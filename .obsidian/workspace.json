@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Business Process Modeling/Appunti/04 - Petri Nets.md",
+                "file": "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "04 - Petri Nets"
+              "title": "07a - EPC e BPMN"
             }
           }
         ]
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Business Process Modeling/Appunti/04 - Petri Nets.md",
+                "file": "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Collegamenti in uscita da 04 - Petri Nets"
+              "title": "Collegamenti in uscita da 07a - EPC e BPMN"
             }
           },
           {
@@ -195,19 +195,26 @@
   },
   "active": "50f3f0140a47f45e",
   "lastOpenFiles": [
+    "Business Process Modeling/Appunti/06 - Orchestration e Collaboration.md",
+    "Business Process Modeling/Appunti/07b - More BPMN.md",
+    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p87_choreography-task.png",
+    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p54_data-association.png",
+    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p37_seller-customer.png",
+    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p20_event-markers.png",
+    "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
+    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p103_implicit-gateway.png",
+    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p112_exclusive-decision.png",
+    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p68_bpmn-vs-epc.png",
+    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p54_matching-split.png",
+    "Business Process Modeling/Appunti/04 - Petri Nets.md",
+    "Business Process Modeling/Appunti/05 - Process Mining.md",
+    "Business Process Modeling/Appunti/assets/06-orchestration_p46_incompatible.png",
+    "Business Process Modeling/Appunti/assets/06-orchestration_p38_choreography.png",
     "Business Process Modeling/Appunti/02 - Business Processes.md",
     "Business Process Modeling/Appunti/03 - Visual Notation.md",
-    "Business Process Modeling/Appunti/04 - Petri Nets.md",
     "Business Process Modeling/Appunti/02 - Business Processes.md.tmp.21108.268c4bfb3a59",
     "Business Process Modeling/Appunti/02 - Business Processes.md.tmp.21108.cb10c774d189",
     "Business Process Modeling/Appunti/04 - Petri Nets.md.tmp.21108.9794038f5829",
-    "Business Process Modeling/Appunti/assets/04-petri_p66_sugar-note.png",
-    "Business Process Modeling/Appunti/assets/04-petri_p97_triggers.png",
-    "Business Process Modeling/Appunti/assets/04-petri_p100_explicit-vs-implicit.png",
-    "Business Process Modeling/Appunti/assets/04-petri_p34_token-game.png",
-    "Business Process Modeling/Appunti/assets/03-visual-notation_p49_standards.png",
-    "Business Process Modeling/Appunti/assets/03-visual-notation_p36_disambiguation.png",
-    "Business Process Modeling/Appunti/assets/02-business-processes_p21_matrix.png",
     "Business Process Modeling/Appunti/assets",
     "Business Process Modeling/Appunti",
     "Business Process Modeling/Slide_Lezioni/05-mining-2025-26.pdf",
