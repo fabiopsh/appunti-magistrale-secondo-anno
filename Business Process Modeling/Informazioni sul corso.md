@@ -1,59 +1,59 @@
-### Objectives
+### Obiettivi
 
-The course aims to reconcile abstraction techniques and high-level diagrammatic notations together with modular and structural approaches. The objective is to show the impact of the analysis and verification properties of business processes on the choice of the best suited specification and modelling languages. At the end of the course, the students will gain some familiarity with business process terminology, with different models and languages for the representation of business processes, with different kinds of logical properties that such models can satisfy and with different analysis and verification techniques. The students will also experiment with some tools for the design, synthesis and analysis of business processes.
+Il corso mira a conciliare tecniche di astrazione e notazioni diagrammatiche di alto livello con approcci modulari e strutturali. L'obiettivo è mostrare l'impatto delle proprietà di analisi e verifica dei processi di business sulla scelta dei linguaggi di specifica e modellazione più adatti. Al termine del corso, gli studenti acquisiranno familiarità con la terminologia dei processi di business, con diversi modelli e linguaggi per la rappresentazione dei processi, con diversi tipi di proprietà logiche che tali modelli possono soddisfare e con diverse tecniche di analisi e verifica. Gli studenti sperimenteranno inoltre alcuni tool per la progettazione, sintesi e analisi dei processi di business.
 
 ---
 
-### Course Overview
+### Panoramica del corso
 
-Business process management. Evolution of Enterprise Systems Architectures. Conceptual models and abstraction mechanisms. Petri nets: invariants, S-systems, T-systems, Free-choice systems and their properties. Workflow nets and workflow modules. Workflow patterns. Event-driven Process Chains (EPC). Business Process Modelling Notation (BPMN), Process performance analysis. Process simulation. Process Mining.
-### Exam
+Business process management. Evoluzione delle Enterprise Systems Architectures. Modelli concettuali e meccanismi di astrazione. Reti di Petri: invarianti, S-system, T-system, sistemi Free-choice e loro proprietà. Workflow net e workflow module. Workflow pattern. Event-driven Process Chains (EPC). Business Process Modelling Notation (BPMN). Analisi delle prestazioni dei processi. Simulazione di processi. Process Mining.
 
-The evaluation will be based on a group project and an oral exam.
+### Esame
 
-[Registration](https://esami.unipi.it/esami/ "https://esami.unipi.it/esami/") to the exam is mandatory.
+La valutazione si basa su un **progetto di gruppo** e un **esame orale**.
 
-The student must demonstrate the ability to put into practice and to execute, with critical awareness, the activities illustrated or carried out under the guidance of the teacher during the course.
+La [registrazione](https://esami.unipi.it/esami/ "https://esami.unipi.it/esami/") all'esame è obbligatoria.
 
-#### Project FAQ
+Lo studente deve dimostrare la capacità di mettere in pratica ed eseguire, con consapevolezza critica, le attività illustrate o svolte sotto la guida del docente durante il corso.
 
-- **What are the prerequisites for having a project assigned?** _There are no prerequisites, but the teacher will assume that you have already studied all the material of the course (if this is not the case, then it is very likely that you won't be able to deliver the project in time)._
-    
-- **How many people can work together on the same project?** _Projects are assigned to individuals or to groups of two people. Exceptionally, groups of three people can be allowed, but a solid motivation is needed._
-    
-- **When is it possible to request the project description?** _After the end of the lectures, any (working) day of the year._
-    
-- **How do we request a project description?** _By sending an email to the teacher (possibly including the text `BPM project request` in the object, and mandatorily including full names, student ids and email addresses of all students in the group). The teacher will then reply (in a few days) with the project description._
-    
-- **Which graphical notation should we use in the modelling?** _You decide: typically EPC is fine for representing orchestrations, BPMN for orchestration, collaboration and choreography diagrams._
-    
-- **Which tools should we use to design EPC diagrams or BPMN diagrams?** _Some tools are suggested in this page, but you are free to evaluate any other tool and then choose the one that you prefer. For example some cross-platform tools are: yEd is versatile, user-friendly, has powerful automatic layout features but cannot export diagrams in .epml and .bpmn formats; Visual Paradigm online is also versatile and can export diagrams in several formats; Camunda modeler offers the essential features for drawing nice BPMN diagrams. Please, briefly motivate your choice in the report._
-    
-- **Which tools should we use for soundness analysis of workflow nets?** _My suggestion is to try to use Woped first, and then Woflan as a backup (as a Microsoft Windows application or as a ProM plugin, running on all platforms) if Woped is not responding fast enough or you like to collect information about error sequences to repair your model. If you find out other tools that can be used to the purpose, feel free to use them as well._
-    
-- **How do we convert graphical diagrams into workflow nets?** _Since January 2026, a prototype conversion tool has been available online at [https://bpmn2petrinet.com/](https://bpmn2petrinet.com/ "https://bpmn2petrinet.com/"). For the best experience, Google Chrome is recommended. Please note that the tool is still in its early stages of development, so the results may not always match expectations. In some cases, manual conversion may therefore be necessary. ProM also provides some conversion plugins; however, their output is typically more complex than the approach presented in the course. If you discover other tools that help speed up the conversion, feel free to use them._
-    
-- **When is the deadline for submitting the project?** _There is no fixed deadline; however, on average, the work requires at least one week of effort._
-    
-- **What does it happen if a person leaves the group?** _You must notify immediately the teacher and choose if you prefer to complete the work individually or to request another project later on._
-    
-- **How do we deliver the project?** _You must send the teacher a short project report in .pdf format together with the source files of all diagrams and nets you designed. Optionally, you can submit the soundness analysis checklist (available on the Microsoft Teams channel) for any of your model._
-    
-- **When do we discuss the project?** _Preferably, at the first exam session that follows the delivery of the project, see the [Academic calendar of activities](https://didattica.di.unipi.it/en/master-programme-in-data-science-and-business-informatics/academic-calendar-2025-2026/ "https://didattica.di.unipi.it/en/master-programme-in-data-science-and-business-informatics/academic-calendar-2025-2026/")._
-    
-- **Is it necessary to have already delivered the project in order to register for the exam?** _No, it is not. But of course the project must be delivered in time for being discussed at the actual oral exam._
-    
+#### FAQ sul progetto
 
-#### Exam FAQ
+- **Quali sono i prerequisiti per l'assegnazione di un progetto?** _Non ci sono prerequisiti, ma il docente darà per scontato che tu abbia già studiato tutto il materiale del corso (in caso contrario, è molto probabile che non riuscirai a consegnare il progetto in tempo)._
 
-- **How do we register for the exam?** _As usual, you must enter your choice on the [ESAMI](https://esami.unipi.it/esami/ "https://esami.unipi.it/esami/") portal._
-    
-- **What are the dates of the exam?** _THE DATES ADVERTISED IN THE ESAMI PORTAL ARE NOT NECESSARILY THOSE OF THE ACTUAL EXAM. After you register for the exam, on the basis of the projects received and any other constraint communicated by each student, the teacher will post a tentative schedule on this web page and will inform you by email or on Teams._
-    
-- **How is the exam organized?** _The exam is oral and it is organised in two parts: the first part will focus on the project discussion, the second part will involve all topics covered by the course._
-    
-- **How is the project discussion organized?** _ALL GROUP MEMBERS MUST BE PRESENT TO THE PROJECT DISCUSSION. All group members must demonstrate they have participated to all the activites of the project. A negative evaluation of the project may require to rework some parts, submit a revised report and schedule a new exam (possibly at the next exam session). A positive evaluation of the project allows each group member to access the second part of the exam._
-    
-- **How is the second part of the exam organized?** _DIFFERENT GROUP MEMBERS CAN ASK TO SCHEDULE THE SECOND PART OF THE EXAM ON DIFFERENT DAYS. Questions may involve (but are not limited to): most relevant concepts, definitions, terminology and techniques; their intuitive meaning and formalization; proof sketches of formal statements; small-sized exercises. Arguments marked as optional in the lectures table below can be discussed upon student request._
-    
-- **Is it possible to pass the first part of the exam and fail the second?** _Let's hope it won't happen, but yes, it is possible, in which case the student will need to register for one of the next exam sessions. Depending on each single case, a new project may also be assigned._
+- **Quante persone possono lavorare insieme sullo stesso progetto?** _I progetti vengono assegnati a singoli o a gruppi di due persone. Eccezionalmente possono essere ammessi gruppi di tre, ma serve una motivazione solida._
+
+- **Quando è possibile richiedere la descrizione del progetto?** _Dopo la fine delle lezioni, in qualsiasi giorno (lavorativo) dell'anno._
+
+- **Come si richiede la descrizione del progetto?** _Inviando un'email al docente (possibilmente includendo il testo `BPM project request` nell'oggetto, e obbligatoriamente includendo nomi completi, numeri di matricola e indirizzi email di tutti gli studenti del gruppo). Il docente risponderà (entro pochi giorni) con la descrizione del progetto._
+
+- **Quale notazione grafica va usata nella modellazione?** _A tua scelta: tipicamente EPC va bene per rappresentare le orchestration, BPMN per orchestration, collaboration e choreography diagram._
+
+- **Quali tool usare per disegnare diagrammi EPC o BPMN?** _Alcuni tool sono suggeriti in questa pagina, ma sei libero di valutarne altri e scegliere quello che preferisci. Ad esempio, alcuni tool cross-platform sono: **yEd** è versatile, facile da usare, ha potenti funzionalità di layout automatico ma non può esportare i diagrammi nei formati .epml e .bpmn; **Visual Paradigm online** è anch'esso versatile e può esportare i diagrammi in vari formati; **Camunda Modeler** offre le funzionalità essenziali per disegnare buoni diagrammi BPMN. Motiva brevemente la tua scelta nella relazione._
+
+- **Quali tool usare per la soundness analysis delle workflow net?** _Il suggerimento è provare prima **WoPeD**, e poi **Woflan** come riserva (come applicazione Microsoft Windows o come plugin di ProM, eseguibile su tutte le piattaforme) se WoPeD non risponde abbastanza velocemente o se vuoi raccogliere informazioni sulle error sequence per riparare il modello. Se trovi altri tool utili allo scopo, sentiti libero di usarli._
+
+- **Come si convertono i diagrammi grafici in workflow net?** _Da gennaio 2026 è disponibile online un tool prototipale di conversione: [https://bpmn2petrinet.com/](https://bpmn2petrinet.com/ "https://bpmn2petrinet.com/"). Per la migliore esperienza è consigliato Google Chrome. Nota che il tool è ancora nelle prime fasi di sviluppo, quindi i risultati potrebbero non corrispondere sempre alle aspettative; in alcuni casi può essere necessaria la conversione manuale. Anche ProM fornisce alcuni plugin di conversione, ma il loro output è tipicamente più complesso dell'approccio presentato nel corso. Se scopri altri tool che velocizzano la conversione, sei libero di usarli._
+
+- **Qual è la scadenza per la consegna del progetto?** _Non c'è una scadenza fissa; in media, però, il lavoro richiede almeno una settimana di impegno._
+
+- **Cosa succede se una persona lascia il gruppo?** _Devi avvisare immediatamente il docente e scegliere se preferisci completare il lavoro individualmente o richiedere un altro progetto in seguito._
+
+- **Come si consegna il progetto?** _Devi inviare al docente una breve relazione di progetto in formato .pdf insieme ai file sorgente di tutti i diagrammi e le reti che hai progettato. Facoltativamente, puoi inviare la checklist di soundness analysis (disponibile sul canale Microsoft Teams) per uno qualsiasi dei tuoi modelli._
+
+- **Quando si discute il progetto?** _Preferibilmente al primo appello successivo alla consegna del progetto, vedi il [calendario accademico delle attività](https://didattica.di.unipi.it/en/master-programme-in-data-science-and-business-informatics/academic-calendar-2025-2026/ "https://didattica.di.unipi.it/en/master-programme-in-data-science-and-business-informatics/academic-calendar-2025-2026/")._
+
+- **È necessario aver già consegnato il progetto per iscriversi all'esame?** _No. Ma naturalmente il progetto deve essere consegnato in tempo per essere discusso all'esame orale effettivo._
+
+#### FAQ sull'esame
+
+- **Come ci si iscrive all'esame?** _Come al solito, devi inserire la tua scelta sul portale [ESAMI](https://esami.unipi.it/esami/ "https://esami.unipi.it/esami/")._
+
+- **Quali sono le date dell'esame?** _LE DATE PUBBLICIZZATE SUL PORTALE ESAMI NON SONO NECESSARIAMENTE QUELLE DELL'ESAME EFFETTIVO. Dopo l'iscrizione, sulla base dei progetti ricevuti e di eventuali vincoli comunicati da ciascuno studente, il docente pubblicherà un calendario provvisorio su questa pagina web e informerà via email o su Teams._
+
+- **Come è organizzato l'esame?** _L'esame è orale ed è organizzato in due parti: la prima parte è dedicata alla discussione del progetto, la seconda riguarda tutti gli argomenti trattati nel corso._
+
+- **Come è organizzata la discussione del progetto?** _TUTTI I MEMBRI DEL GRUPPO DEVONO ESSERE PRESENTI ALLA DISCUSSIONE DEL PROGETTO. Tutti i membri devono dimostrare di aver partecipato a tutte le attività del progetto. Una valutazione negativa del progetto può richiedere di rielaborare alcune parti, inviare una relazione rivista e programmare un nuovo esame (eventualmente all'appello successivo). Una valutazione positiva del progetto consente a ciascun membro del gruppo di accedere alla seconda parte dell'esame._
+
+- **Come è organizzata la seconda parte dell'esame?** _MEMBRI DIVERSI DEL GRUPPO POSSONO CHIEDERE DI PROGRAMMARE LA SECONDA PARTE DELL'ESAME IN GIORNI DIVERSI. Le domande possono riguardare (ma non sono limitate a): i concetti, le definizioni, la terminologia e le tecniche più rilevanti; il loro significato intuitivo e la formalizzazione; proof sketch di enunciati formali; esercizi di piccole dimensioni. Gli argomenti segnati come facoltativi nella tabella delle lezioni possono essere discussi su richiesta dello studente._
+
+- **È possibile passare la prima parte dell'esame e fallire la seconda?** _Speriamo non succeda, ma sì, è possibile: in tal caso lo studente dovrà iscriversi a uno degli appelli successivi. A seconda del singolo caso, potrebbe anche essere assegnato un nuovo progetto._

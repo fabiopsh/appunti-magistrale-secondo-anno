@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Business Process Modeling/Raccolta domande esami passati.md",
-                "mode": "source",
+                "file": "Business Process Modeling/Raccolta risposte esami passati.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Raccolta domande esami passati"
+              "title": "Raccolta risposte esami passati"
             }
           }
         ]
@@ -195,8 +195,12 @@
   },
   "active": "50f3f0140a47f45e",
   "lastOpenFiles": [
-    "Business Process Modeling/Informazioni sul corso.md",
     "Business Process Modeling/Raccolta domande esami passati.md",
+    "Business Process Modeling/Raccolta risposte esami passati.md",
+    "Business Process Modeling/Strategia di studio.md",
+    "Business Process Modeling/Esempio esame pratico altro studente.md",
+    "Business Process Modeling/Raccolta domande esami passati.md.tmp.9884.25c0392505d6",
+    "Business Process Modeling/Informazioni sul corso.md",
     "Business Process Modeling/Appunti/02 - Business Processes.md",
     "Business Process Modeling/Appunti/22 - Esercizi Guidati.md",
     "Business Process Modeling/Appunti/14 - Invariants.md",
@@ -220,7 +224,6 @@
     "Business Process Modeling/Appunti/03 - Visual Notation.md",
     "Business Process Modeling/Appunti/22 - Esercizi Guidati.md.tmp.9884.c4ac4700d5c4",
     "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md",
-    "Business Process Modeling/Appunti/22 - Esercizi Guidati.md.tmp.9884.b5e1ffc98a75",
     "Business Process Modeling/Appunti/assets/22-esercizi_p51_trap-valid.png",
     "Business Process Modeling/Appunti/assets/22-esercizi_p16_rg-final.png",
     "Business Process Modeling/Appunti/assets/22-esercizi_p12_rg-step1.png",
@@ -237,9 +240,6 @@
     "Business Process Modeling/Appunti/17 - Free Choice.md",
     "Business Process Modeling/Appunti/16b - BPMN Analysis.md",
     "Business Process Modeling/Appunti/16a - EPC Analysis.md",
-    "Business Process Modeling/Appunti/17aux - P and NP.md",
-    "Business Process Modeling/Appunti/15 - S-T Systems.md",
-    "Business Process Modeling/Appunti/13 - WFnets Construction.md",
-    "Business Process Modeling/Appunti/12 - Soundness.md"
+    "Business Process Modeling/Appunti/17aux - P and NP.md"
   ]
 }

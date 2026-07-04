@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiAnvil",
+      "LiAlertTriangle",
+      "LiBadgeDollarSign",
       "⁉",
-      "LiInfo",
-      "LiExperiment",
-      "LiDock",
-      "LiShieldQuestion"
+      "LiInfo"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -64,5 +64,7 @@
   "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md": "LiDock",
   "Business Process Modeling/Appunti/22 - Esercizi Guidati.md": "LiExperiment",
   "Business Process Modeling/Informazioni sul corso.md": "LiInfo",
-  "Business Process Modeling/Raccolta domande esami passati.md": "⁉"
+  "Business Process Modeling/Raccolta domande esami passati.md": "LiAnvil",
+  "Business Process Modeling/Strategia di studio.md": "LiBadgeDollarSign",
+  "Business Process Modeling/Raccolta risposte esami passati.md": "LiAlertTriangle"
 }
