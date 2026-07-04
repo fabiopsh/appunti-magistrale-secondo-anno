@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Business Process Modeling/Appunti/16a - EPC Analysis.md",
+                "file": "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "16a - EPC Analysis"
+              "title": "21 - WFnets Diagnosis"
             }
           },
           {
@@ -207,20 +207,27 @@
   },
   "active": "50f3f0140a47f45e",
   "lastOpenFiles": [
-    "Business Process Modeling/Appunti/15 - S-T Systems.md",
-    "Business Process Modeling/Appunti/16b - BPMN Analysis.md",
-    "Business Process Modeling/Appunti/assets/16b-bpmn-analysis_p64_buyer-reseller.png",
-    "Business Process Modeling/Appunti/assets/16b-bpmn-analysis_p58_sushi-system.png",
-    "Business Process Modeling/Appunti/assets/16b-bpmn-analysis_p27_order-process.png",
-    "Business Process Modeling/Appunti/assets/16b-bpmn-analysis_p22_gateways.png",
-    "Business Process Modeling/Appunti/assets/16b-bpmn-analysis_p17_the-twist.png",
-    "Business Process Modeling/Appunti/16a - EPC Analysis.md",
-    "Business Process Modeling/Appunti/assets/16a-epc-analysis_p80_overall-freechoice.png",
-    "Business Process Modeling/Appunti/assets/16a-epc-analysis_p33_example-epc-wfnet.png",
-    "Business Process Modeling/Appunti/assets/16a-epc-analysis_p24_or-join.png",
-    "Business Process Modeling/Appunti/assets/16a-epc-analysis_p23_or-split.png",
-    "Business Process Modeling/Appunti/assets/16a-epc-analysis_p9_three-steps.png",
+    "Business Process Modeling/Appunti/20 - Quantitative Analysis.md",
+    "Business Process Modeling/Appunti/19 - Conformance.md",
+    "Business Process Modeling/Appunti/18 - Workflow Systems.md",
+    "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p60_rcg-unbounded.png",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p49_rg-nonlive.png",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p31_pt-handle.png",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p28_tp-handle.png",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p19_s-cover-example.png",
+    "Business Process Modeling/Appunti/assets/21-wfnets-diagnosis_p11_s-component-example.png",
+    "Business Process Modeling/Appunti/assets/20-quantitative_p92_cost-example.png",
+    "Business Process Modeling/Appunti/assets/20-quantitative_p57_rework-loop.png",
+    "Business Process Modeling/Appunti/assets/20-quantitative_p41_parallel-paths.png",
+    "Business Process Modeling/Appunti/assets/20-quantitative_p35_alternative-paths.png",
     "Business Process Modeling/Appunti/14 - Invariants.md",
+    "Business Process Modeling/Appunti/17 - Free Choice.md",
+    "Business Process Modeling/Appunti/16b - BPMN Analysis.md",
+    "Business Process Modeling/Appunti/16a - EPC Analysis.md",
+    "Business Process Modeling/Appunti/17aux - P and NP.md",
+    "Business Process Modeling/Appunti/17aux - P and NP.md.tmp.9884.753ce9982fd7",
+    "Business Process Modeling/Appunti/15 - S-T Systems.md",
     "Business Process Modeling/Appunti/13 - WFnets Construction.md",
     "Business Process Modeling/Slide_Lezioni/13-wfnets-construction-2025-26.pdf",
     "Business Process Modeling/Appunti/11 - Net Matrices.md",
@@ -243,7 +250,6 @@
     "Business Process Modeling/Appunti/04 - Petri Nets.md.tmp.21108.9794038f5829",
     "Business Process Modeling/Appunti/assets",
     "Business Process Modeling/Appunti",
-    "Business Process Modeling/Slide_Lezioni/05-mining-2025-26.pdf",
     "README.md"
   ]
 }

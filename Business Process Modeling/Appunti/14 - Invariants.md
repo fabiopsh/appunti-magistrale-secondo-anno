@@ -76,7 +76,13 @@ Vediamolo su un esempio concreto — il modello di due semafori — che mostra a
 
 ### A cosa servono gli S-invariant
 
-Dalla proprietà fondamentale discendono tre usi pratici. Prima serve una classificazione: un S-invariant è **semi-positive** se $I \ge \mathbf{0}$ e $I \ne \mathbf{0}$ (nessun peso negativo, almeno uno positivo), **positive** se $I(p) > 0$ per *ogni* place. Il **support** $\langle I \rangle = \{p \mid I(p) > 0\}$ è l'insieme dei place con peso positivo.
+Dalla proprietà fondamentale discendono tre usi pratici. Prima serve una classificazione dei possibili S-invariant, in base al segno dei pesi.
+
+> [!definition] S-invariant semi-positive e positive
+>
+> - **Semi-positive**: $I \ge \mathbf{0}$ e $I \ne \mathbf{0}$ — nessun peso negativo, e almeno un peso strettamente positivo.
+> - **Positive**: $I(p) > 0$ per **ogni** place $p$ — tutti i pesi strettamente positivi (caso più forte, implica semi-positive).
+> - Il **support** $\langle I \rangle = \{p \mid I(p) > 0\}$ è l'insieme dei place con peso positivo. Per un invariante positive, il support è **tutto** $P$.
 
 > [!theorem] 1) Boundedness (condizione sufficiente)
 >
