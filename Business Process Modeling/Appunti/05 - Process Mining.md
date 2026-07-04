@@ -66,7 +66,11 @@ Per lavorarci comodamente si passa a una rappresentazione compatta: si abbrevian
 
 > [!definition] Simple event log
 >
-> Sia $A$ un insieme di attività. Una **simple trace** $\sigma$ su $A$ è una sequenza finita di attività. Un **simple event log** $L$ su $A$ è un **multiset** di trace (multiinsieme, perché la stessa trace può ripetersi, e la sua *molteplicità* conta). Notazione: $L_1 = [\langle a,b,c,d\rangle^3, \langle a,c,b,d\rangle^2, \langle a,e,d\rangle]$ significa tre casi con la prima trace, due con la seconda, uno con la terza.
+> Sia $A$ un insieme di attività. Una **simple trace** $\sigma$ su $A$ è una sequenza finita di attività. Un **simple event log** $L$ su $A$ è un **multiset** di trace (multiinsieme, perché la stessa trace può ripetersi, e la sua *molteplicità* conta). Notazione:
+>
+> $$L_1 = [\langle a,b,c,d\rangle^3,\ \langle a,c,b,d\rangle^2,\ \langle a,e,d\rangle]$$
+>
+> Significa tre casi con la prima trace, due con la seconda, uno con la terza.
 
 ---
 
@@ -122,10 +126,21 @@ Tutto parte da una relazione elementare, il "segue direttamente".
 
 > [!definition] Log-based ordering relations
 >
-> La relazione di base è il **directly-follows** $\;a >_L b\;$: vale se esiste una trace $\sigma = \langle t_1,\dots,t_n\rangle$ in $L$ e un indice $i$ tale che $t_i = a$ e $t_{i+1} = b$ — cioè $a$ è (qualche volta) **immediatamente seguito** da $b$. Da questa si derivano tre relazioni:
-> - **Causality** $\;a \to_L b\;$: se $a >_L b$ **ma non** $b >_L a$. L'ordine è sempre lo stesso → dipendenza causale (prima $a$, poi $b$).
-> - **Mutual exclusion / no relation** $\;a \#_L b\;$: se **né** $a >_L b$ **né** $b >_L a$. Le due attività non sono mai adiacenti.
-> - **Concurrency** $\;a \parallel_L b\;$: se $a >_L b$ **e anche** $b >_L a$. Entrambi gli ordini compaiono → le due attività sono in parallelo (indipendenti).
+> La relazione di base è il **directly-follows**:
+>
+> $$a >_L b$$
+>
+> Vale se esiste una trace $\sigma = \langle t_1,\dots,t_n\rangle$ in $L$ e un indice $i$ tale che $t_i = a$ e $t_{i+1} = b$ — cioè $a$ è (qualche volta) **immediatamente seguito** da $b$. Da questa si derivano tre relazioni:
+>
+> $$\begin{aligned}
+> a \to_L b &\quad \text{(causality): se } a >_L b \text{ ma non } b >_L a \\
+> a \#_L b &\quad \text{(mutual exclusion): se né } a >_L b \text{ né } b >_L a \\
+> a \parallel_L b &\quad \text{(concurrency): se } a >_L b \text{ e anche } b >_L a
+> \end{aligned}$$
+>
+> - **Causality** $a \to_L b$: l'ordine è sempre lo stesso → dipendenza causale (prima $a$, poi $b$).
+> - **Mutual exclusion / no relation** $a \#_L b$: le due attività non sono mai adiacenti.
+> - **Concurrency** $a \parallel_L b$: entrambi gli ordini compaiono → le due attività sono in parallelo (indipendenti).
 
 L'intuizione è che l'ordine (o il disordine) con cui due attività si susseguono nel log rivela la loro relazione strutturale nel processo:
 

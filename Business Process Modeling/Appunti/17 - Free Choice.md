@@ -80,7 +80,13 @@ Un primo regalo dei free-choice riguarda la liveness. In *qualsiasi* rete, la li
 >
 > In un free-choice system: **place-live $\iff$ live**.
 >
-> *Intuizione ($\Rightarrow$):* per abilitare una transizione $t$ con $\bullet t = \{p_1, \dots, p_n\}$ partendo da una marcatura $M$: essendo place-live, da $M$ raggiungo $M_1$ che marca $p_1$; da $M_1$ raggiungo $M_2$ che marca $p_2$; e così via fino a $M_n$ che marca $p_n$. Il punto delicato è che **i token già messi non si perdono**: per la proprietà fondamentale, se una $t'$ potesse togliere il token da $p_1$, avrebbe lo stesso pre-set di $t$ — ma allora abiliterebbe direttamente $t$. Alla fine $M_n$ marca tutti i $p_i$ e **abilita $t$**.
+> *Intuizione ($\Rightarrow$):* per abilitare una transizione $t$ con $\bullet t = \{p_1, \dots, p_n\}$ partendo da una marcatura $M$, si costruisce la catena, sfruttando ogni volta la place-liveness:
+>
+> $$
+> M \ \leadsto\ M_1 \ (\text{marca } p_1) \ \leadsto\ M_2 \ (\text{marca } p_2) \ \leadsto\ \dots \ \leadsto\ M_n \ (\text{marca } p_n)
+> $$
+>
+> Il punto delicato è che **i token già messi non si perdono**: per la proprietà fondamentale, se una $t'$ potesse togliere il token da $p_1$, avrebbe lo stesso pre-set di $t$ — ma allora abiliterebbe direttamente $t$. Alla fine $M_n$ marca tutti i $p_i$ e **abilita $t$**.
 
 ![Schema della dimostrazione: si vuole abilitare t, che ha input p1, p2, ..., pn. Da M si raggiunge M1 che marca p1 (place-liveness); da M1 si raggiunge M2 che marca p2; e così via fino a Mn che marca tutti i pi e abilita t](assets/17-free-choice_p19_place-live-intuition.png)
 *Fig. — La costruzione passo-passo: si marca **un place di input alla volta** ($p_1$, poi $p_2$, …, poi $p_n$), sfruttando ogni volta la place-liveness. Il passaggio delicato (non visibile nel disegno, ma cruciale) è che marcare $p_2$ non deve "svuotare" $p_1$: qui interviene la proprietà fondamentale dei free-choice, che impedisce a un'altra transizione di rubare il token da $p_1$ senza condividerne l'intero pre-set con $t$.*
@@ -125,7 +131,11 @@ Il legame con la liveness, valido in **ogni** rete:
 >
 > Se un system è **live**, allora ogni proper siphon $R$ è **marcato**.
 >
-> *Perché:* preso $p \in R$ e una $t \in \bullet p \cup p\bullet$, per liveness esiste uno scatto $M \xrightarrow{t} M'$ raggiungibile; quindi $p$ (e dunque $R$) è marcato in $M$ o $M'$, e per il corollario era marcato in $M_0$.
+> *Perché:* preso $p \in R$ e una $t \in \bullet p \cup p\bullet$, per liveness esiste uno scatto raggiungibile
+>
+> $$M \xrightarrow{t} M'$$
+>
+> quindi $p$ (e dunque $R$) è marcato in $M$ o in $M'$; per il corollario, era già marcato in $M_0$.
 >
 > **Contronominale (test rapido):** se esiste un proper siphon **non marcato**, il system **non è live**.
 

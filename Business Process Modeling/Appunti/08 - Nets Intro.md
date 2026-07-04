@@ -44,7 +44,17 @@ stateDiagram-v2
     unlocked --> unlocked: card
 ```
 
-Per descrivere l'effetto di un'**intera parola** (non un solo simbolo) si estende $\delta$ alla **funzione destinazione** $\hat\delta : Q \times \Sigma^\star \to Q$, definita per **induzione** sulla lunghezza della parola: $\hat\delta(q, \epsilon) = q$ (parola vuota, si resta fermi) e $\hat\delta(q, wa) = \delta(\hat\delta(q, w), a)$ (si processa prima $w$, poi il simbolo finale $a$). Un automa **accetta** una parola $w$ se $\hat\delta(q_0, w) \in F$, e il suo **linguaggio** è $L(A) = \{ w \mid \hat\delta(q_0, w) \in F \}$.
+Per descrivere l'effetto di un'**intera parola** (non un solo simbolo) si estende $\delta$ alla **funzione destinazione** $\hat\delta : Q \times \Sigma^\star \to Q$, definita per **induzione** sulla lunghezza della parola:
+
+$$\hat\delta(q, \epsilon) = q$$
+
+(parola vuota, si resta fermi), e
+
+$$\hat\delta(q, wa) = \delta(\hat\delta(q, w), a)$$
+
+(si processa prima $w$, poi il simbolo finale $a$). Un automa **accetta** una parola $w$ se $\hat\delta(q_0, w) \in F$, e il suo **linguaggio** è
+
+$$L(A) = \{ w \mid \hat\delta(q_0, w) \in F \}$$
 
 Esiste anche la variante **non-deterministica** (NFA), in cui $\delta : Q \times \Sigma \to \wp(Q)$ restituisce un **insieme** di possibili stati successivi (uno stesso input può portare in stati diversi).
 
@@ -90,18 +100,27 @@ Per descrivere con precisione "quanti token ci sono in ogni place" un insieme or
 >
 > Un **multiset** su un insieme $S$ è una funzione $M : S \to \mathbb{N}$ che a ogni elemento associa la sua **molteplicità** (quante volte compare). L'insieme dei multiset su $S$ si denota $\mu(S)$ o $S^\oplus$. Diciamo che $x \in M$ se $M(x) > 0$. Un **set** è il caso particolare in cui ogni molteplicità è 0 oppure 1.
 
-Un multiset si scrive comodamente come **somma formale**: $M = k_1 x_1 + k_2 x_2 + \dots + k_n x_n$, dove $k_i$ è la molteplicità di $x_i$ (si omette se vale 1). Per esempio $2a + 3b + c$ è il multiset con due $a$, tre $b$ e una $c$. Le operazioni sono definite molteplicità per molteplicità:
+Un multiset si scrive comodamente come **somma formale**:
 
-- **Contenimento**: $M \subseteq M'$ se $M(x) \le M'(x)$ per ogni $x$.
-- **Unione (somma)**: $(M + M')(x) = M(x) + M'(x)$.
-- **Differenza**: $(M - M')(x) = M(x) - M'(x)$, **definita solo se** $M \supseteq M'$ (altrimenti si andrebbe sotto zero).
+$$M = k_1 x_1 + k_2 x_2 + \dots + k_n x_n$$
+
+dove $k_i$ è la molteplicità di $x_i$ (si omette se vale 1). Per esempio $2a + 3b + c$ è il multiset con due $a$, tre $b$ e una $c$. Le operazioni sono definite molteplicità per molteplicità:
+
+- **Contenimento**: $$M \subseteq M' \iff M(x) \le M'(x) \ \text{per ogni } x$$
+- **Unione (somma)**: $$(M + M')(x) = M(x) + M'(x)$$
+- **Differenza**: $$(M - M')(x) = M(x) - M'(x)$$, **definita solo se** $M \supseteq M'$ (altrimenti si andrebbe sotto zero).
 
 > [!example] Operazioni sui multiset
 >
 > - $3a + 2b \subseteq 2a + 3b + c$? **No** (serve $3a \le 2a$, falso).
-> - $(a + 2b) + (2a + c) = 3a + 2b + c$.
-> - $(2a + 3b) - (2a + b) = 2b$.
-> - $(2a + 2b) - (a + c)$ = **non definita** (manca $c$ nel primo).
+>
+> $$(a + 2b) + (2a + c) = 3a + 2b + c$$
+>
+> $$(2a + 3b) - (2a + b) = 2b$$
+>
+> $$(2a + 2b) - (a + c) = \text{non definita}$$
+>
+> (manca $c$ nel primo).
 
 ---
 
@@ -115,20 +134,43 @@ Con i multiset possiamo formalizzare tutto ciò che in [[04 - Petri Nets]] aveva
 
 > [!definition] Petri net (con marcatura iniziale)
 >
-> Un **Petri net** è una tupla $(P, T, F, M_0)$ con $P$ place finiti, $T$ transition finite ($P \cap T = \varnothing$), $F \subseteq (P\times T)\cup(T\times P)$ la flow relation, e $M_0 \in \mu(P)$ la **marcatura iniziale**. Ricordiamo il **pre-set** $\bullet t = \{p \mid (p,t)\in F\}$ e il **post-set** $t\bullet = \{p \mid (t,p)\in F\}$.
+> Un **Petri net** è una tupla
+>
+> $$(P, T, F, M_0)$$
+>
+> con $P$ place finiti, $T$ transition finite ($P \cap T = \varnothing$), $F \subseteq (P\times T)\cup(T\times P)$ la flow relation, e $M_0 \in \mu(P)$ la **marcatura iniziale**. Ricordiamo il **pre-set** e il **post-set** di una transizione $t$:
+>
+> $$\bullet t = \{p \mid (p,t)\in F\}$$
+>
+> $$t\bullet = \{p \mid (t,p)\in F\}$$
 
 Ed ecco il punto in cui il formalismo dei multiset ripaga: abilitazione e scatto diventano **operazioni aritmetiche** su marcature.
 
 > [!definition] Enabling e firing (formali)
 >
-> - **Enabling**: una transizione $t$ è **abilitata** in $M$ se e solo se $\;\bullet t \subseteq M\;$, cioè se ogni input place ha abbastanza token. Si scrive $M \xrightarrow{t}$ oppure $M[t\rangle$.
+> - **Enabling**: una transizione $t$ è **abilitata** in $M$ se e solo se
+>
+> $$\bullet t \subseteq M$$
+>
+> cioè se ogni input place ha abbastanza token. Si scrive $M \xrightarrow{t}$ oppure $M[t\rangle$.
+>
 > - **Firing**: una $t$ abilitata in $M$ può **scattare**, portando alla nuova marcatura
+>
 > $$M' = M - \bullet t + t\bullet$$
+>
 > e si scrive $M \xrightarrow{t} M'$ (o $M[t\rangle M'$). Cioè: **togli** un token da ogni input place, **aggiungi** un token in ogni output place.
 
 Valgono le stesse osservazioni della lezione 04: lo scatto è **atomico**, la semantica è **interleaving** (una transizione alla volta), e il numero totale di token **può variare** perché $|\bullet t|$ e $|t\bullet|$ possono differire.
 
-Introduciamo anche una notazione compatta per parlare di *esistenza* di mosse: $M \to$ se qualche transizione è abilitata in $M$; $M \to M'$ se $M \xrightarrow{t} M'$ per qualche $t$; $M \not\xrightarrow{t}$ se $t$ non è abilitata; $M \not\to$ se **nessuna** transizione è abilitata (marcatura *morta*).
+Introduciamo anche una notazione compatta per parlare di *esistenza* di mosse:
+
+$$M \to \quad \text{se qualche transizione è abilitata in } M$$
+
+$$M \to M' \quad \text{se } M \xrightarrow{t} M' \text{ per qualche } t$$
+
+$$M \not\xrightarrow{t} \quad \text{se } t \text{ non è abilitata}$$
+
+$$M \not\to \quad \text{se nessuna transizione è abilitata (marcatura morta)}$$
 
 ---
 
@@ -138,11 +180,29 @@ Un singolo scatto è solo un passo. Ci interessa l'evoluzione completa, cioè le
 
 > [!definition] Firing sequence
 >
-> Data una sequenza di transizioni $\sigma = t_1 t_2 \cdots t_{n-1} \in T^\star$, scriviamo $M \xrightarrow{\sigma} M'$ se esiste una successione di marcature $M = M_1 \xrightarrow{t_1} M_2 \xrightarrow{t_2} \cdots \xrightarrow{t_{n-1}} M_n = M'$. La sequenza può anche essere **infinita** ($\sigma \in T^\omega$), se il processo non termina mai.
+> Data una sequenza di transizioni
+>
+> $$\sigma = t_1 t_2 \cdots t_{n-1} \in T^\star$$
+>
+> scriviamo $M \xrightarrow{\sigma} M'$ se esiste una successione di marcature
+>
+> $$M = M_1 \xrightarrow{t_1} M_2 \xrightarrow{t_2} \cdots \xrightarrow{t_{n-1}} M_n = M'$$
+>
+> La sequenza può anche essere **infinita** ($\sigma \in T^\omega$), se il processo non termina mai.
 
 > [!definition] Marcature raggiungibili
 >
-> Una marcatura $M'$ è **raggiungibile** da $M$ se $M \xrightarrow{\sigma} M'$ per qualche $\sigma$; si scrive $M \xrightarrow{\;\ast\;} M'$. L'insieme di tutte le marcature raggiungibili da $M$ si denota $\text{reach}(M)$ oppure $[M\rangle$. (Nota: $M \xrightarrow{\epsilon} M$, ogni marcatura raggiunge sé stessa con la sequenza vuota.)
+> Una marcatura $M'$ è **raggiungibile** da $M$ se $M \xrightarrow{\sigma} M'$ per qualche $\sigma$; si scrive
+>
+> $$M \xrightarrow{\;\ast\;} M'$$
+>
+> L'insieme di tutte le marcature raggiungibili da $M$ si denota $\text{reach}(M)$ oppure $[M\rangle$.
+>
+> Nota:
+>
+> $$M \xrightarrow{\epsilon} M$$
+>
+> ogni marcatura raggiunge sé stessa con la sequenza vuota.
 
 Su queste sequenze si definiscono le nozioni di **concatenazione** (finito + finito = finito; finito + infinito = infinito) e di **prefisso** ($\sigma_1$ è prefisso di $\sigma$ se $\sigma_1\sigma_2 = \sigma$ per qualche $\sigma_2$). Un fatto utile lega abilitazione e prefissi:
 
@@ -150,6 +210,12 @@ Su queste sequenze si definiscono le nozioni di **concatenazione** (finito + fin
 >
 > Una sequenza $\sigma$ è abilitata in $M$ (cioè $M \xrightarrow{\sigma}$) **se e solo se** *ogni* prefisso $\sigma'$ di $\sigma$ è abilitato in $M$.
 >
-> *Idea:* ($\Rightarrow$) immediato dalla definizione. ($\Leftarrow$) se $\sigma$ è finita è banale (è prefisso di sé stessa); se è infinita, per ogni $i$ il passo $t_i$ è abilitato perché il prefisso $t_1\cdots t_i$ lo è, e quello è un prefisso finito. $\blacksquare$
+> *Idea:*
+>
+> $$(\Rightarrow) \quad \text{immediato dalla definizione}$$
+>
+> $$(\Leftarrow) \quad \text{se } \sigma \text{ è finita, è banale: è prefisso di sé stessa}$$
+>
+> Se invece $\sigma$ è infinita, per ogni $i$ il passo $t_i$ è abilitato perché il prefisso $t_1\cdots t_i$ lo è, e quello è un prefisso finito. $\blacksquare$
 
 L'insieme delle marcature raggiungibili $[M_0\rangle$ è il concetto centrale su cui costruiremo l'analisi: rappresenta **tutti gli stati** in cui il processo può finire. Nella prossima lezione lo organizzeremo in un grafo — l'**occurrence graph** — per poterlo studiare sistematicamente. → [[09 - Occurrence Graph]]

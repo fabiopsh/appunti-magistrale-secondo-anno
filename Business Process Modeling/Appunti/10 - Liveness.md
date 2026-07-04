@@ -15,7 +15,15 @@ fonte: "Petri nets · Esparza, *Free Choice Petri Nets* (optional)"
 
 In [[09 - Occurrence Graph]] abbiamo imparato a costruire lo spazio degli stati raggiungibili e a chiederci se è finito (boundedness). Ora affrontiamo una domanda diversa, sul *comportamento a lungo termine*: una data attività del processo **potrà sempre, prima o poi, essere eseguita**? Oppure può capitare di finire in uno stato da cui quell'attività non sarà **mai più** possibile? Questa è la nozione di **liveness** (vivacità), la proprietà chiave per garantire che un processo non "muoia" pezzo per pezzo. Studieremo la liveness delle transizioni, quella dei place, la nozione più debole di **deadlock-freedom**, e come queste proprietà si implicano a vicenda.
 
-Una premessa logica utile per tutta la lezione: per **smentire** un'implicazione $P \Rightarrow Q$ basta esibire un caso in cui $P$ è vero e $Q$ falso, cioè $P \wedge \neg Q$. E ricordiamo la transitività della raggiungibilità: se $M \in [M_0\rangle$ e $M' \in [M\rangle$, allora $M' \in [M_0\rangle$. Con "marcatura raggiungibile" intenderemo sempre "raggiungibile da $M_0$".
+Una premessa logica utile per tutta la lezione: per **smentire** un'implicazione $P \Rightarrow Q$ basta esibire un caso in cui $P$ è vero e $Q$ falso, cioè
+
+$$P \wedge \neg Q$$
+
+E ricordiamo la transitività della raggiungibilità:
+
+$$M \in [M_0\rangle \ \wedge\ M' \in [M\rangle \ \implies\ M' \in [M_0\rangle$$
+
+Con "marcatura raggiungibile" intenderemo sempre "raggiungibile da $M_0$".
 
 ---
 
@@ -98,7 +106,15 @@ La stessa idea si trasporta ai place, sostituendo "abilitata" con "marcato". Dic
 > $$\forall M \in [M_0\rangle.\;\; \exists M' \in [M\rangle.\;\; M'(p) > 0$$
 > Intuitivamente: ogni volta che $p$ si svuota, resta la possibilità di rimarcarlo in futuro (o resta sempre marcato). Una rete è **place-live** se tutti i suoi place sono live.
 
-Come per le transizioni: $p$ è **dead** a $M$ se resterà unmarked per sempre ($\forall M' \in [M\rangle.\; M'(p) = 0$), e sull'occurrence graph $p$ è live ⟺ da ogni nodo si raggiunge un nodo con un token in $p$; $p$ è dead ⟺ nessun nodo del grafo ha token in $p$.
+Come per le transizioni, $p$ è **dead** a $M$ se resterà unmarked per sempre:
+
+$$\text{Dead}(p) \equiv \forall M' \in [M\rangle.\; M'(p) = 0$$
+
+E sull'occurrence graph:
+
+$$p \text{ è live} \iff \text{da ogni nodo si raggiunge un nodo con un token in } p$$
+
+$$p \text{ è dead} \iff \text{nessun nodo del grafo ha token in } p$$
 
 Escludiamo dal discorso i **nodi isolati** (place o transition con pre-set e post-set vuoti): consideriamo solo reti senza nodi isolati.
 

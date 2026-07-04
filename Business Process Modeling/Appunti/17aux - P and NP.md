@@ -101,14 +101,29 @@ Il capostipite storico è **SAT**, la soddisfacibilità booleana.
 > [!definition] SAT decision problem (NP-complete)
 >
 > Ingredienti:
-> - **Variables**: $x_1, x_2, \dots, x_n$;
-> - **Literals**: una variabile o la sua negazione, $x_i$ o $\bar{x_i}$;
-> - **Clause**: una **disgiunzione** di literal (un OR), es. $(x_1 \vee \bar{x_3})$;
+> - **Variables**: un insieme di variabili booleane
+>
+> $$x_1, x_2, \dots, x_n$$
+>
+> - **Literals**: una variabile o la sua negazione
+>
+> $$x_i \quad \text{oppure} \quad \bar{x_i}$$
+>
+> - **Clause**: una **disgiunzione** di literal (un OR), es.
+>
+> $$(x_1 \vee \bar{x_3})$$
+>
 > - **Formula**: una **congiunzione** di clause (un AND di OR — forma normale congiuntiva).
 >
-> Esempio: $\varphi = (x_1 \vee \bar{x_3}) \wedge (x_1 \vee \bar{x_2} \vee x_3) \wedge (x_2 \vee \bar{x_3})$.
+> Esempio:
 >
-> **Domanda**: esiste un'assegnazione di valori booleani alle variabili tale che $\varphi = \text{true}$? (Per l'esempio, $x_1 = x_2 = x_3 = \text{true}$ funziona.)
+> $$\varphi = (x_1 \vee \bar{x_3}) \wedge (x_1 \vee \bar{x_2} \vee x_3) \wedge (x_2 \vee \bar{x_3})$$
+>
+> **Domanda**: esiste un'assegnazione di valori booleani alle variabili tale che $\varphi = \text{true}$?
+>
+> Per l'esempio, questa assegnazione funziona:
+>
+> $$x_1 = x_2 = x_3 = \text{true}$$
 
 SAT è stato il **primo** problema dimostrato NP-complete (teorema di Cook–Levin): verificare un'assegnazione è banale, ma *trovarne* una soddisfacente è, per quanto si sa, difficile.
 

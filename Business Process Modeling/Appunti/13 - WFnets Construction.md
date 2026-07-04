@@ -44,8 +44,16 @@ Perché il collegamento funzioni, servono due lemmi sulle transizioni "di bordo"
 
 > [!note] Transizioni iniziali e finali
 >
-> - Una transizione $t$ è **iniziale** se c'è un arco dal place iniziale $i$ a $t$. In un WF net sound, se $t$ è iniziale allora $\bullet t = \{i\}$ (altrimenti $t$ sarebbe dead, perché all'inizio l'unico token è in $i$).
-> - Una transizione $t$ è **finale** se c'è un arco da $t$ al place finale $o$. In un WF net sound, se $t$ è finale allora $t\bullet = \{o\}$ (altrimenti $t$ sarebbe dead, oppure violerebbe la proper completion lasciando token oltre a quello in $o$).
+> - Una transizione $t$ è **iniziale** se c'è un arco dal place iniziale $i$ a $t$. In un WF net sound, se $t$ è iniziale allora:
+>
+> $$\bullet t = \{i\}$$
+>
+> (altrimenti $t$ sarebbe dead, perché all'inizio l'unico token è in $i$).
+> - Una transizione $t$ è **finale** se c'è un arco da $t$ al place finale $o$. In un WF net sound, se $t$ è finale allora:
+>
+> $$t\bullet = \{o\}$$
+>
+> (altrimenti $t$ sarebbe dead, oppure violerebbe la proper completion lasciando token oltre a quello in $o$).
 >
 > Questi vincoli assicurano che, sostituendo $N'$ al posto di $t$, le sue transizioni iniziali si aggancino puliti all'input di $t$ e quelle finali all'output.
 

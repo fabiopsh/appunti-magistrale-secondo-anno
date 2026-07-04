@@ -58,9 +58,18 @@ Tradotto sui workflow net, dove "avviare un caso" = mettere un token in $i$ e "c
 > [!definition] Soundness di un workflow net (formale)
 >
 > Un workflow net è **sound** se valgono tre condizioni:
-> 1. **No dead task**: nessuna transizione è dead — $\;\forall t \in T.\; \exists M \in [i\rangle.\; M \xrightarrow{t}$ (ogni transizione è eseguibile in qualche marcatura raggiungibile).
-> 2. **Option to complete**: da ogni marcatura raggiungibile si può arrivare a marcare $o$ — $\;\forall M \in [i\rangle.\; \exists M' \in [M\rangle.\; M'(o) \ge 1$.
-> 3. **Proper completion**: quando $o$ è marcato, non resta nessun altro token — $\;\forall M \in [i\rangle.\; M(o) \ge 1 \Rightarrow M = o$.
+>
+> 1. **No dead task**: nessuna transizione è dead (ogni transizione è eseguibile in qualche marcatura raggiungibile).
+>
+> $$\forall t \in T.\; \exists M \in [i\rangle.\; M \xrightarrow{t}$$
+>
+> 2. **Option to complete**: da ogni marcatura raggiungibile si può arrivare a marcare $o$.
+>
+> $$\forall M \in [i\rangle.\; \exists M' \in [M\rangle.\; M'(o) \ge 1$$
+>
+> 3. **Proper completion**: quando $o$ è marcato, non resta nessun altro token.
+>
+> $$\forall M \in [i\rangle.\; M(o) \ge 1 \Rightarrow M = o$$
 
 Ogni condizione serve a **vietare uno dei difetti** visti nella figura sopra. Conviene leggerle così, abbinandole al problema che escludono:
 
@@ -70,7 +79,13 @@ Ogni condizione serve a **vietare uno dei difetti** visti nella figura sopra. Co
 | **2. Option to complete** | da dovunque tu sia arrivato, la fine ($o$ marcato) resta **raggiungibile** | **livelock** / casi che non terminano più |
 | **3. Proper completion** | nell'istante in cui $o$ ha il token, la rete è **vuota** ovunque | **token/attività pendenti** dopo la fine del caso |
 
-Nota la struttura dei quantificatori, la stessa della liveness in [[10 - Liveness]]: la cond. 1 è un "$\forall t\ \exists M$" (per ogni task *esiste* un modo di eseguirla); la cond. 2 un "$\forall M\ \exists M'$" (da *ogni* marcatura *esiste* una via verso $o$); la cond. 3 un "$\forall M$" con un'implicazione (per *ogni* marcatura, *se* $o$ è marcato *allora* è l'unica cosa marcata).
+Nota la struttura dei quantificatori, la stessa della liveness in [[10 - Liveness]]:
+
+$$\text{cond. 1:}\quad \forall t\ \exists M \qquad \text{(per ogni task \emph{esiste} un modo di eseguirla)}$$
+
+$$\text{cond. 2:}\quad \forall M\ \exists M' \qquad \text{(da \emph{ogni} marcatura \emph{esiste} una via verso } o\text{)}$$
+
+$$\text{cond. 3:}\quad \forall M.\ (\ldots \Rightarrow \ldots) \qquad \text{(per \emph{ogni} marcatura, \emph{se} } o \text{ è marcato \emph{allora} è l'unica cosa marcata)}$$
 
 > [!warning] Cosa NON dice l'"option to complete"
 >
@@ -103,7 +118,17 @@ Il teorema è potente perché riconduce una proprietà specifica dei workflow (l
 > - **$N^\star$ bounded** ⟹ *proper completion* (cond. 3): se non ci fosse proper completion, quando $o$ è marcato resterebbe qualche token extra; reset lo riporterebbe verso $i$ accumulando token a ogni giro → unbounded. La boundedness lo vieta.
 > - Insieme, live + bounded ⟹ *option to complete* (cond. 2): la liveness garantisce che reset (e quindi $o$) sia sempre raggiungibile.
 >
-> Le dimostrazioni formali usano il **marking equation lemma** e il **monotonicity lemma** di [[11 - Net Matrices]]: per esempio, "sound ⟹ $N^\star$ bounded" si prova per assurdo — se $N^\star$ fosse unbounded esisterebbe $i \xrightarrow{\ast} M \xrightarrow{\ast} M'$ con $M \subsetneq M'$; per monotonicità, dal surplus $L = M' - M$ si raggiungerebbe $o + L$ (un token in $o$ *più* dei token extra $L$), violando la proper completion.
+> Le dimostrazioni formali usano il **marking equation lemma** e il **monotonicity lemma** di [[11 - Net Matrices]]: per esempio, "sound ⟹ $N^\star$ bounded" si prova per assurdo.
+>
+> Se $N^\star$ fosse unbounded esisterebbe:
+>
+> $$i \xrightarrow{\ast} M \xrightarrow{\ast} M' \quad \text{con } M \subsetneq M'$$
+>
+> Per monotonicità, dal surplus $L = M' - M$ si raggiungerebbe:
+>
+> $$o + L$$
+>
+> cioè un token in $o$ *più* dei token extra $L$, violando la proper completion.
 
 ---
 

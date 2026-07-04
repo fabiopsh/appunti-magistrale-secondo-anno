@@ -62,7 +62,13 @@ L'idea per raffinare la misura: invece di fermarsi al primo problema, si **conti
 >
 > $$\text{fitness}(\sigma, N) = \frac{1}{2}\left(1 - \frac{m}{c}\right) + \frac{1}{2}\left(1 - \frac{r}{p}\right)$$
 >
-> Le due metà sono **pesate ugualmente** e misurano due difetti distinti: $m/c$ è la proporzione di consumi "forzati" (mancava il token); $r/p$ è la proporzione di produzioni "sprecate" (token che restano inutilizzati). Il caso **ideale** è $m = r = 0$, che dà fitness $= 1$.
+> Le due metà sono **pesate ugualmente** e misurano due difetti distinti:
+>
+> $$\frac{m}{c} = \text{proporzione di consumi "forzati" (mancava il token)}$$
+>
+> $$\frac{r}{p} = \text{proporzione di produzioni "sprecate" (token che restano inutilizzati)}$$
+>
+> Il caso **ideale** è $m = r = 0$, che dà fitness $= 1$.
 
 ### Esempio: nessun token mancante né residuo
 
@@ -82,7 +88,17 @@ La stessa formula si estende a un log completo sommando i contatori di tutte le 
 
 $$\text{fitness}(L,N) = \frac{1}{2}\left(1 - \frac{\sum_{\sigma \in L} L(\sigma) \cdot m_{N,\sigma}}{\sum_{\sigma \in L} L(\sigma) \cdot c_{N,\sigma}}\right) + \frac{1}{2}\left(1 - \frac{\sum_{\sigma \in L} L(\sigma) \cdot r_{N,\sigma}}{\sum_{\sigma \in L} L(\sigma) \cdot p_{N,\sigma}}\right)$$
 
-dove $L(\sigma)$ è quante volte la trace $\sigma$ compare nel log. Su questa base, i quattro modelli dell'esempio iniziale si separano finalmente in modo sensato: $\text{fitness}(N_1) = 1$, $\text{fitness}(N_2) = 0.9504$, $\text{fitness}(N_3) = 0.8797$, $\text{fitness}(N_4) = 1$ — il flower model $N_4$ resta (giustamente) fuori discussione come "buon modello" per altri motivi (la sua precision è pessima), ma qui vediamo che la fitness da sola non basta a giudicare la qualità complessiva.
+dove $L(\sigma)$ è quante volte la trace $\sigma$ compare nel log. Su questa base, i quattro modelli dell'esempio iniziale si separano finalmente in modo sensato:
+
+$$\text{fitness}(N_1) = 1$$
+
+$$\text{fitness}(N_2) = 0.9504$$
+
+$$\text{fitness}(N_3) = 0.8797$$
+
+$$\text{fitness}(N_4) = 1$$
+
+Il flower model $N_4$ resta (giustamente) fuori discussione come "buon modello" per altri motivi (la sua precision è pessima), ma qui vediamo che la fitness da sola non basta a giudicare la qualità complessiva.
 
 ---
 

@@ -195,7 +195,15 @@ Quest'ultimo punto — l'ordinamento tra i task — merita un formalismo, perch�
 > [!example] Precedenza ed execution trace
 >
 > Prendiamo l'insieme di task $S = \{a, b, c, d, e, f\}$ con la relazione di precedenza:
-> $$a \prec b \prec d \prec f \qquad a \prec c \prec e \prec f \qquad c \prec d$$
+>
+> $$
+> \begin{aligned}
+> a &\prec b \prec d \prec f \\[4pt]
+> a &\prec c \prec e \prec f \\[4pt]
+> c &\prec d
+> \end{aligned}
+> $$
+>
 > che si legge come il grafo di precedenza:
 > ```mermaid
 > flowchart LR

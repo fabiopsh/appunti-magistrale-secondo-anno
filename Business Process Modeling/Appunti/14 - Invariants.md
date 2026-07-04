@@ -67,7 +67,11 @@ Il motivo per cui gli S-invariant sono utili è un solo teorema, semplice ma pot
 > $$I \cdot M = I \cdot M_0$$
 > Cioè la **somma pesata dei token è costante** durante tutta l'esecuzione.
 >
-> *Dimostrazione.* Se $M \in [M_0\rangle$, c'è $\sigma$ con $M_0 \xrightarrow{\sigma} M$. Per la marking equation ([[11 - Net Matrices]]) $M = M_0 + \mathbf{N}\cdot\vec{\sigma}$. Allora $I \cdot M = I \cdot M_0 + I \cdot \mathbf{N} \cdot \vec{\sigma} = I \cdot M_0 + \mathbf{0} \cdot \vec{\sigma} = I \cdot M_0$, perché $I \cdot \mathbf{N} = \mathbf{0}$. $\blacksquare$
+> *Dimostrazione.* Se $M \in [M_0\rangle$, c'è $\sigma$ con $M_0 \xrightarrow{\sigma} M$. Per la marking equation ([[11 - Net Matrices]]):
+> $$M = M_0 + \mathbf{N}\cdot\vec{\sigma}$$
+> Allora, moltiplicando entrambi i membri per $I$:
+> $$I \cdot M = I \cdot M_0 + I \cdot \mathbf{N} \cdot \vec{\sigma} = I \cdot M_0 + \mathbf{0} \cdot \vec{\sigma} = I \cdot M_0$$
+> perché $I \cdot \mathbf{N} = \mathbf{0}$. $\blacksquare$
 
 Vediamolo su un esempio concreto — il modello di due semafori — che mostra anche come **combinare** più invarianti:
 
@@ -86,7 +90,11 @@ Dalla proprietà fondamentale discendono tre usi pratici. Prima serve una classi
 
 > [!theorem] 1) Boundedness (condizione sufficiente)
 >
-> Se la rete ha un S-invariant **positive**, allora è **bounded**. Anzi, ogni place è limitato esplicitamente: da $I(p)\,M(p) \le I\cdot M = I\cdot M_0$ segue $M(p) \le (I \cdot M_0)/I(p)$, un limite **indipendente** dalla marcatura raggiungibile. Basta dunque *esibire* un S-invariant positive per certificare la boundedness — senza esplorare gli stati.
+> Se la rete ha un S-invariant **positive**, allora è **bounded**. Anzi, ogni place è limitato esplicitamente: da
+> $$I(p)\,M(p) \le I\cdot M = I\cdot M_0$$
+> segue
+> $$M(p) \le \frac{I \cdot M_0}{I(p)}$$
+> un limite **indipendente** dalla marcatura raggiungibile. Basta dunque *esibire* un S-invariant positive per certificare la boundedness — senza esplorare gli stati.
 
 > [!theorem] 2) Disprovare la liveness
 >
@@ -118,7 +126,10 @@ Mentre un S-invariant è un peso *sui place* con significato "valore conservato"
 >
 > Sia $M \xrightarrow{\sigma} M'$. Il Parikh vector $\vec{\sigma}$ è un T-invariant **se e solo se** $M' = M$.
 >
-> In parole: un T-invariant è **un insieme di scatti (con molteplicità) che riporta la rete esattamente alla marcatura di partenza**. La dimostrazione è immediata dalla marking equation: $M' = M + \mathbf{N}\cdot\vec{\sigma}$, quindi $M' = M \iff \mathbf{N}\cdot\vec{\sigma} = \mathbf{0}$.
+> In parole: un T-invariant è **un insieme di scatti (con molteplicità) che riporta la rete esattamente alla marcatura di partenza**. La dimostrazione è immediata dalla marking equation:
+> $$M' = M + \mathbf{N}\cdot\vec{\sigma}$$
+> quindi
+> $$M' = M \iff \mathbf{N}\cdot\vec{\sigma} = \mathbf{0}$$
 
 ![Rete persons/bikes/riders: i place persons (1 token) e bikes (3 token) alimentano la transizione take, che produce un token in riders; leave riporta i token in persons e bikes. Il T-invariant è [1 1]: eseguire take una volta e leave una volta riporta alla marcatura iniziale](assets/14-invariants_p134_t-invariant.png)
 *Fig. — Un T-invariant facile da trovare. Nella rete "noleggio bici", `take` (persona+bici → rider) e `leave` (rider → persona+bici) sono l'una l'inversa dell'altra: il T-invariant $J = [1,1]$ dice che **eseguendo `take` una volta e `leave` una volta si torna allo stato di partenza**. L'ordine non conta (il Parikh vector lo dimentica).*
@@ -129,7 +140,9 @@ Il risultato chiave lega T-invariant, boundedness e liveness, e usa il **princip
 
 > [!theorem] Bounded + live ⟹ positive T-invariant
 >
-> Se un sistema **bounded** ha una sequenza infinita di scatti (cosa garantita dalla liveness), allora — poiché gli stati raggiungibili sono finiti — per il pigeonhole una marcatura $M_i$ si ripete: $M_i \xrightarrow{\sigma'} M_j = M_i$. Il Parikh vector di $\sigma'$ è un T-invariant (*reproduction lemma*). Con la liveness si può fare in modo che coinvolga *tutte* le transizioni, ottenendo un T-invariant **positive**.
+> Se un sistema **bounded** ha una sequenza infinita di scatti (cosa garantita dalla liveness), allora — poiché gli stati raggiungibili sono finiti — per il pigeonhole una marcatura $M_i$ si ripete:
+> $$M_i \xrightarrow{\sigma'} M_j = M_i$$
+> Il Parikh vector di $\sigma'$ è un T-invariant (*reproduction lemma*). Con la liveness si può fare in modo che coinvolga *tutte* le transizioni, ottenendo un T-invariant **positive**.
 
 Per contrapposizione si ricavano test utili:
 

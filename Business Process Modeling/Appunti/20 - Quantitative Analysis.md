@@ -94,7 +94,8 @@ Si analizzano quattro **pattern di flusso** ricorrenti, componendoli via via su 
 
 > [!theorem] Sequenza
 >
-> Il cycle time di un frammento puramente sequenziale è la **somma** dei cycle time delle attività: $\;CT = \sum_{i=1}^n CT_i$.
+> Il cycle time di un frammento puramente sequenziale è la **somma** dei cycle time delle attività:
+> $$CT = \sum_{i=1}^n CT_i$$
 
 ![Due attività A (10) e B (20) in sequenza tra un cerchio iniziale e uno finale: CT = CTA + CTB = 10+20 = 30](assets/20-quantitative_p30_sequence.png)
 *Fig. — Sequenza: $CT = CT_A + CT_B = 10+20=30$. Ovvio, ma è il mattone su cui si costruiscono gli altri pattern.*
@@ -109,7 +110,8 @@ Con uno XOR-split/join il processo segue **un solo** ramo per caso, ma rami dive
 
 > [!theorem] XOR-block
 >
-> Il cycle time di uno **XOR-block** (il frammento fra uno XOR-split e il corrispondente join) è la **media pesata** dei cycle time dei rami: $\;CT = \sum_{i=1}^n p_i \cdot CT_i$.
+> Il cycle time di uno **XOR-block** (il frammento fra uno XOR-split e il corrispondente join) è la **media pesata** dei cycle time dei rami:
+> $$CT = \sum_{i=1}^n p_i \cdot CT_i$$
 
 ![Cammini alternativi: A(10) seguito da uno XOR-split verso B(20) e C(15), che confluiscono in uno XOR-join; se B è preso nel 90% dei casi la media è vicina a 30](assets/20-quantitative_p35_alternative-paths.png)
 *Fig. — Se **B** ($CT_B=20$) è preso nel 90% dei casi e **C** ($CT_C=15$) nel 10%, la media pesata è $0.9\cdot20+0.1\cdot15=19.5$, vicina a 30 (=$CT_A+CT_B$) proprio perché il ramo lento è quello più frequente.*
@@ -120,7 +122,8 @@ Con un AND-split i rami partono **insieme**; il caso prosegue solo quando **tutt
 
 > [!theorem] AND-block
 >
-> Il cycle time di un **AND-block** è il cycle time del ramo **più lento**: $\;CT = \max_i \{CT_i\}$.
+> Il cycle time di un **AND-block** è il cycle time del ramo **più lento**:
+> $$CT = \max_i \{CT_i\}$$
 
 ![Cammini paralleli: A(10) seguito da un AND-split verso B(20) e C(15) eseguiti in parallelo, che confluiscono in un AND-join; CT = 10 + max{20,15} = 30](assets/20-quantitative_p41_parallel-paths.png)
 *Fig. — $CT = CT_A + \max\{CT_B,CT_C\} = 10+\max\{20,15\}=30$: **non** $10+20+15=45$, perché B e C avvengono **contemporaneamente**, non uno dopo l'altro.*
@@ -150,7 +153,8 @@ Il ragionamento è lo stesso della [[14 - Invariants|serie geometrica]]: $P$ vie
 > Se invece $P$ può essere **saltato del tutto** (eseguito 0 volte con probabilità $1-r$, e così via):
 > $$CT = \frac{r \cdot CT_P}{1-r}$$
 >
-> *Intuizione:* è esattamente il caso "1 o più volte" **meno** una singola esecuzione di $P$ già "scontata": $\frac{CT_P}{1-r} - CT_P = \left(1-(1-r)\right)\cdot\frac{CT_P}{1-r} = \frac{r\cdot CT_P}{1-r}$.
+> *Intuizione:* è esattamente il caso "1 o più volte" **meno** una singola esecuzione di $P$ già "scontata":
+> $$\frac{CT_P}{1-r} - CT_P = \left(1-(1-r)\right)\cdot\frac{CT_P}{1-r} = \frac{r\cdot CT_P}{1-r}$$
 
 ---
 
@@ -169,7 +173,8 @@ Il cycle time da solo non dice **dove** si nasconde il tempo perso. Separarlo in
 >
 > Il **theoretical cycle time (TCT)** si calcola con le **stesse formule** del CT, ma usando i **processing time** al posto dei cycle time — è il tempo che il processo impiegherebbe se non ci fosse **mai** attesa.
 >
-> La **Cycle Time Efficiency**: $\;CTE = \dfrac{TCT}{CT}$.
+> La **Cycle Time Efficiency**:
+> $$CTE = \frac{TCT}{CT}$$
 >
 > - $CTE$ vicino a $1$: poco margine di miglioramento (a meno di cambiamenti radicali del processo).
 > - $CTE$ vicino a $0$: **molto** margine, riducendo il waiting time.
@@ -184,7 +189,9 @@ Un secondo strumento, indipendente dalla struttura del processo, lega il cycle t
 > [!theorem] Little's law
 >
 > In un sistema **stabile** (il numero di casi attivi non cresce all'infinito):
-> $$WIP = \lambda \cdot CT \qquad\Longleftrightarrow\qquad CT = \frac{WIP}{\lambda}$$
+> $$WIP = \lambda \cdot CT$$
+> equivalentemente:
+> $$CT = \frac{WIP}{\lambda}$$
 >
 > Formulata da John Little nel 1954 (dimostrata nel 1961), è universale: non serve sapere **nulla** della struttura interna del processo, bastano due grandezze **osservabili dall'esterno** (contare i casi attivi, contare gli arrivi).
 

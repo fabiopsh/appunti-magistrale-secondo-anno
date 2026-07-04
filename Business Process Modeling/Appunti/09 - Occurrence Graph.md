@@ -75,7 +75,9 @@ Una domanda cruciale per l'analisi: esiste un limite al numero di token che un p
 > - Un place è **safe** se è **1-bounded** (al più un token); una rete è safe se tutti i suoi place lo sono.
 > - Un place è **bounded** se è k-bounded **per qualche** $k$; una rete è **bounded** se tutti i place lo sono, **unbounded** altrimenti (esiste un place in cui può comparire un numero arbitrario di token).
 
-Formalmente, una rete è bounded se $\;\exists k \in \mathbb{N}.\; \forall M \in [M_0\rangle.\; \forall p \in P.\; M(p) \le k$.
+Formalmente, una rete è bounded se:
+
+$$\exists k \in \mathbb{N}.\; \forall M \in [M_0\rangle.\; \forall p \in P.\; M(p) \le k$$
 
 ### Il legame con l'occurrence graph
 
@@ -85,8 +87,15 @@ C'è un teorema semplice ma potentissimo che collega una proprietà del *comport
 >
 > Una rete è **bounded** se e solo se il suo occurrence graph è **finito**.
 >
-> *($\Rightarrow$) Bounded implica finito.* Se è k-bounded, ogni place ha al più $k$ token; con $n$ place ci sono al più $(k+1)^n$ marcature possibili, quindi un numero finito di nodi.
-> *($\Leftarrow$) Finito implica bounded.* Se il grafo è finito, per ogni nodo $M$ prendiamo $k_M$ = massimo numero di token in uno stesso place; sia $k = \max\{k_M\}$ (esiste perché i nodi sono finiti). Allora la rete è k-bounded. $\blacksquare$
+> *($\Rightarrow$) Bounded implica finito.*
+> Se è k-bounded, ogni place ha al più $k$ token; con $n$ place ci sono al più $(k+1)^n$ marcature possibili, quindi un numero finito di nodi.
+>
+> *($\Leftarrow$) Finito implica bounded.*
+> Se il grafo è finito, per ogni nodo $M$ prendiamo $k_M$ = massimo numero di token in uno stesso place.
+>
+> $$k = \max\{k_M\}$$
+>
+> Questo massimo esiste perché i nodi sono finiti. Allora la rete è k-bounded. $\blacksquare$
 
 Come conseguenza immediata: **una rete è unbounded se e solo se il suo reachability graph è infinito**. Questo ci dà un metodo per rilevare l'unboundedness — ma anche un problema: se il grafo è infinito, l'algoritmo di prima **non termina**. Serve un'approssimazione finita.
 
@@ -108,7 +117,17 @@ L'idea per scoprire i place illimitati sfrutta la **monotonicità** dei Petri ne
 > $$M \xrightarrow{\;\ast\;} M+L \xrightarrow{\;\ast\;} M+2L \xrightarrow{\;\ast\;} \cdots \xrightarrow{\;\ast\;} M+nL$$
 > Quindi **ogni place $p$ con $L(p) > 0$ è unbounded**: nell'extended bag lo segniamo con $\omega$ al posto del suo valore.
 
-Le operazioni sugli extended bag estendono quelle sui multiset trattando $\omega$ come "assorbente": $\omega + n = \omega$, $\omega - n = \omega$, e $\omega$ è $\ge$ di qualsiasi valore finito. L'algoritmo del coverability graph è come quello del reachability graph, ma quando crea una nuova marcatura $B'$ controlla se lungo il cammino esiste un antenato $B'' \subset B'$: per ogni place dove $B''(p) < B'(p)$, mette $\omega$.
+Le operazioni sugli extended bag estendono quelle sui multiset trattando $\omega$ come "assorbente":
+
+$$
+\begin{aligned}
+\omega + n &= \omega \\
+\omega - n &= \omega \\
+\omega &\ge n \quad \text{per ogni } n \text{ finito}
+\end{aligned}
+$$
+
+L'algoritmo del coverability graph è come quello del reachability graph, ma quando crea una nuova marcatura $B'$ controlla se lungo il cammino esiste un antenato $B'' \subset B'$: per ogni place dove $B''(p) < B'(p)$, mette $\omega$.
 
 ![Esempio: una rete con place i, p2, p3, o e transizioni t1, t2, t3 in cui t3 produce un token in o e ne rimette uno in p2 (loop), causando l'accumulo illimitato di token in o (marcato ∞). Sotto, il coverability graph: i →t1→ p2 →t2→ p3 →t3→ p2+∞o →t2→ p3+∞o, dove ∞o indica che il place o è unbounded](assets/09-occurrence_p89_coverability.png)
 *Fig. — Coverability graph. La rete ha un ciclo che a ogni giro deposita un token in `o` senza mai consumarlo: `o` è **unbounded**, marcato $\infty$. Il grafo resta **finito** grazie a $\omega$: invece di enumerare `o, 2o, 3o, ...` (infiniti nodi) si collassa tutto in `∞o`.*

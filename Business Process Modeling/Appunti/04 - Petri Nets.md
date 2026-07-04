@@ -57,8 +57,14 @@ I nodi sono collegati da **archi** orientati. La regola fondamentale è che un a
 > [!definition] Arc
 >
 > Un **arc** rappresenta una **dipendenza**, e ha due sole forme possibili:
-> - **da un place $p$ a una transition $t$** ($p \to t$): significa che, per poter scattare, $t$ ha bisogno di un token in $p$; quando $t$ scatta, quel token viene **consumato**. Il place è quindi una *precondizione* dell'evento.
-> - **da una transition $t$ a un place $p$** ($t \to p$): significa che lo scatto di $t$ **produce** un token in $p$. Il place è quindi un *effetto* dell'evento.
+>
+> - **da un place a una transition**:
+> $$p \to t$$
+> significa che, per poter scattare, $t$ ha bisogno di un token in $p$; quando $t$ scatta, quel token viene **consumato**. Il place è quindi una *precondizione* dell'evento.
+>
+> - **da una transition a un place**:
+> $$t \to p$$
+> significa che lo scatto di $t$ **produce** un token in $p$. Il place è quindi un *effetto* dell'evento.
 
 > [!warning] Archi vietati
 >
@@ -79,9 +85,14 @@ Ora che l'intuizione è chiara, possiamo scrivere la definizione precisa. Una re
 
 > [!definition] Petri net
 >
-> Una **Petri net** è una tupla $(P, T, F, M_0)$ dove:
+> Una **Petri net** è una tupla:
+> $$(P, T, F, M_0)$$
+> dove:
+>
 > - $P$ è un insieme **finito** di **place**;
-> - $T$ è un insieme **finito** di **transition**, disgiunto dai place: $P \cap T = \varnothing$ (nessun nodo è insieme place e transition);
+> - $T$ è un insieme **finito** di **transition**, disgiunto dai place:
+> $$P \cap T = \varnothing$$
+> (nessun nodo è insieme place e transition);
 > - $F \subseteq (P \times T) \cup (T \times P)$ è la **flow relation**, cioè l'insieme degli archi: ogni arco è una coppia place–transition o transition–place, mai place–place o transition–transition (è qui che si formalizza la bipartizione);
 > - $M_0$ è l'**initial marking**: la configurazione iniziale dei token, cioè quanti token stanno in ciascun place all'inizio.
 
@@ -90,12 +101,22 @@ Una volta fissata la struttura, ci serve un modo compatto per parlare del "vicin
 > [!definition] Pre-set e post-set
 >
 > Dato una transition $t$:
-> - il **pre-set** $\bullet t = \{\, p \mid (p,t) \in F \,\}$ è l'insieme degli **input place** di $t$, cioè tutti i place da cui parte una freccia verso $t$. Sono le condizioni che devono essere soddisfatte (avere un token) perché $t$ possa scattare.
-> - il **post-set** $t \bullet = \{\, p \mid (t,p) \in F \,\}$ è l'insieme degli **output place** di $t$, cioè i place in cui $t$ deposita un token quando scatta. Sono gli effetti dell'evento.
+>
+> - il **pre-set**:
+> $$\bullet t = \{\, p \mid (p,t) \in F \,\}$$
+> è l'insieme degli **input place** di $t$, cioè tutti i place da cui parte una freccia verso $t$. Sono le condizioni che devono essere soddisfatte (avere un token) perché $t$ possa scattare.
+>
+> - il **post-set**:
+> $$t \bullet = \{\, p \mid (t,p) \in F \,\}$$
+> è l'insieme degli **output place** di $t$, cioè i place in cui $t$ deposita un token quando scatta. Sono gli effetti dell'evento.
 >
 > La stessa notazione si usa per un place $p$: $\bullet p$ sono le transition che *producono* token in $p$ (da dove i token possono arrivare), e $p \bullet$ sono le transition che *consumano* token da $p$ (dove i token possono andare a finire).
 >
-> In generale, per qualunque nodo $x$: $\;\bullet x = \{ y \mid (y,x) \in F \}\;$ (i predecessori) e $\;x\bullet = \{ y \mid (x,y) \in F \}\;$ (i successori).
+> In generale, per qualunque nodo $x$:
+> $$\bullet x = \{ y \mid (y,x) \in F \}$$
+> (i predecessori) e
+> $$x\bullet = \{ y \mid (x,y) \in F \}$$
+> (i successori).
 
 Il punto da ricordare è questo: il **pre-set di una transition dice cosa le serve per scattare**, il **post-set dice cosa produce**. Con questi due insiemi possiamo enunciare la regola che governa tutta la dinamica.
 
@@ -193,8 +214,15 @@ flowchart LR
 > [!definition] Workflow net
 >
 > Un Petri net $(P, T, F)$ è un **workflow net** se soddisfa tre condizioni:
-> 1. esiste un place iniziale distinto $i \in P$ **senza archi entranti** ($\bullet i = \varnothing$): è l'unico punto d'ingresso;
-> 2. esiste un place finale distinto $o \in P$ **senza archi uscenti** ($o \bullet = \varnothing$): è l'unico punto d'uscita;
+>
+> 1. esiste un place iniziale distinto $i \in P$ **senza archi entranti**:
+> $$\bullet i = \varnothing$$
+> è l'unico punto d'ingresso;
+>
+> 2. esiste un place finale distinto $o \in P$ **senza archi uscenti**:
+> $$o \bullet = \varnothing$$
+> è l'unico punto d'uscita;
+>
 > 3. **ogni** altro place e transition si trova su almeno un **cammino da $i$ a $o$**.
 
 Ognuna delle tre condizioni ha un significato concreto in termini di processo, che vale la pena esplicitare per capire *perché* le imponiamo.

@@ -60,7 +60,13 @@ Questa costruzione dà due teoremi — nella direzione contronominale, entrambi 
 >
 > Se un free-choice system è **live e bounded**, allora è **S-coverable**.
 >
-> **Conseguenza pratica**: free-choice + **non** S-coverable $\Rightarrow$ non (live e bounded). In particolare, se $N$ è free-choice e $N^\star$ **non** è S-coverable, allora **$N$ non è sound**.
+> **Conseguenza pratica** (contronominale):
+>
+> $$\text{free-choice} \ \wedge\ \neg\,\text{S-coverable} \ \Rightarrow\ \neg(\text{live} \wedge \text{bounded})$$
+>
+> In particolare:
+>
+> $$N \text{ free-choice} \ \wedge\ N^\star \text{ non S-coverable} \ \Rightarrow\ N \text{ non è sound}$$
 
 > [!warning] Attenzione con WoPeD
 >
@@ -100,7 +106,11 @@ Il difetto duale riguarda l'ordine opposto: uno XOR-split i cui rami vengono poi
 >
 > Se $N$ è **sound** e **well-structured**, allora $N^\star$ è **S-coverable**.
 >
-> **Conseguenza pratica**: $N$ well-structured + $N^\star$ **non** S-coverable $\Rightarrow$ **$N$ non è sound**. Anche qui, come per il teorema 1, WoPeD calcola gli handle su $N^\star$ (reset implicito), non su $N$.
+> **Conseguenza pratica** (contronominale):
+>
+> $$N \text{ well-structured} \ \wedge\ N^\star \text{ non S-coverable} \ \Rightarrow\ N \text{ non è sound}$$
+>
+> Anche qui, come per il teorema 1, WoPeD calcola gli handle su $N^\star$ (reset implicito), non su $N$.
 
 ---
 
@@ -126,7 +136,9 @@ Le due varianti corrispondono ai due modi di rompere la soundness: la liveness (
 
 > [!theorem] Proprietà fondamentale
 >
-> Se $N^\star$ è **bounded** e $N$ **non ha task dead**, allora: $N^\star$ è **live** $\iff$ $N$ **non ha non-live sequence**.
+> Se $N^\star$ è **bounded** e $N$ **non ha task dead**, allora:
+>
+> $$N^\star \text{ è live} \quad\iff\quad N \text{ non ha non-live sequence}$$
 
 L'analisi è possibile solo su sistemi **bounded** (altrimenti il reachability graph non è nemmeno finito) e si visualizza colorando gli stati del RG:
 
@@ -151,7 +163,7 @@ Il difetto duale riguarda la boundedness: invece di bloccarsi, la rete potrebbe 
 
 > [!theorem] Proprietà fondamentale
 >
-> $N^\star$ è **bounded** $\iff$ $N$ **non ha** unbounded sequence.
+> $$N^\star \text{ è bounded} \quad\iff\quad N \text{ non ha unbounded sequence}$$
 
 La visualizzazione usa lo stesso schema a tre colori, ma sul **coverability graph** (CG, che rappresenta anche le marcature "infinite" con un simbolo $\omega$):
 

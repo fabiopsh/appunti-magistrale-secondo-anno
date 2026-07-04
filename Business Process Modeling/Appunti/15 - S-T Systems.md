@@ -26,8 +26,16 @@ La distinzione è sorprendentemente semplice e riguarda quanti archi hanno i nod
 
 > [!definition] S-net e T-net
 >
-> - Una rete è un **S-net** se **ogni transizione ha esattamente un input place e un output place**: $\forall t.\; |\bullet t| = 1 = |t\bullet|$. (La S viene da *Stellen*, "place" in tedesco.) Una transizione così **non può sincronizzare** (non aspetta più input) né **spezzare** (non produce più output): la sincronizzazione è **vietata**.
-> - Una rete è un **T-net** se **ogni place ha esattamente una input transition e una output transition**: $\forall p.\; |\bullet p| = 1 = |p\bullet|$. Un place così **non può essere conteso** da più transizioni: la **scelta/conflitto è vietata**. I T-net sono **concorrenti ma deterministici**.
+> - Una rete è un **S-net** se **ogni transizione ha esattamente un input place e un output place**:
+>
+> $$\forall t.\; |\bullet t| = 1 = |t\bullet|$$
+>
+> (La S viene da *Stellen*, "place" in tedesco.) Una transizione così **non può sincronizzare** (non aspetta più input) né **spezzare** (non produce più output): la sincronizzazione è **vietata**.
+> - Una rete è un **T-net** se **ogni place ha esattamente una input transition e una output transition**:
+>
+> $$\forall p.\; |\bullet p| = 1 = |p\bullet|$$
+>
+> Un place così **non può essere conteso** da più transizioni: la **scelta/conflitto è vietata**. I T-net sono **concorrenti ma deterministici**.
 
 ![Quattro reti da classificare come S-net e/o T-net: la prima è un S-net (ogni transizione 1-in-1-out) ma non T-net; la seconda è sia S-net sia T-net; la terza è un T-net ma non S-net; la quarta né l'uno né l'altro](assets/15-st-systems_p10_s-net-t-net.png)
 *Fig. — Classificare S-net e T-net. Si guarda ogni transizione (per S-net: una freccia in, una out) e ogni place (per T-net: una in, una out). Le due proprietà sono indipendenti: una rete può essere solo S, solo T, entrambe, o nessuna delle due.*
@@ -42,15 +50,23 @@ Poiché in un S-net ogni transizione toglie **esattamente un** token da un place
 
 > [!theorem] Proprietà fondamentale degli S-system
 >
-> Il **numero totale di token** è invariante. Detto $M(P) = \sum_{p \in P} M(p)$ il conteggio totale, per ogni marcatura raggiungibile $M \in [M_0\rangle$ vale $M(P) = M_0(P)$.
+> Il **numero totale di token** è invariante. Detto $M(P) = \sum_{p \in P} M(p)$ il conteggio totale, per ogni marcatura raggiungibile $M \in [M_0\rangle$ vale:
 >
-> *Perché:* ogni scatto fa $M'(P) = M(P) - |\bullet t| + |t\bullet| = M(P) - 1 + 1 = M(P)$.
+> $$M(P) = M_0(P)$$
+>
+> *Perché:* ogni scatto fa
+>
+> $$M'(P) = M(P) - |\bullet t| + |t\bullet| = M(P) - 1 + 1 = M(P)$$
 
 Da questo discendono subito diverse conseguenze, tutte immediate.
 
 > [!note] Conseguenze immediate per gli S-system
 >
-> - **Sempre bounded**: da $M(p) \le M(P) = M_0(P)$, nessun place può superare $M_0(P)$ token. Un S-system è k-bounded con $k = M_0(P)$.
+> - **Sempre bounded**: da
+>
+> $$M(p) \le M(P) = M_0(P)$$
+>
+> nessun place può superare $M_0(P)$ token. Un S-system è k-bounded con $k = M_0(P)$.
 > - **Test di raggiungibilità gratis**: se $M(P) \ne M_0(P)$, allora $M$ **non è raggiungibile**. (Es. se parto con 6 token in totale, una marcatura con 7 token è impossibile.)
 > - **S-invariant uniformi**: gli unici S-invariant di un S-net connesso sono i vettori costanti $I = [k, k, \dots, k]$ — coerente con "ogni token vale uguale, la somma si conserva".
 
@@ -58,7 +74,9 @@ E la liveness? Ha una caratterizzazione **puramente strutturale**, il primo dei 
 
 > [!theorem] Liveness degli S-system
 >
-> Un S-system $(N, M_0)$ è **live** $\iff$ $N$ è **strongly connected** e $M_0$ marca **almeno un** place ($M_0(P) \ge 1$).
+> Un S-system $(N, M_0)$ è **live** $\iff$
+>
+> $$N \text{ è strongly connected} \quad \text{e} \quad M_0(P) \ge 1$$
 >
 > *Intuizione ($\Leftarrow$):* con un token in giro e strong connectedness, per abilitare una qualsiasi transizione $t$ basta **spostare il token fino a lei** lungo un cammino (che esiste, per la strong connectedness); poiché ogni transizione dell'S-net sposta solo il token, la si può portare dove serve.
 
@@ -66,7 +84,9 @@ Combinando conservazione e strong connectedness si ottiene anche una caratterizz
 
 > [!theorem] Raggiungibilità negli S-system live
 >
-> In un S-system **live** (quindi strongly connected), una marcatura $M$ è **raggiungibile** $\iff$ $M(P) = M_0(P)$.
+> In un S-system **live** (quindi strongly connected), una marcatura $M$ è **raggiungibile** $\iff$
+>
+> $$M(P) = M_0(P)$$
 >
 > Cioè: basta contare i token. Se $M$ ha lo stesso numero totale di token di $M_0$, allora è raggiungibile (li si sposta uno per volta nei place giusti sfruttando i cammini); altrimenti no.
 
@@ -84,7 +104,9 @@ Ricordiamo che un **circuito** è un cammino ciclico $\gamma$; scriviamo $M(\gam
 
 > [!theorem] Proprietà fondamentale dei T-system
 >
-> Il **conteggio dei token di ogni circuito** è invariante: per ogni circuito $\gamma$ e ogni $M \in [M_0\rangle$, $\;M(\gamma) = M_0(\gamma)$.
+> Il **conteggio dei token di ogni circuito** è invariante: per ogni circuito $\gamma$ e ogni $M \in [M_0\rangle$:
+>
+> $$M(\gamma) = M_0(\gamma)$$
 >
 > *Perché:* prendi una transizione $t$. In un T-net, o $t$ non tocca il circuito $\gamma$ (allora non ne cambia i token), oppure lo tocca — ma allora consuma da **esattamente un** place di $\gamma$ e produce in **esattamente un** place di $\gamma$ (per la struttura 1-in-1-out dei place), quindi il conteggio resta invariato. In ogni caso $M(\gamma)$ non cambia.
 
@@ -106,7 +128,9 @@ E la liveness dei T-system? Anch'essa strutturale, ed è forse il criterio più 
 
 > [!theorem] Liveness dei T-system
 >
-> Un T-system $(N, M_0)$ è **live** $\iff$ **ogni circuito** di $N$ è **marcato** in $M_0$ (cioè $M_0(\gamma) > 0$ per ogni circuito $\gamma$).
+> Un T-system $(N, M_0)$ è **live** $\iff$ **ogni circuito** di $N$ è **marcato** in $M_0$, cioè:
+>
+> $$M_0(\gamma) > 0 \quad \text{per ogni circuito } \gamma$$
 >
 > *Intuizione ($\Rightarrow$ per assurdo):* se un circuito $\gamma$ ha zero token, per la proprietà fondamentale **resterà vuoto per sempre**; ma allora una transizione che ha un input place in $\gamma$ non riceverà mai un token da lì e non scatterà mai → è dead → non live. Viceversa, se ogni circuito ha almeno un token, si dimostra che ogni transizione può sempre essere riabilitata.
 

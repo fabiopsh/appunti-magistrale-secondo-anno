@@ -47,9 +47,17 @@ Per rendere l'interazione **esplicita** (e quindi analizzabile con i Petri net),
 > [!definition] Workflow module
 >
 > Un workflow module consiste di:
-> - un workflow net **sound** $(P, T, F)$;
-> - un insieme di **place di input** $P_I$ e archi di input $F_I \subseteq (P_I \times T)$;
-> - un insieme di **place di output** $P_O$ e archi di output $F_O \subseteq (T \times P_O)$;
+> - un workflow net **sound**:
+>
+> $$(P, T, F)$$
+>
+> - un insieme di **place di input** $P_I$ e archi di input:
+>
+> $$F_I \subseteq (P_I \times T)$$
+>
+> - un insieme di **place di output** $P_O$ e archi di output:
+>
+> $$F_O \subseteq (T \times P_O)$$
 >
 > con il vincolo che **ogni transizione ha al più un arco** verso l'interfaccia ($P_I \cup P_O$) — una transizione non può scambiare più di un messaggio alla volta.
 
@@ -86,8 +94,13 @@ La composizione di moduli compatibili non è ancora un workflow net "pulito": ma
 > [!definition] Workflow system
 >
 > Un **workflow system** è un workflow net ottenuto da $n$ workflow module **structurally compatible** (con place iniziali $i_1,\dots,i_n$ e finali $o_1,\dots,o_n$), aggiungendo:
-> - un place iniziale $i$ e una transizione $t_i$ da $i$ a **tutti** gli $i_1,\dots,i_n$ (avvia tutti i moduli in parallelo);
-> - un place finale $o$ e una transizione $t_o$ da **tutti** gli $o_1,\dots,o_n$ a $o$ (attende che tutti i moduli terminino).
+> - un place iniziale $i$ e una transizione $t_i$ da $i$ a **tutti** gli $i_1,\dots,i_n$:
+>
+> $$i \ \xrightarrow{\ t_i\ }\ i_1,\dots,i_n \qquad \text{(avvia tutti i moduli in parallelo)}$$
+>
+> - un place finale $o$ e una transizione $t_o$ da **tutti** gli $o_1,\dots,o_n$ a $o$:
+>
+> $$o_1,\dots,o_n \ \xrightarrow{\ t_o\ }\ o \qquad \text{(attende che tutti i moduli terminino)}$$
 >
 > La marcatura iniziale è un token in $i$.
 
