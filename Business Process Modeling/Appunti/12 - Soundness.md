@@ -62,6 +62,16 @@ Tradotto sui workflow net, dove "avviare un caso" = mettere un token in $i$ e "c
 > 2. **Option to complete**: da ogni marcatura raggiungibile si può arrivare a marcare $o$ — $\;\forall M \in [i\rangle.\; \exists M' \in [M\rangle.\; M'(o) \ge 1$.
 > 3. **Proper completion**: quando $o$ è marcato, non resta nessun altro token — $\;\forall M \in [i\rangle.\; M(o) \ge 1 \Rightarrow M = o$.
 
+Ogni condizione serve a **vietare uno dei difetti** visti nella figura sopra. Conviene leggerle così, abbinandole al problema che escludono:
+
+| Condizione | In parole povere | Difetto che vieta |
+|---|---|---|
+| **1. No dead task** | ogni attività, in qualche esecuzione, si può fare | task **dead** (attività inutile, mai eseguibile) |
+| **2. Option to complete** | da dovunque tu sia arrivato, la fine ($o$ marcato) resta **raggiungibile** | **livelock** / casi che non terminano più |
+| **3. Proper completion** | nell'istante in cui $o$ ha il token, la rete è **vuota** ovunque | **token/attività pendenti** dopo la fine del caso |
+
+Nota la struttura dei quantificatori, la stessa della liveness in [[10 - Liveness]]: la cond. 1 è un "$\forall t\ \exists M$" (per ogni task *esiste* un modo di eseguirla); la cond. 2 un "$\forall M\ \exists M'$" (da *ogni* marcatura *esiste* una via verso $o$); la cond. 3 un "$\forall M$" con un'implicazione (per *ogni* marcatura, *se* $o$ è marcato *allora* è l'unica cosa marcata).
+
 > [!warning] Cosa NON dice l'"option to complete"
 >
 > La condizione 2 **non** proibisce le iterazioni né impone un limite ai cicli: dice solo che da *qualunque* marcatura raggiungibile deve **essere possibile** raggiungere $o$ in un certo numero di passi. Si assume implicitamente la **fairness**: una transizione non può essere rimandata indefinitamente. Così un ciclo va bene, purché esista sempre una via d'uscita verso $o$.

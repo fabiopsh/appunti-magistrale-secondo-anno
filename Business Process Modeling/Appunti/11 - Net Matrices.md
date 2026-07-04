@@ -72,7 +72,7 @@ Per gestire *sequenze* di scatti serve un modo di sommare tutti gli effetti in u
 
 Per esempio, se $\sigma = t_3 t_5 t_3 t_4 t_2$, il Parikh vector è $\vec{\sigma} = [0, 1, 2, 1, 1]$ (zero $t_1$, un $t_2$, due $t_3$, un $t_4$, un $t_5$). **Il Parikh vector dimentica l'ordine** — ed è esattamente ciò che ci serve.
 
-Combinando matrice e Parikh vector otteniamo il risultato centrale della lezione. I passi intermedi: prima $\mathbf{N} \cdot \vec{t_j} = \vec{t_j}$ (moltiplicare la matrice per il Parikh vector di una singola transizione estrae la sua colonna); poi $M \xrightarrow{t} M'$ implica $M' = M + \mathbf{N} \cdot \vec{t}$. Per induzione si generalizza a sequenze qualsiasi.
+Combinando matrice e Parikh vector otteniamo il risultato centrale della lezione. Il legame parte da un fatto di algebra lineare: **moltiplicare la matrice $\mathbf{N}$ per il Parikh vector di una singola transizione seleziona la colonna di quella transizione**. Infatti $\vec{t}$ ha un solo $1$ (nella posizione di $t$) e zeri altrove, quindi $\mathbf{N} \cdot \vec{t}$ estrae esattamente la colonna $\vec{t}$ della matrice — cioè l'effetto di $t$. Ma allora il singolo scatto $M \xrightarrow{t} M' = M + \vec{t}$ si riscrive come $M' = M + \mathbf{N} \cdot \vec{t}$: è già la marking equation per una sequenza lunga uno. Per induzione la si estende a sequenze qualsiasi.
 
 > [!theorem] Marking equation lemma
 >

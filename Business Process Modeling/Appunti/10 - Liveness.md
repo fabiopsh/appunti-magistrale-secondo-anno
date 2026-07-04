@@ -46,16 +46,38 @@ L'aggettivo cruciale è **live**, e la sua definizione ha una struttura a due qu
 >
 > Non confondere la liveness di $t$ con la proprietà, molto più debole, $\exists M \in [M_0\rangle.\; M \xrightarrow{t}$. Quest'ultima dice solo che $t$ **non è dead** al marking iniziale (si riesce a scattarla una volta partendo da $M_0$). La liveness invece pretende che, **da qualunque punto**, si possa *ancora* riabilitarla. Una transizione può scattare all'inizio e poi morire per sempre: sarebbe non-dead ma **non** live.
 
-Le definizioni negate si ottengono per negazione dei quantificatori:
+Il modo migliore per afferrare la differenza è un esempio concreto, con marcature vere.
+
+> [!example] Una transizione che scatta e poi muore
+>
+> Prendiamo una rete lineare: $t_1$ prende il token da $p_1$ e lo mette in $p_2$, poi $t_2$ lo porta in $p_3$.
+> ```mermaid
+> flowchart LR
+>     p1(("p1 ●")) --> t1["t1"] --> p2(("p2")) --> t2["t2"] --> p3(("p3"))
+> ```
+> Partendo da $M_0 = p_1$, le marcature raggiungibili sono solo $[M_0\rangle = \{\,p_1,\ p_2,\ p_3\,\}$ (il token avanza e basta). Verifichiamo $t_1$:
+> - da $p_1$: $t_1$ è abilitata ✔;
+> - da $p_2$: per riabilitare $t_1$ servirebbe un token in $p_1$, ma da $p_2$ si va solo verso $p_3$, mai indietro ✘;
+> - da $p_3$: fine corsa, niente scatta ✘.
+>
+> Quindi $t_1$ scatta **una volta** e poi non tornerà **mai più** abilitabile: è **non-dead** (ha scattato) ma **non live** (dalla marcatura $p_2$ è ormai dead). La condizione $\forall M \exists M'$ fallisce proprio su $M = p_2$: non esiste alcun $M'$ raggiungibile da $p_2$ che riabiliti $t_1$.
+>
+> Per rendere $t_1$ **live** basterebbe chiudere un ciclo — es. una transizione da $p_3$ di nuovo verso $p_1$: allora da *qualunque* marcatura si potrebbe sempre tornare in $p_1$ e riabilitare $t_1$.
+
+Le definizioni negate si ottengono **scambiando i quantificatori** ($\forall \leftrightarrow \exists$) e negando la condizione finale.
 
 > [!note] Recap formale (transizioni)
 >
-> - $\text{Live}(t,N) \equiv \forall M \in [M_0\rangle.\; \exists M' \in [M\rangle.\; M' \xrightarrow{t}$
-> - $\text{NonLive}(t,N) \equiv \exists M \in [M_0\rangle.\; \forall M' \in [M\rangle.\; M' \not\xrightarrow{t}$
-> - $\text{Dead}(t,N) \equiv \forall M \in [M_0\rangle.\; M \not\xrightarrow{t}$ (non abilitata in nessuna marcatura raggiungibile)
-> - $\text{NonDead}(t,N) \equiv \exists M \in [M_0\rangle.\; M \xrightarrow{t}$
+> - **Live**: da *ogni* $M$ raggiungibile, *esiste* un modo di riabilitare $t$.
+> $$\text{Live}(t,N) \equiv \forall M \in [M_0\rangle.\; \exists M' \in [M\rangle.\; M' \xrightarrow{t}$$
+> - **NonLive** (negazione): *esiste* una marcatura $M$ da cui, comunque si prosegua, $t$ *non* torna mai abilitabile.
+> $$\text{NonLive}(t,N) \equiv \exists M \in [M_0\rangle.\; \forall M' \in [M\rangle.\; M' \not\xrightarrow{t}$$
+> - **Dead**: $t$ non è abilitata in *nessuna* marcatura raggiungibile (non scatta mai).
+> $$\text{Dead}(t,N) \equiv \forall M \in [M_0\rangle.\; M \not\xrightarrow{t}$$
+> - **NonDead**: $t$ è abilitata in *almeno una* marcatura (scatta almeno una volta).
+> $$\text{NonDead}(t,N) \equiv \exists M \in [M_0\rangle.\; M \xrightarrow{t}$$
 >
-> Il legame tra le due: $\text{NonLive}(t,N)$ significa esattamente che esiste una marcatura raggiungibile $M$ da cui $t$ è **dead** (cioè $t$ è dead nella rete "ripartita" da $M$). A parole: **un sistema non è live se e solo se ha una transizione che può diventare dead.**
+> Il legame chiave è tra NonLive e Dead: la $M$ che testimonia la NonLive è una marcatura **da cui in poi $t$ è dead** (come $p_2$ nell'esempio). In una frase: **un sistema non è live ⟺ ha una transizione che a un certo punto può diventare dead.**
 
 Il modo pratico di verificare la liveness è sull'**occurrence graph**:
 
