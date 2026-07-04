@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
+                "file": "Business Process Modeling/Appunti/10 - Liveness.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "07a - EPC e BPMN"
+              "title": "10 - Liveness"
             }
           }
         ]
@@ -112,12 +112,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
+                "file": "Business Process Modeling/Appunti/09 - Occurrence Graph.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Collegamenti in uscita da 07a - EPC e BPMN"
+              "title": "Collegamenti in uscita da 09 - Occurrence Graph"
             }
           },
           {
@@ -195,21 +195,30 @@
   },
   "active": "50f3f0140a47f45e",
   "lastOpenFiles": [
-    "Business Process Modeling/Appunti/06 - Orchestration e Collaboration.md",
+    "Business Process Modeling/Appunti/13 - WFnets Construction.md",
+    "Business Process Modeling/Appunti/10 - Liveness.md",
+    "Business Process Modeling/Appunti/11 - Net Matrices.md",
+    "Business Process Modeling/Appunti/12 - Soundness.md",
+    "Business Process Modeling/Appunti/09 - Occurrence Graph.md",
+    "Business Process Modeling/Appunti/assets/13-wfnets_p56_general-replacement.png",
+    "Business Process Modeling/Appunti/assets/13-wfnets_p33_car-damage.png",
+    "Business Process Modeling/Appunti/assets/13-wfnets_p15_and-block.png",
+    "Business Process Modeling/Appunti/assets/13-wfnets_p12_building-blocks.png",
+    "Business Process Modeling/Appunti/assets/12-soundness_p85_nstar.png",
+    "Business Process Modeling/Appunti/assets/12-soundness_p40_behavioural-problems.png",
+    "Business Process Modeling/Slide_Lezioni/09-occurrence-graph-2025-26.pdf",
+    "Business Process Modeling/Appunti/08 - Nets Intro.md",
+    "Business Process Modeling/Slide_Lezioni/08-nets-intro-2025-26.pdf",
     "Business Process Modeling/Appunti/07b - More BPMN.md",
-    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p87_choreography-task.png",
-    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p54_data-association.png",
-    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p37_seller-customer.png",
-    "Business Process Modeling/Appunti/assets/07b-more-bpmn_p20_event-markers.png",
     "Business Process Modeling/Appunti/07a - EPC e BPMN.md",
-    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p103_implicit-gateway.png",
-    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p112_exclusive-decision.png",
-    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p68_bpmn-vs-epc.png",
-    "Business Process Modeling/Appunti/assets/07a-epc-bpmn_p54_matching-split.png",
+    "Business Process Modeling/Appunti/assets/11-net-matrices_p74_marking-equation.png",
+    "Business Process Modeling/Appunti/assets/11-net-matrices_p42_vending-incidence.png",
+    "Business Process Modeling/Appunti/assets/10-liveness_p55_deadlock-free.png",
+    "Business Process Modeling/Appunti/assets/10-liveness_p10_liveness-illustrated.png",
+    "Business Process Modeling/Appunti/09 - Occurrence Graph.md.tmp.21108.b839cbd861e9",
+    "Business Process Modeling/Appunti/06 - Orchestration e Collaboration.md",
     "Business Process Modeling/Appunti/04 - Petri Nets.md",
     "Business Process Modeling/Appunti/05 - Process Mining.md",
-    "Business Process Modeling/Appunti/assets/06-orchestration_p46_incompatible.png",
-    "Business Process Modeling/Appunti/assets/06-orchestration_p38_choreography.png",
     "Business Process Modeling/Appunti/02 - Business Processes.md",
     "Business Process Modeling/Appunti/03 - Visual Notation.md",
     "Business Process Modeling/Appunti/02 - Business Processes.md.tmp.21108.268c4bfb3a59",
@@ -219,9 +228,6 @@
     "Business Process Modeling/Appunti",
     "Business Process Modeling/Slide_Lezioni/05-mining-2025-26.pdf",
     "Business Process Modeling/Slide_Lezioni/04-petri-2025-26.pdf",
-    "Business Process Modeling/Slide_Lezioni/03-visual-notation-2025-26.pdf",
-    "Business Process Modeling/Slide_Lezioni/02-business-processes-2025-26.pdf",
-    "README.md",
-    "Business Process Modeling/Slide_Lezioni/21-wfnets-diagnosis-2025-26.pdf"
+    "README.md"
   ]
 }
