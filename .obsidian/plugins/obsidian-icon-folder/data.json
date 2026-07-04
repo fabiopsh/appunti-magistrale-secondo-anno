@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiExperiment",
       "LiDock",
       "LiShieldQuestion",
       "LiFileVideoCamera",
-      "LiFileSliders",
-      "LiHardDrive"
+      "LiFileSliders"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -61,5 +61,6 @@
   "Business Process Modeling/Slide_Lezioni": "LiFileSliders",
   "Business Process Modeling/Appunti": "LiFileVideoCamera",
   "Business Process Modeling/Appunti/20 - Quantitative Analysis.md": "LiShieldQuestion",
-  "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md": "LiDock"
+  "Business Process Modeling/Appunti/21 - WFnets Diagnosis.md": "LiDock",
+  "Business Process Modeling/Appunti/22 - Esercizi Guidati.md": "LiExperiment"
 }
