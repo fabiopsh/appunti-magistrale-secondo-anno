@@ -20,23 +20,8 @@
               "icon": "lucide-file",
               "title": "Strategia di studio"
             }
-          },
-          {
-            "id": "897b383bdc2470fe",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": "Business Process Modeling/Appunti/03 - Visual Notation.md",
-                "bFile": "Business Process Modeling/Appunti/03 - Visual Notation.md",
-                "aRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: 03 - Visual Notation  (Working Tree)"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -208,7 +193,7 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "897b383bdc2470fe",
+  "active": "658f5e5a2ab0f6a3",
   "lastOpenFiles": [
     "Business Process Modeling/Appunti/04 - Petri Nets.md",
     "Latex/preamble.tex",
