@@ -11,14 +11,12 @@
             "id": "50f3f0140a47f45e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "pdf",
               "state": {
-                "file": "Business Process Modeling/Strategia di studio.md",
-                "mode": "preview",
-                "source": false
+                "file": "Latex/main.pdf"
               },
-              "icon": "lucide-file",
-              "title": "Strategia di studio"
+              "icon": "lucide-file-text",
+              "title": "main"
             }
           }
         ]
@@ -193,8 +191,9 @@
       "omnisearch:Omnisearch": false
     }
   },
-  "active": "658f5e5a2ab0f6a3",
+  "active": "50f3f0140a47f45e",
   "lastOpenFiles": [
+    "Business Process Modeling/Strategia di studio.md",
     "Business Process Modeling/Appunti/04 - Petri Nets.md",
     "Latex/preamble.tex",
     "Latex/main.tex",
@@ -218,7 +217,6 @@
     "Latex/chapters/17aux.tex",
     "Business Process Modeling/Appunti/03 - Visual Notation.md",
     "Business Process Modeling/Appunti/02 - Business Processes.md",
-    "Business Process Modeling/Strategia di studio.md",
     "Business Process Modeling/Raccolta risposte esami passati.md",
     "Business Process Modeling/Informazioni sul corso.md",
     "Business Process Modeling/Raccolta domande esami passati.md",
