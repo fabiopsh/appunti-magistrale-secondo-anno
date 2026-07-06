@@ -17,7 +17,7 @@ Questa lezione introduce il **vocabolario di base** del corso. Non c'è ancora n
 
 ---
 
-## Orientamento al processo (process orientation)
+## Orientamento al processo
 
 ### Dai prodotti al lavoro
 
@@ -59,7 +59,7 @@ A questo si aggiunge un costo umano. In una società complessa, un'iper-speciali
 
 ---
 
-## Strutture organizzative (organizational structures)
+## Strutture organizzative
 
 Se ragioniamo per processi, dobbiamo chiederci come sono organizzate le persone che li eseguono. Una **struttura organizzativa** stabilisce come lavoro, autorità e responsabilità vengono ripartiti tra il personale. Il vincolo di fondo è che ogni **resource** sa svolgere solo certi task, e ogni task può essere svolto solo da certe risorse: un cassiere di banca, per esempio, non può concedere un mutuo. Descrivere un processo significa allora indicare tre cose — *quali* task servono, in *quale ordine*, e *chi* li esegue — e il modo in cui si assegnano i work item alle risorse incide moltissimo su efficienza ed efficacia.
 
@@ -69,7 +69,7 @@ Le risorse si classificano secondo due criteri complementari: le **functions** (
 
 Nella struttura a **rete**, attori autonomi collaborano per fornire prodotti o servizi senza una gerarchia. Le relazioni sono orizzontali: aggregazioni ad-hoc, outsourcing, ingresso e uscita dinamici dei membri dal team. È la forma più flessibile e meno rigida.
 
-### Struttura gerarchica (hierarchical)
+### Struttura gerarchica
 
 La struttura **gerarchica** è organizzata come un **albero**. Poiché la nozione di albero tornerà spesso nel corso, conviene richiamarla con precisione.
 
@@ -90,7 +90,7 @@ La struttura a **matrice** è quella che serve davvero all'orientamento al proce
 
 ---
 
-## Attori (actors): principal e contractor
+## Attori : principal e contractor
 
 Passiamo da come è organizzato il lavoro a chi lo commissiona e chi lo esegue. Nella pratica, gran parte del lavoro di una persona le viene **assegnato o dato in outsourcing** da qualcun altro: i suoi **principal** (che possono essere individui, dipartimenti o intere aziende). I principal si presentano in due forme, il **boss** e il **customer**, spesso collegate tra loro: un boss assegna un compito che a sua volta serve a soddisfare un customer. Chi riceve il compito è il **contractor** (e può essere non solo una persona, ma anche una macchina o un software).
 

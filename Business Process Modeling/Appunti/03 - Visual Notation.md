@@ -23,7 +23,7 @@ Prima di disegnare qualcosa, dobbiamo essere precisi su *cosa* stiamo disegnando
 
 > [!definition] Business process (Weske)
 >
-> Un **insieme di attività** eseguite in coordinamento in un ambiente organizzativo e tecnico, che realizzano **congiuntamente un obiettivo di business**. Ogni business process è **messo in atto (enacted) da una singola organizzazione**, ma può interagire con processi di altre organizzazioni.
+> Un **insieme di attività** eseguite in coordinamento in un ambiente organizzativo e tecnico, che realizzano **congiuntamente un obiettivo di business**. Ogni business process è **messo in atto  da una singola organizzazione**, ma può interagire con processi di altre organizzazioni.
 
 Da questa definizione nascono due punti di vista che ci accompagneranno per tutto il corso, e che è bene distinguere fin da subito. Quando guardiamo *dentro* una singola organizzazione, e ci interessa come essa coordina le proprie attività, parliamo di **orchestration**. Quando invece guardiamo *l'interazione* tra processi di organizzazioni diverse, parliamo di **collaboration / choreography**. La stessa realtà, insomma, si osserva o dall'interno di un attore o dallo spazio tra più attori.
 
