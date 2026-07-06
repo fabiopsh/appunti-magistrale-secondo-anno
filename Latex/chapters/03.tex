@@ -1,0 +1,207 @@
+\chapter{\texorpdfstring{Visual Notation}{Visual Notation}}
+\label{ch:03}
+\lecturemeta{Lezione 03 \quad\textbullet\quad 2026-07-03 \quad\textbullet\quad Roberto Bruni}{Weske, \emph{Business Process Management}, Ch.3 · van der Aalst, \emph{Workflow Management}, Sect.1.3}
+
+Nella lezione precedente (\hyperref[ch:02]{02 — Business Processes}) abbiamo chiuso dicendo che i processi si rappresentano bene con \textbf{nodi e frecce}. Questa lezione mette alla prova quell'idea e ne scopre il limite: un grafo "ingenuo" di soli nodi e frecce è \textbf{ambiguo}, perché non sa distinguere il "fare più cose insieme" dal "scegliere una cosa sola". Vedremo prima \emph{perché} nasce l'ambiguità, poi come la si risolve arricchendo il grafo con simboli precisi (i \textbf{gateway}), e infine daremo un primo sguardo ai tre standard che studieremo nel corso: \textbf{BPMN, EPC e Workflow nets}.
+
+\section{\texorpdfstring{Cosa modelliamo: processo, modello, istanza}{Cosa modelliamo: processo, modello, istanza}}
+
+Prima di disegnare qualcosa, dobbiamo essere precisi su \emph{cosa} stiamo disegnando. Partiamo dalla definizione di riferimento.
+
+\begin{boxdefinition}{Business process (Weske)}
+Un \textbf{insieme di attività} eseguite in coordinamento in un ambiente organizzativo e tecnico, che realizzano \textbf{congiuntamente un obiettivo di business}. Ogni business process è \textbf{messo in atto (enacted) da una singola organizzazione}, ma può interagire con processi di altre organizzazioni.
+\end{boxdefinition}
+
+Da questa definizione nascono due punti di vista che ci accompagneranno per tutto il corso, e che è bene distinguere fin da subito. Quando guardiamo \emph{dentro} una singola organizzazione, e ci interessa come essa coordina le proprie attività, parliamo di \textbf{orchestration}. Quando invece guardiamo \emph{l'interazione} tra processi di organizzazioni diverse, parliamo di \textbf{collaboration / choreography}. La stessa realtà, insomma, si osserva o dall'interno di un attore o dallo spazio tra più attori.
+
+C'è poi una distinzione ancora più fondamentale, che è la stessa che in programmazione separa una \emph{classe} da un \emph{oggetto}: quella tra lo schema astratto e il caso concreto.
+
+\begin{boxdefinition}{Model vs Instance (Weske)}
+\begin{itemize}
+\item Un \textbf{business process model} è un insieme di \textbf{activity model} con i \textbf{vincoli di esecuzione} tra di essi. È lo schema astratto, il \emph{blueprint} (progetto) del processo.
+\item Una \textbf{business process instance} è un \textbf{caso concreto} nell'operatività dell'azienda, composto da \textbf{activity instance}. È una singola esecuzione reale di quello schema.
+\end{itemize}
+\end{boxdefinition}
+
+Il rapporto tra i due è di uno-a-molti: un solo model fa da blueprint per un'infinità di istanze. Così come un activity model (per esempio "Enter credit request") genera molte activity instance concrete ("Enter credit request per r017, Miller, 10000", "per r018, Brown, 15500", e così via), allo stesso modo un process model genera molte process instance, una per ciascun caso trattato.
+
+\begin{boxnote}{Una convenzione che useremo sempre}
+Quando non c'è rischio di confusione, diremo semplicemente "\textbf{activity}" per intendere sia l'activity model (il task astratto) sia l'activity instance (la sua esecuzione). Allo stesso modo "\textbf{process}" indicherà indifferentemente il model o l'istanza. Il contesto chiarisce di quale dei due si parla.
+\end{boxnote}
+
+\section{\texorpdfstring{Le domande che guidano la modellazione}{Le domande che guidano la modellazione}}
+
+Modellare un processo, in pratica, significa rispondere a una manciata di domande ricorrenti. Ognuna mette a fuoco una diversa dimensione del processo, e insieme coprono tutto ciò che serve descrivere.
+
+\begin{itemize}
+\item \textbf{Who is the customer?} Ogni processo \textbf{inizia e finisce con un customer}, che richiede un prodotto e ne riceve il risultato. Attenzione: il customer può anche essere \textbf{interno} all'azienda, per esempio un altro dipartimento.
+\item \textbf{Who is the owner?} A ogni processo è assegnato un \textbf{process owner}, responsabile del fatto che le istanze si svolgano correttamente, che gli obiettivi di business siano raggiunti e che le performance siano misurate e migliorate.
+\item \textbf{Which tasks?} Sono l'insieme di attività necessarie a raggiungere l'obiettivo. Possono essere descritte a \textbf{diversi livelli di granularità}: ogni unità di lavoro è vista come un'azione atomica, eventualmente con una durata e un costo.
+\item \textbf{Which dependencies?} Sono i \textbf{vincoli di esecuzione} che ordinano le attività in modo da usare bene le risorse. Riguardano la distribuzione nel \textbf{tempo}.
+\item \textbf{Which roles?} Ogni task può richiedere abilità specifiche, cioè \textbf{ruoli}. Riguardano la distribuzione nello \textbf{spazio} (chi, dove).
+\end{itemize}
+
+Rispondere a queste domande vuol dire passare da \textbf{descrizioni testuali informali} (i requisiti scritti a parole) a una \textbf{notazione grafica} precisa. Il guadagno è nella comunicazione: un modello esplicito e disegnato permette a stakeholder diversi di parlarsi con efficienza, raffinare i processi e migliorarli. È proprio per organizzare tutto questo che esiste una disciplina dedicata.
+
+\begin{boxdefinition}{BPM e BPMS (Weske)}
+\begin{itemize}
+\item Il \textbf{Business Process Management (BPM)} è l'insieme di concetti, metodi e tecniche per supportare \textbf{design, amministrazione, configurazione, enactment e analisi} dei processi. Presuppone una rappresentazione \textbf{esplicita} di processi, task e vincoli.
+\item Un \textbf{Business Process Management System (BPMS)} è un sistema software generico, \textbf{guidato da rappresentazioni esplicite} del processo, che coordina l'enactment delle sue istanze. I modelli sono l'\textbf{artefatto principale} con cui si implementano i processi — implementazione che può avvenire tramite regole organizzative oppure, appunto, tramite un software.
+\end{itemize}
+\end{boxdefinition}
+
+\section{\texorpdfstring{Tre livelli di rappresentazione}{Tre livelli di rappresentazione}}
+
+Uno stesso processo può essere rappresentato a tre livelli diversi, a seconda di \emph{chi} deve leggerlo. Non sono alternative in competizione, ma tre viste della stessa cosa.
+
+\begingroup\small
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Livello} & \textbf{Per chi} & \textbf{Esempi} \\
+\midrule
+\textbf{Visual representations} (diagrammi, chart) & \emph{what we see} — gli umani & notazioni informali e intuitive: BPMN, EPC, BPEL \\
+\textbf{Languages} (sintassi macchina non ambigua) & \emph{what machines see} — i calcolatori & dialetti di processo, schemi XML \\
+\textbf{Models} (semantica rigorosa) & \emph{what we analyse} — gli scienziati & automi, \textbf{Petri nets}, \textbf{workflow nets} \\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+Il livello grafico e quello linguistico sono \textbf{due facce della stessa medaglia}: quando disegniamo un modello, dietro le quinte esiste una descrizione testuale equivalente che la macchina può elaborare. Un modello BPMN, per esempio, ha sempre una controparte in un file XML con estensione \texttt{.bpmn}.
+
+\begin{boxexample}{Lo stesso processo, disegnato e scritto}
+Un processo elementare \emph{Start $\rightarrow$ Run $\rightarrow$ End} corrisponde a questo frammento XML, dove ritroviamo l'evento iniziale, il task "Run", l'evento finale e i flussi che li collegano:
+
+\begin{Verbatim}[fontsize=\small]
+<bpmn:process id="Process_0pjif87">
+  <bpmn:startEvent id="StartEvent_1">
+    <bpmn:outgoing>Flow_0u05dpy</bpmn:outgoing>
+  </bpmn:startEvent>
+  <bpmn:task id="Activity_11zhm01" name="Run">
+    <bpmn:incoming>Flow_0u05dpy</bpmn:incoming>
+    <bpmn:outgoing>Flow_17t5zjm</bpmn:outgoing>
+  </bpmn:task>
+  <bpmn:sequenceFlow id="Flow_0u05dpy" sourceRef="StartEvent_1" targetRef="Activity_11zhm01"/>
+  <bpmn:endEvent id="Event_1t0u7im">
+    <bpmn:incoming>Flow_17t5zjm</bpmn:incoming>
+  </bpmn:endEvent>
+  <bpmn:sequenceFlow id="Flow_17t5zjm" sourceRef="Activity_11zhm01" targetRef="Event_1t0u7im"/>
+</bpmn:process>
+\end{Verbatim}
+\end{boxexample}
+
+Il terzo livello, quello dei \textbf{Models} (Petri nets, workflow nets), è invece ciò che ci darà una \textbf{semantica formale} su cui fare analisi automatica: è il filo che tiene insieme il resto del corso, a partire dalla lezione sui \hyperref[ch:04]{Petri net}.
+
+\section{\texorpdfstring{L'esempio guida: la richiesta di risarcimento assicurativo}{L'esempio guida: la richiesta di risarcimento assicurativo}}
+
+Tutta la lezione ruota attorno a un unico esempio concreto, un processo di \textbf{insurance claim} (una richiesta di risarcimento a un'assicurazione), semplificato in 12 passi. Conviene leggerli come una storia: arriva una richiesta, la si esamina, si decide se pagarla o rifiutarla, si gestisce l'eventuale contestazione del cliente, si chiude.
+
+\begin{enumerate}
+\item \textbf{recording} — si registra la ricezione della richiesta;
+\item \textbf{type} — si stabilisce di che tipo di richiesta si tratta;
+\item \textbf{policy} — si verifica che la polizza del cliente copra il danno;
+\item \textbf{premium} — si verifica che il premio sia in regola (pagamenti aggiornati?);
+\item \textbf{rejection?} — si decide se rifiutare o ammettere;
+\item \textbf{reject letter} — se il passo 3 \emph{oppure} il 4 danno esito negativo, si produce una lettera di rifiuto, poi si va al passo 12;
+\item \textbf{estimate} — se il 3 \emph{e} il 4 sono entrambi positivi, si invia la stima dell'importo da pagare;
+\item \textbf{reaction} — si registra la reazione del cliente;
+\item \textbf{assessment?} — si valuta l'eventuale obiezione del cliente;
+\item \textbf{revision} — se il passo 9 è negativo, si decide di rivedere il passo 7;
+\item \textbf{payment} — se il passo 9 è positivo, si paga il risarcimento;
+\item \textbf{filing} — si archivia e si chiude la pratica.
+\end{enumerate}
+
+Se colleghiamo questi task con semplici frecce di dipendenza, otteniamo un primo grafo, leggibile ma — come stiamo per vedere — insidioso:
+
+\begin{center}
+\includegraphics[width=0.74\linewidth,height=0.32\textheight,keepaspectratio]{images/mermaid/03_1.png}
+\end{center}
+
+\section{\texorpdfstring{I pattern di flusso (workflow patterns)}{I pattern di flusso (workflow patterns)}}
+
+Prima di affrontare l'ambiguità, isoliamo i \textbf{mattoni ricorrenti} con cui è costruito questo (e qualunque) processo. Sono i pattern di control-flow, e li ritroviamo un po' ovunque.
+
+\begin{itemize}
+\item \textbf{Sequence} — un task segue semplicemente l'altro: prima \texttt{1 recording}, poi \texttt{2 type}.
+\item \textbf{Parallel} — dopo un task se ne attivano più d'uno, da svolgere \emph{tutti} (è la concorrenza).
+\item \textbf{Choice / Split} — dopo un task se ne sceglie \emph{uno solo} tra più alternative.
+\item \textbf{Merge} — più rami confluiscono di nuovo in un unico task.
+\item \textbf{Iteration} — un ciclo che ripete una porzione di processo (nel nostro esempio: estimate $\rightarrow$ reaction $\rightarrow$ assessment $\rightarrow$ revision $\rightarrow$ di nuovo estimate).
+\end{itemize}
+
+I due pattern più delicati, che stanno al cuore dell'ambiguità, sono il parallelismo e la scelta. Ecco come si presentano sul nostro esempio:
+
+\begin{center}
+\includegraphics[width=0.73\linewidth,height=0.32\textheight,keepaspectratio]{images/mermaid/03_2.png}
+\end{center}
+
+\begin{center}
+\includegraphics[width=0.74\linewidth,height=0.32\textheight,keepaspectratio]{images/mermaid/03_3.png}
+\end{center}
+
+\section{\texorpdfstring{Il problema dell'ambiguità}{Il problema dell'ambiguità}}
+
+Ed eccoci al punto cruciale. Guardando i due diagrammi qui sopra ci accorgiamo di un fatto imbarazzante: \textbf{hanno la stessa forma grafica}. Sia il parallelismo (dopo il task 2 partono 3 e 4) sia la scelta (dopo il task 5 partono 6 o 7) si disegnano allo stesso modo — un nodo da cui escono due frecce. Ma il significato è opposto! Nel primo caso vanno fatti \emph{entrambi}, nel secondo \emph{uno solo}. Con soli nodi e frecce, quindi, restano aperte domande a cui il disegno non sa rispondere:
+
+\begin{itemize}
+\item Dopo il task 2, i task 3 e 4 vanno eseguiti \textbf{entrambi} (sempre), o se ne sceglie uno?
+\item Prima del task 5, bisogna aspettare che \emph{entrambi} 3 e 4 siano finiti?
+\item Dopo il task 5, i task 6 e 7 sono \textbf{alternativi} (uno solo) o possono avvenire tutti e due?
+\end{itemize}
+
+\begin{boxwarning}{Nodi e frecce non bastano}
+Un grafo di sole dipendenze è intrinsecamente ambiguo nei punti di \textbf{split} (dove il flusso si dirama) e di \textbf{join} (dove si ricongiunge): non dice se il comportamento è \textbf{AND} (tutti i rami) o \textbf{XOR} (un ramo solo). La forma grafica è identica, il significato no. Servono simboli dedicati che rendano esplicita la differenza.
+\end{boxwarning}
+
+\section{\texorpdfstring{Disambiguazione con i gateway split/join}{Disambiguazione con i gateway split/join}}
+
+La soluzione è annotare ogni punto di split e join con un \textbf{gateway} che ne dichiari la natura. In questo corso, seguendo le slide, ne usiamo due tipi, distinti anche per colore.
+
+\begin{boxdefinition}{I due gateway}
+\begin{itemize}
+\item \textbf{\texttt{+} Parallel split / join} (concorrenza, AND — in \emph{verde}): come split, attiva \textbf{tutti} i rami uscenti; come join, aspetta il completamento di \textbf{tutti} i rami entranti prima di proseguire.
+\item \textbf{\texttt{✕} Choice split / join} (scelta, XOR — in \emph{rosso}): come split, attiva \textbf{esattamente un} ramo uscente; come join, prosegue non appena \textbf{uno} dei rami entranti arriva.
+\end{itemize}
+\end{boxdefinition}
+
+Applicando questi gateway al nostro insurance claim, ogni diramazione acquista un significato preciso e il modello diventa \textbf{non ambiguo}:
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/03-visual-notation_p36_disambiguation.png}
+\caption{Il modello disambiguato. Subito dopo \texttt{2 type} un gateway \texttt{+} (verde) apre in parallelo \texttt{3 policy} e \texttt{4 premium}, che un secondo \texttt{+} ricongiunge prima di \texttt{5 rejection?}. Da lì in avanti i gateway \texttt{✕} (rossi) gestiscono le scelte mutuamente esclusive: rifiuto o stima, e poi il ciclo di revisione e la chiusura. Verde = AND (tutti i rami), rosso = XOR (un ramo solo).}
+\end{figure}
+
+Ora la lettura è univoca: i controlli su polizza e premio (3 e 4) avvengono \textbf{sempre entrambi}, perché sono racchiusi tra gateway \texttt{+}; mentre rifiuto/stima e gli esiti successivi sono \textbf{mutuamente esclusivi}, perché governati da gateway \texttt{✕}. L'ambiguità è sparita.
+
+\section{\texorpdfstring{Gli "ingredienti" di una notazione}{Gli "ingredienti" di una notazione}}
+
+Facciamo un passo indietro e chiediamoci: cosa deve saper esprimere, in generale, una notazione per processi? Progettarne una significa scegliere una forma grafica per ciascuno di un insieme fisso di concetti. Averli in mente aiuta a capire perché i vari standard fanno scelte diverse ma coprono le stesse esigenze.
+
+\begin{itemize}
+\item \textbf{start / end} — l'inizio e la fine del processo;
+\item \textbf{tasks} — le unità di lavoro;
+\item \textbf{join \& split: concurrency} — i gateway paralleli (il nostro \texttt{+});
+\item \textbf{join \& split: internal decisions} — le scelte decise \emph{dentro} il processo (il nostro \texttt{✕});
+\item \textbf{split: external decisions} — le scelte determinate da un evento \emph{esterno} (per esempio la reazione del cliente, che il processo non controlla);
+\item \textbf{links} — le dipendenze \textbf{causali e temporali} (le frecce, eventualmente di tipi diversi);
+\end{itemize}
+
+e, a un livello più avanzato, anche \textbf{responsibility} (di chi è l'intero processo o il singolo task), \textbf{information} (dati, parametri) e \textbf{platform} (binding, servizi, porte). La scelta concreta dei simboli è in fondo arbitraria, purché resti \textbf{coerente e non ambigua}: ed è esattamente ciò che i tre standard fanno, ciascuno a modo suo.
+
+\section{\texorpdfstring{Uno sguardo agli standard: BPMN, EPC, WfN}{Uno sguardo agli standard: BPMN, EPC, WfN}}
+
+Gli stessi ingredienti vengono resi con simboli diversi nelle tre notazioni che studieremo. Confrontarli fianco a fianco mostra che parlano tutti delle stesse cose, con "alfabeti" differenti.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/03-visual-notation_p49_standards.png}
+\caption{Confronto dei simboli. \textbf{BPMN} usa il cerchio per start/end, il rombo per i gateway, il rettangolo arrotondato per i task. \textbf{EPC} usa l'esagono per gli eventi di start/end, il cerchio per i connettori, il rettangolo per le funzioni. \textbf{Workflow nets} usano il cerchio per i place, il quadrato per le transizioni/task e frecce per i link — è la notazione formale dei Petri net.}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{BPMN} (Business Process Model and Notation) è lo standard industriale, ricco e intuitivo.
+\item \textbf{EPC} (Event-driven Process Chain) alterna eventi e funzioni lungo la catena.
+\item \textbf{WfN} (Workflow nets) è la variante formale dei \hyperref[ch:04]{Petri net}, quella su cui poggerà l'\textbf{analisi} rigorosa dei processi.
+\end{itemize}
+
+Il resto del corso approfondirà proprio questi formalismi, partendo dai \textbf{Petri net} come base semantica: il livello dei \emph{Models} che ci permetterà finalmente di \emph{analizzare} un processo, e non solo di disegnarlo. $\rightarrow$ \hyperref[ch:04]{04 — Petri Nets}

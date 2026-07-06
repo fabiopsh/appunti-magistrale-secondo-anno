@@ -1,0 +1,177 @@
+% ============================================================
+% Preambolo — Appunti di Business Process Modeling
+% ============================================================
+
+% --- Fonts (XeTeX/tectonic, unicode math) ---------------------------------
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{STIX Two Text}
+\setsansfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=0.9]
+\setmathfont{STIX Two Math}
+
+% --- Italian language (chapter/contents names, \today, quoting) -----------
+\usepackage{polyglossia}
+\setmainlanguage{italian}
+
+% --- Page geometry ----------------------------------------------------------
+\usepackage[a4paper,margin=2.6cm,headheight=14pt]{geometry}
+% book class defaults to \flushbottom, which stretches vertical glue between
+% paragraphs to fill every page -- with many figures/boxes this produces huge
+% random gaps. Let pages run slightly short instead.
+\raggedbottom
+
+% --- Colors -----------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{inkblue}{HTML}{1B3A6B}
+\definecolor{accentblue}{HTML}{2F5FA8}
+\definecolor{defback}{HTML}{EDF2FB}
+\definecolor{defframe}{HTML}{2F5FA8}
+\definecolor{thmback}{HTML}{F1EDFA}
+\definecolor{thmframe}{HTML}{6A4C93}
+\definecolor{exback}{HTML}{EAF7EE}
+\definecolor{exframe}{HTML}{2E8B57}
+\definecolor{noteback}{HTML}{F2F2F2}
+\definecolor{noteframe}{HTML}{6B6B6B}
+\definecolor{tipback}{HTML}{E7F6F4}
+\definecolor{tipframe}{HTML}{1E8C7C}
+\definecolor{warnback}{HTML}{FDF1E4}
+\definecolor{warnframe}{HTML}{C0722A}
+\definecolor{absback}{HTML}{EFEFF5}
+\definecolor{absframe}{HTML}{4A4A68}
+
+% --- Boxes for "callouts" ----------------------------------------------------
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{fancyvrb}
+
+\newtcolorbox{boxdefinition}[1]{%
+  enhanced, breakable, colback=defback, colframe=defframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=defframe,
+  title={Definizione — #1}}
+
+\newtcolorbox{boxtheorem}[1]{%
+  enhanced, breakable, colback=thmback, colframe=thmframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=thmframe,
+  title={Teorema — #1}}
+
+\newtcolorbox{boxexample}[1]{%
+  enhanced, breakable, colback=exback, colframe=exframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=exframe,
+  title={Esempio — #1}}
+
+\newtcolorbox{boxnote}[1]{%
+  enhanced, breakable, colback=noteback, colframe=noteframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=noteframe,
+  title={Nota — #1}}
+
+\newtcolorbox{boxtip}[1]{%
+  enhanced, breakable, colback=tipback, colframe=tipframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=tipframe,
+  title={Suggerimento — #1}}
+
+\newtcolorbox{boxwarning}[1]{%
+  enhanced, breakable, colback=warnback, colframe=warnframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=warnframe,
+  title={Attenzione — #1}}
+
+\newtcolorbox{boxabstract}[1]{%
+  enhanced, breakable, colback=absback, colframe=absframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white,
+  colbacktitle=absframe,
+  title={Quadro d'insieme — #1}}
+
+% --- Tables / figures ---------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+% keep floats inside the section they belong to
+\usepackage[section]{placeins}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,margin=1cm,skip=5pt}
+
+% --- Lists ----------------------------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% --- Math extras ------------------------------------------------------------
+\usepackage{amsthm}
+\usepackage{centernot}
+% unicode-math pre-declares these names but errors at use-time if the
+% chosen math font lacks the glyph -- force our own robust definitions.
+\let\blacksquare\relax
+\newcommand{\blacksquare}{\ensuremath{\vrule height 0.35em width 0.35em depth 0pt}}
+\let\checkmark\relax
+\newcommand{\checkmark}{\ensuremath{\mathord{✓}}}
+\let\leadsto\relax
+\newcommand{\leadsto}{\ensuremath{\mathord{↝}}}
+\let\wp\relax
+\newcommand{\wp}{\ensuremath{\mathord{℘}}}
+
+% --- Chapter / section styling ------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{inkblue}}
+  {\Large\color{accentblue}\chaptertitlename\ \thechapter}
+  {8pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{28pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{inkblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{accentblue}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\itshape\color{accentblue}}{\thesubsubsection}{0.6em}{}
+
+% --- Header / footer ----------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Lecture metadata line under chapter title --------------------------------
+\newcommand{\lecturemeta}[2]{%
+  \begingroup
+  \color{gray!70!black}\small
+  #1\\
+  \textit{Fonte: #2}
+  \endgroup
+  \bigskip\par
+}
+
+% --- Hyperref (load last) ----------------------------------------------------
+\usepackage[bookmarksnumbered,hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=accentblue,
+  citecolor=accentblue,
+  urlcolor=accentblue,
+  pdftitle={Business Process Modeling — Appunti},
+  pdfauthor={Fabio Piscitelli}
+}
+\usepackage[capitalize,noabbrev]{cleveref}
