@@ -1,0 +1,159 @@
+\chapter{\texorpdfstring{EPC e BPMN}{EPC e BPMN}}
+\label{ch:07a}
+\lecturemeta{Lezione 07a \quad\textbullet\quad 2026-07-03 \quad\textbullet\quad Roberto Bruni}{Weske, \emph{Business Process Management}, Sect.4.3, 4.7, 5.7 · Dumas et al., \emph{Fundamentals of BPM}, Ch.3-4}
+
+Questa lezione approfondisce due notazioni diagrammatiche "high-level" per i processi. La prima metà completa lo studio dell'\textbf{EPC} iniziato in \hyperref[ch:06]{06 — Orchestration e Collaboration}: le regole di buona formazione, la sua semantica operazionale (il \emph{folder-passing}) e il problema spinoso dell'OR-join. La seconda metà introduce \textbf{BPMN}, lo standard industriale de facto, con i suoi elementi di base. Il filo conduttore è sempre lo stesso: una notazione grafica deve essere \textbf{espressiva} ma anche \textbf{non ambigua}, e vedremo dove entrambe queste notazioni faticano.
+
+\section{\texorpdfstring{Parte 1 — EPC: regole, semantica, OR-join}{Parte 1 — EPC: regole, semantica, OR-join}}
+
+\subsection{\texorpdfstring{Requisiti di buona formazione}{Requisiti di buona formazione}}
+
+Gli elementi di un EPC (eventi, funzioni, connettori) si possono combinare abbastanza liberamente, cicli inclusi, ma non in modo del tutto arbitrario. Ci sono vincoli strutturali che un diagramma deve rispettare per avere senso.
+
+\begin{boxdefinition}{Requisiti di un diagramma EPC}
+\begin{itemize}
+\item Il grafo deve essere \textbf{debolmente connesso} (weakly connected): niente nodi isolati.
+\item \textbf{Eventi}: al massimo \textbf{un} arco entrante e \textbf{uno} uscente, e almeno un arco incidente. Devono esistere almeno un evento di start e uno di end.
+\item \textbf{Funzioni}: \textbf{esattamente} un arco entrante e uno uscente.
+\item \textbf{Connettori} (logici): o \textbf{uno entrante e molti uscenti} (split), o \textbf{molti entranti e uno uscente} (join). Mai molti-a-molti.
+\end{itemize}
+\end{boxdefinition}
+
+A questi si aggiungono spesso delle \textbf{linee guida} più stringenti — start/end unici, nessun flusso diretto tra due eventi o tra due funzioni, nessun evento seguito da un nodo di decisione ((X)OR-split). Studi empirici, però, mostrano che queste guideline sono \textbf{troppo restrittive}: seguirle alla lettera produce diagrammi inutilmente complicati, e in pratica le persone le ignorano. La soluzione pragmatica è \textbf{rilassare la maggior parte dei vincoli}, tanto i nodi "dummy" mancanti (funzioni o eventi fittizi che ripristinano l'alternanza, oppure un connettore che disambigua) si possono sempre aggiungere dopo, in automatico.
+
+\begin{boxnote}{Start ed end multipli: cosa si assume}
+\begin{itemize}
+\item Uno \textbf{start event} (senza archi entranti) invoca una nuova istanza del processo. Più start event si assumono \textbf{mutuamente esclusivi}: c'è un \textbf{XOR-split implicito} che sceglie con quale far partire l'istanza.
+\item Un \textbf{end event} (senza archi uscenti) segnala il completamento. Con più end event non c'è unanimità sulla semantica: si assume un \textbf{join implicito} (tipicamente XOR, ma non necessariamente).
+\end{itemize}
+\end{boxnote}
+
+Oltre agli elementi base, le funzioni possono avere \textbf{annotazioni}: l'\textbf{organization unit} (chi è responsabile della funzione, un'ellisse con linea verticale), gli \textbf{information/material/resource object} (i dati o oggetti in input/output, rettangoli collegati) e il \textbf{supporting system} (il supporto tecnico).
+
+\subsection{\texorpdfstring{La semantica folder-passing}{La semantica folder-passing}}
+
+Come si esegue un EPC? L'idea intuitiva è che un processo parte quando accadono i suoi eventi iniziali, le attività si eseguono secondo i vincoli del diagramma, e alla fine — se il diagramma è "corretto" — restano da trattare solo eventi finali. Per rendere precisa questa intuizione si usa la \textbf{folder-passing semantics}, del tutto analoga al token game dei \hyperref[ch:04]{Petri net}.
+
+\begin{boxdefinition}{Folder-passing semantics}
+Lo stato corrente del processo è dato dalle \textbf{folder} (cartelle) piazzate sul diagramma — l'equivalente dei token. Una \textbf{relazione di transizione} spiega come passare da uno stato al successivo, ed è \textbf{possibilmente non-deterministica}. Le regole per far avanzare le folder ricalcano quelle di split/join: un \textbf{AND-split} replica la folder su tutti i rami, un \textbf{AND-join} aspetta le folder su tutti i rami; uno \textbf{XOR-split} manda la folder su un solo ramo, e così via.
+\end{boxdefinition}
+
+Il punto delicato — di nuovo — sono i \textbf{join}, in particolare quando devono decidere se aspettare o meno un secondo input. Questo richiede a volte di sapere non solo \emph{dove sono} le folder, ma anche \emph{dove non arriveranno mai}: un'informazione \textbf{non-locale}, difficile da propagare.
+
+\begin{boxwarning}{La semantica dei join è non-locale}
+\begin{itemize}
+\item \textbf{XOR-join}: se arrivano \emph{entrambi} gli input dovrebbe \textbf{bloccare} il flusso (era una scelta, non dovevano arrivare tutti e due); se ne arriva uno solo, può procedere solo se è \emph{informato} che l'altro non arriverà mai.
+\item \textbf{OR-join}: se arriva un solo input dovrebbe rilasciare il flusso; se arrivano entrambi ne rilascia uno solo; ma se ne arriva uno solo \textbf{deve aspettare} l'altro \emph{a meno che} non sia garantito che l'altro non arriverà mai. È la stessa condizione non-locale vista in \hyperref[ch:06]{06 — Orchestration e Collaboration}, ed è la ragione per cui l'OR-join è notoriamente problematico da formalizzare.
+\end{itemize}
+\end{boxwarning}
+
+\subsection{\texorpdfstring{Decorated EPC: disambiguare i join}{Decorated EPC: disambiguare i join}}
+
+Per togliere l'ambiguità dai join, si \textbf{annota} ulteriormente il diagramma, legando ogni join allo split da cui i flussi si erano separati. Servono tre nozioni via via più forti.
+
+\begin{boxdefinition}{Candidate, corresponding, matching split}
+\begin{itemize}
+\item \textbf{Candidate split} di un join: un qualsiasi split i cui output sono connessi agli input di quel join.
+\item \textbf{Corresponding split}: fra i candidati, quello \textbf{scelto} e associato al join (si etichetta il join con il suo split, es. \texttt{j1 (s1)}).
+\item \textbf{Matching split}: un corresponding split che è dello \textbf{stesso tipo} del join (uno XOR-split per uno XOR-join).
+\end{itemize}
+\end{boxdefinition}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/07a-epc-bpmn_p54_matching-split.png}
+\caption{Matching split. $s1$ (XOR) è \textbf{matching} per $j1$ (XOR), stesso tipo. $s2$ (XOR) è corresponding ma \textbf{non matching} per $j2$ (OR), tipo diverso.}
+\end{figure}
+
+La distinzione serve a risolvere l'OR-join scegliendo una \textbf{policy}:
+
+\begin{boxdefinition}{Policy dell'OR-join}
+\begin{itemize}
+\item Se l'OR-join ha uno split \textbf{matching}, la semantica è \textbf{wait-for-all}: aspetta il completamento di \emph{tutti} i cammini attivati.
+\item Altrimenti si sceglie un'altra policy: \textbf{every-time} (rilancia l'output a ogni input) oppure \textbf{first-come} (aspetta il primo input e ignora il secondo).
+\end{itemize}
+
+Si assume che \textbf{ogni OR-join sia etichettato con una policy} (qualcuno propone perfino simboli a trapezio diversi per distinguerle).
+\end{boxdefinition}
+
+\section{\texorpdfstring{Parte 2 — BPMN: lo standard industriale}{Parte 2 — BPMN: lo standard industriale}}
+
+\subsection{\texorpdfstring{Obiettivi, storia, pro e contro}{Obiettivi, storia, pro e contro}}
+
+Il \textbf{BPMN} (Business Process Model and Notation) nasce con un obiettivo di comprensibilità \emph{trasversale}: una notazione grafica leggibile dagli \textbf{analisti} (che disegnano le bozze), dai \textbf{developer} (che le implementano) e dalle \textbf{persone di business} (che gestiscono i processi). Prima di BPMN esisteva una miriade di proposte frammentate (BPEL, BPML, UML AD, WS-CDL, XLANG, ...); BPMN nasce proprio per \textbf{ridurre questa frammentazione}, consolidare le idee migliori e favorire BPMS interoperabili. Storicamente: BPMI.org nel \textbf{2000}, la fusione con OMG nel \textbf{2005}, \textbf{BPMN 1.0} nel 2006, fino a \textbf{BPMN 2.0 final} nel \textbf{2011} (che aggiunge tra l'altro le choreographies, un metamodello completo e la serializzazione XML).
+
+\begin{boxabstract}{Pro e contro di BPMN}
+\textbf{Pregi}: \emph{simplicity} (un piccolo insieme di simboli base), \emph{extensibility} (molte decorazioni, aggiungibili in futuro), design grafico intuitivo, \emph{generality} (copre orchestration + collaboration + choreography), disponibilità di tool e formato di scambio \texttt{.bpmn}. \textbf{Difetti}: oltre \textbf{100 elementi grafici}, una specifica verbosa (500 pagine), difficile da imparare a fondo (letture diverse dello stesso diagramma sono possibili), e vendor diversi implementano l'esecuzione di BPMN in modi diversi (e su sottoinsiemi diversi).
+\end{boxabstract}
+
+BPMN definisce i \textbf{Business Process Diagram (BPD)}, basati sulla tecnica del flowchart, con \textbf{quattro categorie} di elementi: \textbf{swimlanes}, \textbf{flow objects}, \textbf{connecting objects} e \textbf{artefacts}. Nonostante la ricchezza, molti concetti hanno una corrispondenza diretta con l'EPC:
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/07a-epc-bpmn_p68_bpmn-vs-epc.png}
+\caption{BPMN vs EPC (a grandi linee). Ogni ingrediente EPC ha un analogo BPMN; BPMN aggiunge il \textbf{message flow} per la comunicazione tra pool.}
+\end{figure}
+
+\subsection{\texorpdfstring{Swimlanes: pool e lane}{Swimlanes: pool e lane}}
+
+Le \textbf{swimlane} organizzano le attività in categorie visuali che illustrano capacità o responsabilità diverse.
+
+\begin{boxdefinition}{Pool e lane}
+\begin{itemize}
+\item Un \textbf{pool} rappresenta un \textbf{partecipante} (o ruolo) del processo — un'organizzazione, un ruolo, un sistema — disegnato come un rettangolo con un nome. Un pool \textbf{deve contenere 0 o 1 processo} e può contenere 0 o più lane. Due pool possono essere collegati \textbf{solo da message flow}.
+\item Una \textbf{lane} è una sotto-partizione gerarchica \emph{dentro} un pool, per organizzare e categorizzare le attività.
+\item Un \textbf{collapsed pool} nasconde il processo interno: è trattato come una \textbf{black-box}.
+\end{itemize}
+\end{boxdefinition}
+
+\subsection{\texorpdfstring{Flow objects: eventi, attività, gateway}{Flow objects: eventi, attività, gateway}}
+
+Il cuore di BPMN sono i \textbf{flow objects}, e la scelta di design è deliberata: fissare \textbf{pochi elementi core} (tre forme da imparare), poi aggiungere informazione tramite \textbf{bordi diversi e marker interni}. Così la notazione resta estensibile senza moltiplicare le forme base.
+
+\begin{boxdefinition}{I tre flow objects}
+\begin{itemize}
+\item \textbf{Event} (cerchio): qualcosa che "accade" durante il processo. Il \textbf{bordo} ne definisce il tipo — \textbf{start} (bordo sottile), \textbf{intermediate} (doppio bordo), \textbf{end} (bordo spesso) — e un marker interno il sotto-tipo (message, timer, error, ...).
+\item \textbf{Activity} (rettangolo arrotondato): un'unità di lavoro. Può essere \textbf{atomica} (un \textbf{task}) o \textbf{composta} (un \textbf{sub-process}).
+\item \textbf{Gateway} (rombo): controlla lo split/join del sequence flow (condizione, fork, attesa); un marker interno ne indica la natura.
+\end{itemize}
+\end{boxdefinition}
+
+I \textbf{gateway} sono l'analogo dei connettori EPC, ma con più varianti. I principali:
+
+\begin{itemize}
+\item \textbf{Exclusive (XOR), data-based} — in split, instrada verso \textbf{esattamente un} ramo secondo condizioni; in merge, aspetta \textbf{un} ramo entrante.
+\item \textbf{Parallel (AND)} — in split, attiva \textbf{tutti} i rami simultaneamente; in merge, aspetta \textbf{tutti} i rami.
+\item \textbf{Inclusive (OR)} — in split, attiva \textbf{uno o più} rami secondo condizioni; in merge, aspetta tutti i rami \emph{attivi}. Porta con sé \textbf{gli stessi problemi} dell'OR-join in EPC: da usare solo quando strettamente necessario.
+\item \textbf{Complex} — merge/branch con condizioni complesse; da usare con parsimonia perché la semantica può non essere chiara.
+\item \textbf{Event-based} — è sempre seguito da eventi catching o receive task, e instrada verso quello che accade \textbf{per primo} (è la scelta \emph{implicita/deferred} di \hyperref[ch:04]{04 — Petri Nets}).
+\end{itemize}
+
+\subsection{\texorpdfstring{Connecting objects e requisiti}{Connecting objects e requisiti}}
+
+Gli oggetti si collegano con tre tipi di connettori: il \textbf{sequence flow} (linea piena con punta piena, l'ordine di esecuzione \emph{dentro} un pool — in BPMN si evita il termine "control flow"), il \textbf{message flow} (tra pool \emph{diversi}) e l'\textbf{association} (verso gli artefacts). Le regole di connettività ricalcano quelle EPC: gli eventi hanno al più un arco entrante e uno uscente, le attività \textbf{esattamente uno e uno}, i gateway sono uno-a-molti, molti-a-uno o molti-a-molti.
+
+Cosa succede se un'attività ha \emph{più} archi, violando la regola "uno e uno"? BPMN inserisce dei \textbf{gateway impliciti}, e qui si nasconde una trappola.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/07a-epc-bpmn_p103_implicit-gateway.png}
+\caption{Gateway impliciti. \textbf{Più flussi uscenti} equivalgono a un \textbf{AND-split} (parallelo), a meno che non abbiano condizioni. Simmetricamente, \textbf{più flussi entranti} su un'attività sono trattati come \textbf{mutuamente esclusivi} (XOR-join implicito). È un "hidden issue": meglio rendere i gateway espliciti per evitare letture sbagliate.}
+\end{figure}
+
+\subsection{\texorpdfstring{Sub-process e naming}{Sub-process e naming}}
+
+I modelli grandi sono difficili da leggere. Il \textbf{sub-process} migliora la leggibilità nascondendo parti del diagramma in un'attività composta e auto-contenuta, che si può mostrare \textbf{collapsed} (una scatola con un \texttt{+}) o \textbf{expanded} (aperta, con uno start/end impliciti). BPMN raccomanda anche \textbf{convenzioni di naming} precise: i pool prendono un sostantivo (spesso il verbo principale "nominalizzato", es. \emph{order fulfilment}); gli eventi un sostantivo seguito da un participio passato (es. \emph{Invoice emitted}); le attività un verbo all'imperativo seguito da un sostantivo (es. \emph{Approve order}). In tutti i casi: label brevi, articoli spesso omessi.
+
+\subsection{\texorpdfstring{Pattern tipici}{Pattern tipici}}
+
+Con questi ingredienti si costruiscono i pattern ricorrenti: la \textbf{sequenza}, il \textbf{rework/repetition} (un blocco che inizia con un XOR-join e finisce con un XOR-split decisionale), le \textbf{attività parallele}, gli \textbf{start/end multipli} (comodi per catturare trigger mutuamente esclusivi; BPMN usa una \textbf{implicit termination semantics} — il caso finisce solo quando \emph{ogni} token ha raggiunto un end). Un pattern particolarmente utile è la \textbf{decisione esclusiva} con i rami annotati dalle condizioni:
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.74\linewidth,height=0.34\textheight,keepaspectratio]{images/07a-epc-bpmn_p112_exclusive-decision.png}
+\caption{Decisione esclusiva (invoice checking). È buona pratica \textbf{annotare i rami con le condizioni} sotto cui vengono presi. Un ramo può essere marcato come \textbf{default flow} (una barra sull'arco), che significa "altrimenti" e si prende se nessun'altra condizione è vera.}
+\end{figure}
+
+Per le \textbf{decisioni inclusive} (uno \emph{o} più rami, es. distribuire un ordine a più magazzini), si può provare a usare solo XOR/AND, ma il diagramma diventa contorto e non scala col numero di rami; gli \textbf{OR-gateway} scalano bene, ma riportano tutti i problemi degli OR-join non-matched visti in EPC — da usare solo se davvero necessari. Regola pratica: i diagrammi sono più leggibili se i gateway sono \textbf{bilanciati} (ogni split ha il suo join dello stesso tipo).
+
+Con EPC e BPMN abbiamo il quadro completo delle notazioni high-level. La prossima parte aggiunge gli elementi BPMN più avanzati. $\rightarrow$ \hyperref[ch:07b]{07b — More BPMN}
