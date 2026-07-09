@@ -1,0 +1,45 @@
+\chapter{S-coverability}
+
+Serve a certificare ``a pezzi'' l'S-invariant positivo richiesto dal Rank Theorem, e a diagnosticare perché un net non è sound.
+
+\section{S-coverability: definizione e relazioni}
+
+\begin{domanda}{$\times 1$}
+Cos'è la \textbf{S-coverability}: definizione e relazione con S-net, liveness e boundedness.
+\end{domanda}
+
+Motiverei la nozione partendo dal Rank Theorem: una delle sei condizioni per ``live e bounded'' è ``avere un S-invariant positivo''. Il problema pratico è \emph{come} trovarlo in modo intuitivo, non solo risolvendo un sistema lineare. L'idea è che un caso reale è spesso composto da \textbf{filoni di controllo paralleli} (thread), ciascuno dei quali impone un ordine sui propri task. Se decomponiamo la rete in sotto-reti che sono S-net, ciascuna induce un S-invariant uniforme, e sommandoli si ottiene un S-invariant positivo sull'intera rete.
+
+Per formalizzare serve prima la nozione di \textbf{S-component}, che è una sottorete ``ben fatta'':
+
+\begin{definizione}{S-component}
+Una subnet $N'$ indotta da un insieme di nodi $X$ è un \textbf{S-component} se:
+\begin{enumerate}
+  \item è un \textbf{S-net strongly connected} (ogni transizione ha esattamente un place in ingresso e uno in uscita);
+  \item per ogni place $p \in X$, \textbf{tutte} le transizioni collegate a $p$ (sia $\bullet p$ sia $p\bullet$) sono in $X$ — ``se prendi un place, prendi anche tutte le sue transizioni''.
+\end{enumerate}
+\end{definizione}
+
+La condizione 2 è cruciale: evita di ``tagliare a metà'' le scelte di un place, garantendo che la subnet catturi fedelmente il comportamento locale di quel filone. Un singolo S-component copre solo alcuni place; per coprirli tutti serve una collezione:
+
+\begin{definizione}{S-cover e S-coverability}
+Un \textbf{S-cover} di $N$ è un insieme $C$ di S-component tale che \textbf{ogni place} di $N$ appartenga ad almeno uno di essi. $N$ è \textbf{S-coverable} se ammette un S-cover.
+\end{definizione}
+
+La ricetta pratica: ogni S-component induce un S-invariant \emph{uniforme} (peso 1 sui place che copre, 0 altrove — è il risultato sugli S-net); \textbf{sommando} gli invarianti di tutti gli S-component di un S-cover, poiché ogni place è coperto da almeno uno, si ottiene un vettore con \emph{tutte} le componenti positive, cioè un \textbf{S-invariant positivo} su tutta la rete. Ecco come si certifica ``a pezzi'' uno dei sei ingredienti del Rank Theorem.
+
+La \textbf{relazione con liveness e boundedness} è data da un teorema (nella direzione contronominale diventa un test di non-soundness):
+
+\begin{teorema}{S-coverability theorem}
+Se un free-choice system è \textbf{live e bounded}, allora è \textbf{S-coverable}.
+
+Contronominale (test pratico):
+$$\text{free-choice} \;\wedge\; \neg\,\text{S-coverable} \;\Rightarrow\; \neg(\text{live}\wedge\text{bounded})$$
+in particolare, se $N$ è free-choice e $N^\star$ non è S-coverable, allora $N$ \textbf{non è sound}.
+\end{teorema}
+
+Il modo giusto di riassumere le relazioni all'orale: la S-coverability è la nozione ``strutturale a filoni'' che sta dietro all'S-invariant positivo; ogni S-component è un S-net (strongly connected, con il suo invariante uniforme); e per le free-choice ``live e bounded'' (cioè la soundness di $N^\star$) implica la S-coverability. Quindi la mancata S-coverability è un certificato — visivo e diagnosticabile — di non-soundness: dice \emph{quali} place non riescono a stare in nessun filone S-net coerente, indicando dove il processo è mal strutturato.
+
+\begin{puntochiave}{S-coverability}
+S-component: subnet S-net strongly connected che, per ogni suo place, include tutte le transizioni collegate. S-cover: insieme di S-component che copre ogni place. Ogni S-component dà un S-invariant uniforme; la loro somma è un S-invariant positivo. Teorema: free-choice live+bounded $\Rightarrow$ S-coverable; contronominale $\Rightarrow$ test di non-soundness.
+\end{puntochiave}

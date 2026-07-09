@@ -1,0 +1,62 @@
+\chapter{S-system e T-system}
+
+Sono le due classi ``pulite'' e duali: gli S-system vietano la sincronizzazione, i T-system vietano la scelta. Per entrambe, le proprietà comportamentali diventano criteri strutturali verificabili a occhio.
+
+\section{Proprietà fondamentale degli S-system}
+
+\begin{domanda}{$\times 1$}
+Cos'è un \textbf{S-net} e qual è la \textbf{proprietà fondamentale} degli S-system (conservazione dei token)?
+\end{domanda}
+
+Definirei prima la classe. Una rete è un \textbf{S-net} se ogni transizione ha esattamente un input place e un output place: $\forall t.\ |\bullet t| = 1 = |t\bullet|$. La ``S'' viene da \emph{Stellen}, ``place'' in tedesco. Una transizione così non può \textbf{sincronizzare} (non aspetta più input) né \textbf{spezzare} (non produce più output): nell'S-net la sincronizzazione è \emph{vietata}. Un S-system è semplicemente un S-net con una marcatura iniziale.
+
+Da questa struttura discende immediatamente una legge di conservazione:
+
+\begin{teorema}{Proprietà fondamentale degli S-system}
+Il \textbf{numero totale di token} è invariante. Detto $M(P) = \sum_{p\in P} M(p)$ il conteggio totale, per ogni marcatura raggiungibile $M \in [M_0\rangle$:
+$$M(P) = M_0(P)$$
+\end{teorema}
+
+La dimostrazione è una riga: ogni scatto di una transizione $t$ toglie esattamente un token (dall'unico input place) e ne mette esattamente uno (nell'unico output place), quindi
+$$M'(P) = M(P) - |\bullet t| + |t\bullet| = M(P) - 1 + 1 = M(P).$$
+Il totale non cambia mai. È l'analogo di una legge di conservazione della fisica: il token ``si sposta'' ma non si crea né si distrugge.
+
+Le conseguenze immediate, tutte da citare:
+\begin{itemize}
+  \item \textbf{Sempre bounded}: da $M(p) \le M(P) = M_0(P)$, nessun place può superare $M_0(P)$ token. Un S-system è k-bounded con $k = M_0(P)$.
+  \item \textbf{Test di raggiungibilità gratis}: se $M(P) \ne M_0(P)$, allora $M$ non è raggiungibile (se parto con 6 token totali, una marcatura con 7 è impossibile).
+  \item \textbf{S-invariant uniformi}: gli unici S-invariant di un S-net connesso sono i vettori costanti $I = [k,k,\dots,k]$, coerente con ``ogni token vale uguale, la somma si conserva''.
+\end{itemize}
+
+Se c'è tempo, aggiungerei la \textbf{caratterizzazione della liveness}, che è puramente strutturale: un S-system è live $\iff$ è strongly connected e $M_0(P) \ge 1$ (c'è almeno un token). Con un token in giro e la strong connectedness, per abilitare qualunque transizione basta spostare il token fino a lei lungo un cammino. E il \textbf{take-home sui workflow net}: ogni workflow net che sia un S-net è \emph{safe e sound} — un solo caso che scorre, nessuna sincronizzazione, correttezza automatica.
+
+\begin{puntochiave}{S-system}
+S-net: ogni transizione $1$-in-$1$-out (vieta la sincronizzazione). Proprietà fondamentale: il totale $M(P)=M_0(P)$ è conservato (uno scatto toglie 1 e mette 1). Conseguenze: sempre bounded, raggiungibilità = conteggio token, S-invariant uniformi. WF net S-net $\Rightarrow$ safe e sound.
+\end{puntochiave}
+
+\section{Boundedness e liveness degli S-system}
+
+\begin{domanda}{$\times 1$}
+Cosa si può dire su \textbf{boundedness e liveness} degli S-system?
+\end{domanda}
+
+Questa domanda è il completamento naturale della precedente, e conviene rispondere separando nettamente le due proprietà, perché per gli S-system entrambe hanno una risposta strutturale semplice.
+
+Sulla \textbf{boundedness}: un S-system è \textbf{sempre bounded}, senza alcuna ipotesi aggiuntiva. La ragione è la conservazione del numero totale di token: poiché $M(P) = M_0(P)$ per ogni marcatura raggiungibile, e ogni place ha al più tutti i token, vale $M(p) \le M(P) = M_0(P)$ per ogni place $p$. Quindi il sistema è k-bounded con $k = M_0(P)$: il numero di token iniziale è un tetto invalicabile. Non serve costruire alcun reachability graph, la boundedness è garantita dalla struttura.
+
+Sulla \textbf{liveness}, invece, serve una condizione, ed è la caratterizzazione strutturale elegante:
+
+\begin{teorema}{Liveness degli S-system}
+Un S-system $(N,M_0)$ è \textbf{live} $\iff$
+$$N \text{ è strongly connected} \quad\text{e}\quad M_0(P) \ge 1$$
+\end{teorema}
+
+L'intuizione della direzione ``$\Leftarrow$'': con almeno un token in circolazione e la strong connectedness, per abilitare una qualsiasi transizione $t$ basta \textbf{spostare il token fino a lei} lungo un cammino orientato (che esiste, per la strong connectedness). Poiché ogni transizione dell'S-net non fa altro che spostare l'unico token, si può sempre portarlo dove serve. Se invece la rete non è strongly connected, c'è una parte da cui il token può ``uscire'' senza tornare, e le transizioni lì diventano dead; se $M_0(P) = 0$ non c'è alcun token e nulla scatta.
+
+Combinando le due si ottiene anche una caratterizzazione \textbf{esatta della raggiungibilità} — cosa rara, dato che in generale è EXPSPACE-hard: in un S-system \emph{live} (quindi strongly connected), una marcatura $M$ è raggiungibile $\iff M(P) = M_0(P)$. Basta contare i token: se il totale coincide, la marcatura si raggiunge spostando i token uno per volta nei place giusti.
+
+Il pagamento finale, da dire come conclusione: mettendo insieme ``sempre bounded'' e ``live sse strongly connected + token'', si dimostra che \textbf{ogni workflow net che è un S-net è safe e sound}. La catena: $N^\star$ resta un S-net (quindi bounded); è strongly connected per via del reset e ha $M_0(P) = 1$ (quindi live); live + bounded $\iff N$ sound. Il singolo token che scorre garantisce automaticamente la correttezza.
+
+\begin{puntochiave}{boundedness e liveness S-system}
+Boundedness: \emph{sempre} bounded (k-bounded con $k=M_0(P)$, per conservazione). Liveness: live $\iff$ strongly connected \emph{e} $M_0(P)\ge 1$. Insieme: WF net S-net $\Rightarrow$ safe e sound (via $N^\star$).
+\end{puntochiave}

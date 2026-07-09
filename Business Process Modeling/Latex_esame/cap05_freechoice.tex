@@ -1,0 +1,96 @@
+\chapter{Free-choice net}
+
+Le free-choice net sono la classe ``giusta'' per i processi reali: abbastanza generali da modellarli, abbastanza strutturate da rendere la soundness decidibile in tempo polinomiale. Il Rank Theorem e il legame con siphon/trap sono le domande tipiche.
+
+\section{Rank theorem}
+
+\begin{domanda}{$\times 2$}
+Enuncia il \textbf{Rank Theorem}: tutte le condizioni, più l'algoritmo per verificare il punto sul rank.
+\end{domanda}
+
+Contestualizzerei subito il risultato con il ``contrasto'' che è il take-home della lezione. Decidere la \textbf{sola liveness} di una free-choice net è \textbf{NP-completo} (riduzione da SAT). Ma decidere \textbf{liveness E boundedness insieme} — che è esattamente ciò che serve per la soundness, dato che $N$ sound $\iff N^\star$ live e bounded — diventa \textbf{polinomiale}. Aggiungere il vincolo di boundedness \emph{semplifica} il problema invece di complicarlo: è il Rank Theorem che lo garantisce.
+
+Prima serve la nozione di \textbf{cluster}. Il cluster di un nodo $x$, scritto $[x]$, è il più piccolo insieme tale che: $x \in [x]$; se un place $p \in [x]$ allora tutte le sue transizioni uscenti $p\bullet \subseteq [x]$; se una transizione $t \in [x]$ allora tutti i suoi place entranti $\bullet t \subseteq [x]$. Si ``chiude'' alternando place $\to$ transizioni uscenti e transizione $\to$ place entranti. I cluster \textbf{partizionano} i nodi; in una free-choice un cluster è una ``zona di scelta libera''. $C_N$ è l'insieme dei cluster.
+
+\begin{teorema}{Rank Theorem}
+Un free-choice system $(P,T,F,M_0)$ è \textbf{live e bounded} $\iff$ valgono tutte:
+\begin{enumerate}
+  \item ha almeno un place e una transizione;
+  \item è \textbf{connesso};
+  \item $M_0$ marca \textbf{ogni proper siphon};
+  \item ha un \textbf{S-invariant positivo} (tutte le componenti $>0$);
+  \item ha un \textbf{T-invariant positivo};
+  \item $\operatorname{rank}(\mathbf{N}) = |C_N| - 1$: il rango della matrice di incidenza è il numero di cluster meno uno.
+\end{enumerate}
+\end{teorema}
+
+Il punto forte da comunicare è che \textbf{ognuna delle sei condizioni si verifica in tempo polinomiale}: connessione (visita del grafo), invarianti positivi e rango (algebra lineare), tutto poly. Quindi la soundness dei workflow net free-choice è decidibile in tempo polinomiale — la giustificazione teorica del perché tool come WoPeD funzionano bene sui processi reali, che sono quasi sempre free-choice.
+
+Sull'\textbf{algoritmo per la condizione sul rank} e su quella dei siphon (che il professore chiede in coppia): il rango della matrice di incidenza si calcola con la normale eliminazione di Gauss, in tempo polinomiale; i cluster si trovano con una chiusura sul grafo, altrettanto poly; poi si confronta $\operatorname{rank}(\mathbf{N})$ con $|C_N|-1$. Per la condizione 3 (``$M_0$ marca ogni proper siphon'') si usa l'algoritmo del \textbf{massimo siphon non marcato}, che descrivo nella prossima sezione: si parte dai place vuoti e si rimuovono iterativamente quelli che violano la condizione di siphon; se alla fine non resta nulla, allora ogni proper siphon è marcato.
+
+\begin{puntochiave}{Rank Theorem}
+Free-choice live+bounded $\iff$ (1) non vuoto, (2) connesso, (3) $M_0$ marca ogni proper siphon, (4) S-invariant positivo, (5) T-invariant positivo, (6) $\operatorname{rank}(\mathbf N)=|C_N|-1$. Tutte poly $\Rightarrow$ soundness dei WF net free-choice in tempo polinomiale. Contrasto: la sola liveness è NP-completa.
+\end{puntochiave}
+
+\section{Free-choice net e teorema di Commoner}
+
+\begin{domanda}{$\times 1$}
+Racconta \textbf{tutto sulle free-choice net}: definizione e Commoner's theorem (siphon/trap).
+\end{domanda}
+
+La motivazione è eliminare l'\textbf{interferenza fra conflitto e sincronizzazione}. In una rete qualsiasi, due transizioni possono passare dall'essere indipendenti all'essere in conflitto a seconda di cosa scatta prima nel resto del sistema — e questo rende la scelta ``non libera''. Le free-choice impediscono che una scelta fra transizioni sia influenzata da altro.
+
+\begin{definizione}{Free-choice net}
+Un Petri net è \textbf{free-choice} se, per ogni coppia di transizioni, i pre-set sono \textbf{disgiunti oppure uguali}:
+$$\forall t,t' \in T.\quad \bullet t \cap \bullet t' = \emptyset \;\lor\; \bullet t = \bullet t'$$
+(equivalentemente, per ogni coppia di place i post-set sono disgiunti o uguali).
+\end{definizione}
+
+L'intuizione: se due transizioni condividono anche un solo place di input, allora devono condividerli \emph{tutti}. Così sono sempre abilitate insieme e la scelta fra loro è davvero libera, dipende solo dai token nei place comuni. Da questo segue la \textbf{proprietà fondamentale}: se $M$ abilita $t$ e $t \in p\bullet$, allora $M$ abilita ogni altra $t' \in p\bullet$ (o sono tutte abilitate, o nessuna). Da citare anche che S-net e T-net sono casi particolari di free-choice (nell'S-net ogni $\bullet t$ è un singoletto, nel T-net ogni $p\bullet$ lo è), quindi le free-choice sono una loro super-classe.
+
+Per la liveness servono \textbf{siphon} e \textbf{trap}, due strutture duali sui place:
+
+\begin{definizione}{Siphon e trap}
+\begin{itemize}
+  \item Un insieme di place $R$ è un \textbf{siphon} se $\bullet R \subseteq R\bullet$: ogni transizione che \emph{produce} in $R$ richiede anche un place di $R$ come input. Conseguenza: se $R$ è \textbf{vuoto}, resta vuoto per sempre.
+  \item $R$ è un \textbf{trap} se $R\bullet \subseteq \bullet R$: ogni transizione che \emph{consuma} da $R$ produce anche in $R$. Conseguenza: se $R$ è \textbf{marcato}, resta marcato per sempre.
+\end{itemize}
+$R$ è \emph{proper} se $R \ne \emptyset$.
+\end{definizione}
+
+In \emph{ogni} rete vale che, se il sistema è live, ogni proper siphon è marcato (contronominale: un proper siphon non marcato $\Rightarrow$ non live). Per le free-choice questa condizione diventa \textbf{esatta} grazie ai trap:
+
+\begin{teorema}{Teorema di Commoner (free-choice)}
+Un free-choice system è \textbf{live} $\iff$ \textbf{ogni proper siphon include un trap inizialmente marcato} (equivalentemente, il trap massimale di ogni proper siphon è marcato).
+
+Contronominale: è \textbf{non-live} $\iff$ esiste un proper siphon il cui trap massimale è non marcato.
+\end{teorema}
+
+L'idea: un siphon non marcato è una condanna (resta vuoto e blocca le transizioni), \emph{a meno che} contenga un trap marcato che gli inietta token per sempre. La caratterizzazione via trap massimale è comoda perché il trap massimale è unico (i trap sono chiusi per unione) e calcolabile. Come detto, decidere questa condizione (la sola liveness) è NP-completo, ma con la boundedness in più si torna al Rank Theorem, polinomiale.
+
+\begin{puntochiave}{free-choice + Commoner}
+Free-choice: $\bullet t\cap\bullet t'=\emptyset$ o $\bullet t=\bullet t'$ (scelta libera). Siphon ($\bullet R\subseteq R\bullet$): vuoto resta vuoto. Trap ($R\bullet\subseteq\bullet R$): marcato resta marcato. Commoner: live $\iff$ ogni proper siphon include un trap marcato in $M_0$.
+\end{puntochiave}
+
+\section{Algoritmo per il massimo siphon non marcato}
+
+\begin{domanda}{$\times 1$}
+Descrivi l'\textbf{algoritmo per trovare il massimo siphon non marcato}.
+\end{domanda}
+
+Questo algoritmo serve a verificare la condizione 3 del Rank Theorem (``$M_0$ marca ogni proper siphon'') in tempo polinomiale, senza enumerare tutti i $2^{|P|}$ sottoinsiemi di place. L'idea è partire dall'insieme più grande possibile di place ``sospetti'' e togliere iterativamente quelli che non possono far parte di un siphon non marcato.
+
+Il ragionamento: cerchiamo il \emph{più grande} insieme $R$ di place che sia (a) un siphon e (b) completamente non marcato in $M_0$. Si procede così:
+
+\begin{enumerate}
+  \item \textbf{Inizializza} $R$ con \textbf{tutti i place vuoti} in $M_0$ (quelli con $M_0(p) = 0$): un siphon non marcato può contenere solo place vuoti, quindi partiamo dal candidato massimale.
+  \item \textbf{Controlla la condizione di siphon} $\bullet R \subseteq R\bullet$. In pratica: per ogni transizione $t$ che \emph{produce} in $R$ (cioè $t \in \bullet R$), verifica che $t$ \emph{consumi} anche da $R$ (cioè $t \in R\bullet$). Se una transizione produce in un place $p \in R$ ma non consuma da nessun place di $R$, allora $p$ potrebbe ricevere token dall'esterno: $p$ \textbf{non può} stare nel siphon non marcato, e lo \textbf{rimuoviamo} da $R$.
+  \item \textbf{Ripeti} il passo 2 finché non ci sono più place da rimuovere (la rimozione di un place può far ``saltare'' la condizione per altri, quindi si itera fino a stabilizzazione).
+  \item \textbf{Risultato}: l'insieme $R$ rimasto è il \textbf{massimo siphon non marcato}. Se $R$ è \textbf{vuoto}, allora \emph{ogni} proper siphon è marcato (la condizione 3 del Rank Theorem è soddisfatta). Se $R \ne \emptyset$, abbiamo trovato un proper siphon non marcato, e quindi (in una free-choice, se non contiene un trap marcato) un certificato di \textbf{non-liveness} / non-soundness.
+\end{enumerate}
+
+Il punto sulla complessità: ogni iterazione rimuove almeno un place o termina, quindi si fanno al più $|P|$ iterazioni, ciascuna con un controllo polinomiale sulle transizioni. L'intero algoritmo è \textbf{polinomiale} — ed è proprio questo che permette al Rank Theorem di decidere liveness + boundedness (e quindi la soundness) in tempo polinomiale.
+
+\begin{puntochiave}{massimo siphon non marcato}
+Parti da $R$ = tutti i place vuoti; togli iterativamente ogni $p\in R$ in cui una transizione produce senza consumare da $R$ (viola $\bullet R\subseteq R\bullet$); itera fino a stabilizzazione. Se $R=\emptyset$ ogni proper siphon è marcato; altrimenti $R$ è un siphon non marcato (potenziale non-liveness). Poly.
+\end{puntochiave}

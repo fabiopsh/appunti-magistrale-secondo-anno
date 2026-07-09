@@ -1,0 +1,85 @@
+\chapter{Matrici e marking equation}
+
+L'approccio algebrico è la base di invarianti e soundness. La marking equation, in particolare, viene chiesta con la dimostrazione.
+
+\section{Marking equation lemma, con dimostrazione}
+
+\begin{domanda}{$\times 2$}
+Enuncia e dimostra il \textbf{marking equation lemma}.
+\end{domanda}
+
+Introdurrei l'idea: con la matrice di incidenza possiamo calcolare \emph{dove} arriva la rete dopo una sequenza di scatti senza simularli uno per uno. Lo scatto di una singola transizione è una somma di vettori, $M' = M + \vec{t}$, dove $\vec{t}$ è la colonna di $t$ nella matrice di incidenza (l'effetto netto di $t$ su ogni place). Il marking equation lemma generalizza questo a una sequenza qualsiasi, usando il Parikh vector per contare gli scatti ignorando l'ordine.
+
+\begin{teorema}{Marking equation lemma}
+Se $M \xrightarrow{\sigma} M'$, allora
+$$M' = M + \mathbf{N}\cdot\vec{\sigma}$$
+dove $\mathbf{N}$ è la matrice di incidenza e $\vec{\sigma}$ il Parikh vector di $\sigma$ (il conteggio delle occorrenze di ciascuna transizione in $\sigma$).
+\end{teorema}
+
+Dimostrazione per induzione sulla lunghezza di $\sigma$.
+
+\textbf{Caso base} ($\sigma = \epsilon$, la sequenza vuota): il Parikh vector è $\vec{\sigma} = \mathbf{0}$, quindi $M + \mathbf{N}\cdot\mathbf{0} = M = M'$, e infatti la sequenza vuota non cambia la marcatura. Vero banalmente.
+
+\textbf{Passo induttivo} ($\sigma = \sigma' t$, cioè $\sigma$ è una sequenza più corta $\sigma'$ seguita da un ultimo scatto $t$). Sia $M \xrightarrow{\sigma'} M'' \xrightarrow{t} M'$. Per l'ipotesi induttiva applicata a $\sigma'$ vale $M'' = M + \mathbf{N}\cdot\vec{\sigma'}$; e per il singolo scatto $t$ vale $M' = M'' + \mathbf{N}\cdot\vec{t}$. Sostituendo:
+$$
+\begin{aligned}
+M' &= M'' + \mathbf{N}\cdot\vec{t} \\
+   &= \big(M + \mathbf{N}\cdot\vec{\sigma'}\big) + \mathbf{N}\cdot\vec{t} \\
+   &= M + \mathbf{N}\cdot\big(\vec{\sigma'} + \vec{t}\big) \\
+   &= M + \mathbf{N}\cdot\vec{\sigma}
+\end{aligned}
+$$
+dove nell'ultimo passaggio ho usato la definizione ricorsiva del Parikh vector, $\overrightarrow{\sigma' t} = \vec{\sigma'} + \vec{t}$. $\blacksquare$
+
+Vale la pena chiudere con le due conseguenze che rendono il lemma utile. La prima, sorprendente: la marcatura raggiunta dipende \textbf{solo dal numero di occorrenze} di ciascuna transizione, non dall'ordine — quindi ogni permutazione \emph{eseguibile} delle stesse transizioni porta alla stessa marcatura finale. La seconda: il lemma è una condizione \textbf{necessaria, non sufficiente}. Il calcolo $M + \mathbf{N}\cdot\vec{\sigma}$ si può fare per qualsiasi $\vec{\sigma}$; se il risultato ha una componente \textbf{negativa}, la sequenza \emph{non} è eseguibile (non si può avere un numero negativo di token). Un valore $\ge 0$ ovunque, invece, non garantisce l'eseguibilità: è solo un test di \emph{non}-eseguibilità.
+
+\begin{puntochiave}{marking equation}
+$M\xrightarrow{\sigma}M' \Rightarrow M'=M+\mathbf{N}\vec\sigma$. Prova per induzione sulla lunghezza di $\sigma$ (base: $\vec\epsilon=\mathbf{0}$; passo: $\overrightarrow{\sigma't}=\vec{\sigma'}+\vec t$). Conseguenze: il risultato non dipende dall'ordine; una componente negativa certifica la non-eseguibilità. È il motore di S-invariant e monotonicity.
+\end{puntochiave}
+
+\section{Matrice di incidenza}
+
+\begin{domanda}{$\times 1$}
+Cos'è la \textbf{matrice di incidenza}: cosa rappresentano righe e colonne, quali sono i valori possibili.
+\end{domanda}
+
+L'osservazione chiave da cui parte tutto: la \emph{variazione} del numero di token in un place $p$ causata dallo scatto di una transizione $t$ \textbf{non dipende dalla marcatura corrente}, ma solo dalla struttura della rete (dalla flow relation). Quindi possiamo pre-calcolare, una volta per tutte, l'effetto di ogni transizione su ogni place — ed è proprio la matrice di incidenza.
+
+\begin{definizione}{Matrice di incidenza}
+Data $N=(P,T,F)$, la matrice di incidenza $\mathbf{N} : (P\times T) \to \{-1,0,+1\}$ è
+$$\mathbf{N}(p,t) = \begin{cases}
+-1 & \text{se } (p,t)\in F \wedge (t,p)\notin F \quad (p \text{ solo input di } t)\\
++1 & \text{se } (p,t)\notin F \wedge (t,p)\in F \quad (p \text{ solo output di } t)\\
+0 & \text{altrimenti (scollegati oppure self-loop)}
+\end{cases}$$
+Ha $n=|P|$ \textbf{righe} (una per place) e $m=|T|$ \textbf{colonne} (una per transizione).
+\end{definizione}
+
+Rispondendo direttamente: le \textbf{righe} sono i place, le \textbf{colonne} sono le transizioni. Ogni \textbf{colonna} $\vec{t_j}$ è l'effetto della transizione $t_j$ su tutti i place (quanti token toglie/aggiunge in ciascuno); ogni \textbf{riga} descrive come tutte le transizioni influenzano un singolo place. I valori possibili sono solo tre: $\mathbf{-1}$ (la transizione consuma un token da quel place), $\mathbf{+1}$ (lo produce), $\mathbf{0}$ (nessun effetto netto).
+
+Il punto delicato da menzionare è il caso $0$ del \textbf{self-loop}: se $p$ è sia input sia output di $t$, la transizione consuma e ri-produce un token, quindi la variazione netta è zero — e la matrice \emph{non distingue} un self-loop da ``nessun collegamento''. Questa perdita di informazione è la ragione per cui l'approccio algebrico, pur potentissimo, non cattura \emph{tutto} il comportamento della rete.
+
+\begin{puntochiave}{matrice di incidenza}
+Righe = place, colonne = transizioni. Valori $\{-1,0,+1\}$: $-1$ consuma, $+1$ produce, $0$ nessun effetto netto o self-loop. La colonna di $t$ è il vettore $\vec t$ usato nella marking equation. Attenzione: perde i self-loop.
+\end{puntochiave}
+
+\section{Parikh vector}
+
+\begin{domanda}{$\times 1$}
+Cos'è il \textbf{Parikh vector}?
+\end{domanda}
+
+Il Parikh vector serve a gestire una \emph{sequenza} di scatti sommandone gli effetti in un colpo solo. L'idea è contare quante volte scatta ciascuna transizione, dimenticando l'ordine.
+
+\begin{definizione}{Parikh vector}
+Data una sequenza $\sigma \in T^\star$, il suo \textbf{Parikh vector} $\vec{\sigma} : T \to \mathbb{N}$ associa a ogni transizione $t$ il \textbf{numero di occorrenze} di $t$ in $\sigma$. Per una singola transizione, $\vec{t}$ è il vettore con un $1$ nella posizione di $t$ e $0$ altrove. Definizione ricorsiva:
+$$\vec{\epsilon} = \mathbf{0}, \qquad \overrightarrow{\sigma t} = \vec{\sigma} + \vec{t}$$
+\end{definizione}
+
+Un esempio chiarisce: se $\sigma = t_3\, t_5\, t_3\, t_4\, t_2$, allora $\vec{\sigma} = [0,1,2,1,1]$ (zero $t_1$, un $t_2$, due $t_3$, un $t_4$, un $t_5$).
+
+Il punto essenziale da sottolineare è che \textbf{il Parikh vector dimentica l'ordine}: due sequenze con gli stessi scatti in ordine diverso hanno lo stesso Parikh vector. Questo è esattamente ciò che serve nella marking equation, perché — come dice il lemma — la marcatura finale dipende solo da \emph{quante} volte scatta ciascuna transizione, non da \emph{in che ordine}. Il Parikh vector è anche l'oggetto su cui si definiscono i T-invariant: $\vec{\sigma}$ è un T-invariant sse la sequenza $\sigma$ riporta la rete alla marcatura di partenza.
+
+\begin{puntochiave}{Parikh vector}
+Conta le occorrenze di ogni transizione in $\sigma$, ignorando l'ordine. $\vec\epsilon=\mathbf{0}$, $\overrightarrow{\sigma t}=\vec\sigma+\vec t$. È l'input della marking equation ($M'=M+\mathbf N\vec\sigma$) e la base dei T-invariant.
+\end{puntochiave}

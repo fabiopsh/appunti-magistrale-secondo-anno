@@ -1,0 +1,118 @@
+% ============================================================
+% Preambolo — Preparazione orale di Business Process Modeling
+% ============================================================
+
+% --- Fonts (XeTeX/tectonic, unicode math) ---------------------------------
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{STIX Two Text}
+\setsansfont{Helvetica Neue}
+\setmonofont{Menlo}[Scale=0.9]
+\setmathfont{STIX Two Math}
+
+% --- Italian language --------------------------------------------------------
+\usepackage{polyglossia}
+\setmainlanguage{italian}
+
+% --- Page geometry ----------------------------------------------------------
+\usepackage[a4paper,margin=2.6cm,headheight=14pt]{geometry}
+\raggedbottom
+
+% --- Colors -----------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{inkblue}{HTML}{1B3A6B}
+\definecolor{accentblue}{HTML}{2F5FA8}
+\definecolor{qback}{HTML}{FBEFD6}
+\definecolor{qframe}{HTML}{B8860B}
+\definecolor{defback}{HTML}{EDF2FB}
+\definecolor{defframe}{HTML}{2F5FA8}
+\definecolor{thmback}{HTML}{F1EDFA}
+\definecolor{thmframe}{HTML}{6A4C93}
+\definecolor{keyback}{HTML}{EAF7EE}
+\definecolor{keyframe}{HTML}{2E8B57}
+\definecolor{warnback}{HTML}{FDF1E4}
+\definecolor{warnframe}{HTML}{C0722A}
+
+% --- Boxes ------------------------------------------------------------------
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{fancyvrb}
+
+% Box "Domanda": apre ogni risposta d'orale
+\newtcolorbox{domanda}[1]{%
+  enhanced, breakable, colback=qback, colframe=qframe,
+  boxrule=0.8pt, left=8pt, right=8pt, top=6pt, bottom=6pt,
+  arc=2pt, before skip=10pt, after skip=8pt,
+  fonttitle=\bfseries, coltitle=white, colbacktitle=qframe,
+  title={Domanda \, #1}}
+
+\newtcolorbox{definizione}[1]{%
+  enhanced, breakable, colback=defback, colframe=defframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white, colbacktitle=defframe,
+  title={Definizione — #1}}
+
+\newtcolorbox{teorema}[1]{%
+  enhanced, breakable, colback=thmback, colframe=thmframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white, colbacktitle=thmframe,
+  title={Teorema — #1}}
+
+\newtcolorbox{puntochiave}[1]{%
+  enhanced, breakable, colback=keyback, colframe=keyframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white, colbacktitle=keyframe,
+  title={Da dire all'orale — #1}}
+
+\newtcolorbox{attenzione}[1]{%
+  enhanced, breakable, colback=warnback, colframe=warnframe,
+  boxrule=0.5pt, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  arc=2pt, before skip=7pt, after skip=7pt,
+  fonttitle=\bfseries, coltitle=white, colbacktitle=warnframe,
+  title={Attenzione — #1}}
+
+% --- Tables -----------------------------------------------------------------
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{array}
+
+% --- Lists ------------------------------------------------------------------
+\usepackage{enumitem}
+\setlist{itemsep=2pt, topsep=4pt}
+
+% --- Math extras ------------------------------------------------------------
+\usepackage{amsthm}
+\usepackage{centernot}
+\let\blacksquare\relax
+\newcommand{\blacksquare}{\ensuremath{\vrule height 0.35em width 0.35em depth 0pt}}
+
+% --- Chapter / section styling ----------------------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{inkblue}}
+  {\Large\color{accentblue}\chaptertitlename\ \thechapter}
+  {8pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{24pt}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{inkblue}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+% --- Header / footer --------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- Hyperref (load last) ---------------------------------------------------
+\usepackage[bookmarksnumbered,hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true, linkcolor=accentblue, urlcolor=accentblue,
+  pdftitle={Business Process Modeling — Preparazione orale},
+  pdfauthor={Fabio Piscitelli}}

@@ -1,0 +1,65 @@
+\documentclass[11pt,a4paper,openany]{book}
+
+\input{preamble.tex}
+
+\begin{document}
+
+% ---------------------------------------------------------------- Title page
+\begin{titlepage}
+\centering
+\vspace*{3cm}
+{\Huge\bfseries\color{inkblue} Business Process Modeling\par}
+\vspace{0.6cm}
+{\Large\color{accentblue} Preparazione all'orale\par}
+\vspace{0.4cm}
+{\large Risposte discorsive alle domande d'esame\par}
+\vspace{2.2cm}
+{\large MPB (6 cfu, 295AA)\par}
+\vspace{0.3cm}
+{\large Professore: Roberto Bruni\par}
+\vspace{3cm}
+{\normalsize\itshape Domande raccolte dagli appelli passati,\\ risposte pensate per un'esposizione orale completa\par}
+\vfill
+{\normalsize \today\par}
+\end{titlepage}
+
+\frontmatter
+
+% ------------------------------------------------------------- Come studiare
+\chapter*{Come usare questo documento}
+\addcontentsline{toc}{chapter}{Come usare questo documento}
+\markboth{Come usare questo documento}{Come usare questo documento}
+
+Questo documento raccoglie le \textbf{domande realmente uscite agli orali} di Business Process Modeling e, per ognuna, propone una \textbf{risposta discorsiva e completa}, scritta come la esporresti davanti al professore: prima l'intuizione e il \emph{perché} serve il concetto, poi la definizione formale, infine le conseguenze e i collegamenti con il resto del corso.
+
+\medskip
+
+L'indicatore \textbf{$\times N$} accanto a ogni domanda dice in quante testimonianze distinte è comparsa: più è alto, più la domanda è probabile. Le domande sono raggruppate per argomento, nell'ordine in cui conviene ripassarle.
+
+\medskip
+
+Ogni risposta è costruita con lo stesso schema:
+\begin{itemize}
+  \item un box \textcolor{qframe}{\textbf{Domanda}} con il testo esatto e la frequenza;
+  \item la risposta in prosa, con le formule integrate nel discorso;
+  \item box \textcolor{defframe}{\textbf{Definizione}} e \textcolor{thmframe}{\textbf{Teorema}} per i punti che vanno enunciati con precisione;
+  \item un box \textcolor{keyframe}{\textbf{Da dire all'orale}} col nocciolo da non dimenticare.
+\end{itemize}
+
+\tableofcontents
+
+\mainmatter
+
+\input{cap01_soundness.tex}
+\input{cap02_invarianti.tex}
+\input{cap03_liveness.tex}
+\input{cap04_matrici.tex}
+\input{cap05_freechoice.tex}
+\input{cap06_st_systems.tex}
+\input{cap07_scoverability.tex}
+\input{cap08_grafi.tex}
+\input{cap09_epc_bpmn.tex}
+\input{cap10_mining_conformance.tex}
+\input{cap11_quantitative.tex}
+
+\end{document}

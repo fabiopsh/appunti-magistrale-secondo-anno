@@ -1,0 +1,62 @@
+\chapter{EPC vs BPMN}
+
+\section{Differenza tra BPMN ed EPC, con la notazione}
+
+\begin{domanda}{$\times 2$}
+Qual è la \textbf{differenza tra BPMN ed EPC}? Disegnane la notazione.
+\end{domanda}
+
+Imposterei la risposta dicendo che EPC e BPMN sono \textbf{due notazioni grafiche high-level} per gli stessi processi, con elementi in corrispondenza abbastanza diretta; le differenze vere sono nella ricchezza della notazione e — soprattutto — nella capacità di modellare la comunicazione tra partecipanti.
+
+Comincerei dagli \textbf{ingredienti dell'EPC} (Event-driven Process Chain), disegnandoli:
+\begin{itemize}
+  \item \textbf{Event} — un \textbf{esagono}: qualcosa che è accaduto (pre- o post-condizione di una funzione).
+  \item \textbf{Function} — un \textbf{rettangolo arrotondato}: un'attività, un'unità di lavoro.
+  \item \textbf{Connettori logici} — \textbf{cerchi} contenenti $\wedge$ (AND), $\vee$ (OR) o \textsc{xor}: gestiscono split e join del flusso.
+  \item \textbf{Control flow} — una \textbf{freccia tratteggiata} che collega gli elementi.
+\end{itemize}
+Una regola caratteristica dell'EPC è l'\textbf{alternanza}: un evento è seguito da una funzione e viceversa (eventi e funzioni si alternano lungo il control flow).
+
+Poi gli elementi \textbf{BPMN} (Business Process Model and Notation), disegnandone la corrispondenza:
+\begin{itemize}
+  \item \textbf{Event} — un \textbf{cerchio}: il bordo ne dà il tipo (start = bordo sottile, intermediate = doppio bordo, end = bordo spesso), un marker interno il sotto-tipo (message, timer, error).
+  \item \textbf{Activity} — un \textbf{rettangolo arrotondato}: un task (atomico) o un sub-process (composto). Corrisponde alla function EPC.
+  \item \textbf{Gateway} — un \textbf{rombo} (diamante) con un marker interno: $+$ per il parallelo (AND), $\times$ per l'esclusivo (XOR), $\circ$ per l'inclusivo (OR). Corrisponde al connettore EPC.
+  \item \textbf{Sequence flow} — una \textbf{freccia piena} (l'ordine di esecuzione \emph{dentro} un pool).
+  \item \textbf{Swimlane} (pool e lane) — rettangoli che rappresentano i partecipanti/ruoli.
+  \item \textbf{Message flow} — una \textbf{freccia tratteggiata con un pallino}, per la comunicazione \emph{tra} pool diversi.
+\end{itemize}
+
+La corrispondenza si riassume bene in una tabella:
+
+\begin{center}
+\begingroup\small
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Concetto} & \textbf{EPC} & \textbf{BPMN} \\
+\midrule
+Evento & esagono & cerchio (bordo = tipo) \\
+Attività & function (rett. arrot.) & activity / task (rett. arrot.) \\
+Split / join logico & connettore (cerchio $\wedge\vee\textsc{xor}$) & gateway (rombo $+ \times \circ$) \\
+Flusso di controllo & control flow (freccia tratteggiata) & sequence flow (freccia piena) \\
+Responsabilità & organization unit & swimlane (pool / lane) \\
+Comunicazione & --- (non nativa) & message flow (tra pool) \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{center}
+
+Le \textbf{differenze sostanziali} da evidenziare all'orale:
+
+\begin{enumerate}
+  \item \textbf{Le swimlane e il message flow}. È la differenza più importante: BPMN ha nativamente i \textbf{pool} (partecipanti) collegati da \textbf{message flow}, quindi modella direttamente le \textbf{collaboration} (più organizzazioni che si scambiano messaggi). L'EPC non ha un costrutto nativo altrettanto forte per la comunicazione inter-organizzativa.
+  \item \textbf{Alternanza evento/funzione}. L'EPC \emph{impone} l'alternanza tra eventi e funzioni; BPMN è più libero (gli eventi sono opzionali, spesso si mettono solo start ed end).
+  \item \textbf{Ricchezza e complessità}. BPMN è lo standard industriale de facto (nasce per ridurre la frammentazione di BPEL, BPML, UML AD, \dots) con oltre \textbf{100 elementi grafici} e una specifica di 500 pagine: molto espressivo ma difficile da imparare a fondo, e vendor diversi ne implementano sottoinsiemi diversi. L'EPC è più semplice e ``accademico''.
+  \item \textbf{Il problema comune degli OR-join}. Entrambi soffrono della semantica non-locale dell'OR-join/gateway inclusivo: decidere se aspettare o meno un secondo input richiede di sapere ``dove i token non arriveranno mai'', informazione non-locale. In entrambe le notazioni la raccomandazione pratica è \textbf{evitare gli OR} quando possibile.
+\end{enumerate}
+
+Chiuderei con il collegamento all'analisi: entrambe si traducono in Petri net per verificarne la soundness — un BPMN \emph{process diagram} in un workflow net, un BPMN \emph{collaboration diagram} in un workflow system (più net che comunicano) — quindi la scelta della notazione non cambia gli strumenti di verifica, cambia solo l'espressività e la leggibilità del modello di partenza.
+
+\begin{puntochiave}{EPC vs BPMN}
+Corrispondenza diretta: evento(esagono/cerchio), function/activity(rett. arrot.), connettore/gateway(cerchio/rombo), control/sequence flow. Differenza chiave: BPMN ha \textbf{swimlane + message flow} $\Rightarrow$ modella le collaboration; EPC no. EPC impone l'alternanza evento/funzione; BPMN è più ricco (100+ simboli) ma complesso. Entrambi soffrono l'OR-join non-locale.
+\end{puntochiave}

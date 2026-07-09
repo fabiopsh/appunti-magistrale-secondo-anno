@@ -1,0 +1,33 @@
+\chapter{Grafi di raggiungibilità}
+
+\section{Reachability graph vs coverability graph}
+
+\begin{domanda}{$\times 1$}
+Qual è la \textbf{differenza tra reachability graph e coverability graph}?
+\end{domanda}
+
+Partirei da cosa sono entrambi e dal problema che il secondo risolve. Il \textbf{reachability graph} (o occurrence graph) è la rappresentazione esatta dello spazio degli stati: i nodi sono le marcature raggiungibili da $M_0$, e c'è un arco etichettato $t$ da $M$ a $M'$ ogni volta che $M \xrightarrow{t} M'$. Rappresenta \emph{tutti e soli} i comportamenti reali della rete.
+
+Il limite del reachability graph è che può essere \textbf{infinito}. Vale infatti il teorema: una rete è bounded $\iff$ il suo reachability graph è finito. Quindi, se la rete è \textbf{unbounded}, il reachability graph ha infiniti nodi (un place che accumula token dà una marcatura diversa per ogni valore) e non lo possiamo costruire né esplorare: l'algoritmo che lo genera non terminerebbe.
+
+Il \textbf{coverability graph} è la soluzione a questo problema: è una \textbf{sovra-approssimazione finita} del reachability graph, che ammette marcature ``con infiniti token'' in un place, rappresentati dal simbolo $\omega$ (o $\infty$).
+
+\begin{definizione}{Coverability graph}
+Una sovra-approssimazione \textbf{finita} del reachability graph, i cui nodi sono \textbf{extended bag} $B : P \to \mathbb{N} \cup \{\omega\}$, dove $\omega$ marca un place \textbf{illimitato}. Le operazioni trattano $\omega$ come assorbente: $\omega + n = \omega$, $\omega - n = \omega$, $\omega \ge n$ per ogni $n$ finito.
+\end{definizione}
+
+Il meccanismo con cui scopre i place unbounded sfrutta la \textbf{monotonicità} dei Petri net: se lungo il calcolo si trova $M_0 \xrightarrow{\ast} M \xrightarrow{\ast} M'$ con $M \subsetneq M'$ (la seconda contiene strettamente la prima), allora il ``surplus'' $L = M' - M$ può essere ripetuto all'infinito ($M, M+L, M+2L, \dots$), quindi ogni place $p$ con $L(p) > 0$ è unbounded e lo si marca con $\omega$. È così che gli infiniti nodi (``$o, 2o, 3o, \dots$'') collassano in un solo nodo ``$\omega\, o$'', mantenendo il grafo finito.
+
+Le \textbf{differenze} da enunciare in modo netto:
+\begin{itemize}
+  \item Il reachability graph è \textbf{esatto} ma \textbf{eventualmente infinito}; il coverability graph è \textbf{sempre finito} ma è una \textbf{sovra-approssimazione}.
+  \item Il coverability graph \textbf{non è unico}: dipende dall'ordine con cui l'algoritmo sceglie marcature e transizioni. Il reachability graph è unico.
+  \item Ogni firing sequence reale ha un cammino corrispondente nel coverability graph, ma \textbf{non vale il viceversa}: il coverability graph può suggerire comportamenti che nella rete reale non avvengono (è il prezzo dell'astrazione con $\omega$). Solo i cammini che visitano marcature \emph{finite} corrispondono sempre a vere firing sequence.
+  \item Se il reachability graph è \textbf{finito} (rete bounded), allora \textbf{coincide} col coverability graph.
+\end{itemize}
+
+La sintesi operativa: si usa il reachability graph quando la rete è bounded (allora è finito ed esatto); si ricorre al coverability graph solo quando serve dominare l'infinito di una rete unbounded, accettando che sia una sovra-approssimazione. Tool come WoPeD calcolano un coverability graph proprio per essere sempre in grado di terminare.
+
+\begin{puntochiave}{reachability vs coverability}
+Reachability graph: esatto, unico, ma infinito se la rete è unbounded (bounded $\iff$ finito). Coverability graph: sempre finito grazie a $\omega$ (place illimitati), ma sovra-approssimazione e non unico. Coincidono se la rete è bounded. $\omega$ scoperto via monotonicità sul pattern $M\subsetneq M'$.
+\end{puntochiave}

@@ -1,0 +1,113 @@
+\chapter{Liveness e boundedness}
+
+Sono le proprietà comportamentali di base, e i loro legami con gli S-invariant e con le classi speciali di reti tornano continuamente. Diverse domande chiedono anche di \emph{disegnare} controesempi: è il modo con cui il professore verifica che hai capito le definizioni e non solo memorizzato.
+
+\section{Boundedness: definizione, notazione, legame con gli S-invariant}
+
+\begin{domanda}{$\times 2$}
+Cos'è la \textbf{boundedness}: definizione, notazione matematica, legame con gli S-invariant.
+\end{domanda}
+
+La boundedness risponde alla domanda: esiste un limite al numero di token che un place può contenere? Se sì, quel place non può ``traboccare''; se no, il sistema può accumulare risorse senza fine — che nei processi reali è quasi sempre un bug (per esempio richieste che si accodano senza mai essere smaltite).
+
+\begin{definizione}{k-bounded, safe, bounded}
+\begin{itemize}
+  \item Un place $p$ è \textbf{k-bounded} se nessuna marcatura raggiungibile ha più di $k$ token in $p$.
+  \item Un place è \textbf{safe} se è 1-bounded (al più un token).
+  \item Un place è \textbf{bounded} se è k-bounded per qualche $k$; una rete è \textbf{bounded} se tutti i suoi place lo sono, \textbf{unbounded} altrimenti.
+\end{itemize}
+Formalmente, una rete è bounded se
+$$\exists k \in \mathbb{N}.\;\; \forall M \in [M_0\rangle.\;\; \forall p \in P.\;\; M(p) \le k$$
+\end{definizione}
+
+Il legame teorico da citare per primo è con l'occurrence graph: una rete è \textbf{bounded se e solo se il suo reachability graph è finito}. Se è k-bounded, con $n$ place ci sono al più $(k+1)^n$ marcature, quindi un numero finito di nodi; viceversa, se il grafo è finito, il massimo numero di token in un place su tutti i nodi è un limite. Come corollario, una rete è unbounded sse il suo reachability graph è infinito (e allora si ricorre al coverability graph per rappresentarlo in modo finito con il simbolo $\omega$).
+
+Il \textbf{legame con gli S-invariant}, che è la parte specificamente richiesta, è il seguente: se la rete ha un S-invariant \textbf{positive} $I$ (tutti i pesi $>0$), allora è bounded. La ragione è la proprietà fondamentale $I\cdot M = I\cdot M_0$: poiché tutti i pesi sono positivi, per ogni place $p$
+$$I(p)\,M(p) \le I\cdot M = I\cdot M_0 \quad\Longrightarrow\quad M(p) \le \frac{I\cdot M_0}{I(p)}$$
+che è un limite esplicito, uguale per tutte le marcature raggiungibili. Quindi \textbf{esibire un S-invariant positive è un certificato di boundedness}, ottenuto con puro calcolo algebrico senza esplorare gli stati. È esattamente il tipo di ragionamento ``strutturale $\to$ comportamentale'' che caratterizza gli invarianti.
+
+Aggiungerei il legame duale con i T-invariant: un sistema \emph{live} senza T-invariant positive è unbounded; equivalentemente, se una rete ha un S-invariant positive (quindi è bounded) ma nessun T-invariant positive, allora non può essere live.
+
+\begin{puntochiave}{boundedness}
+$\exists k.\ \forall M\in[M_0\rangle.\ \forall p.\ M(p)\le k$. Bounded $\iff$ reachability graph finito. Legame con S-invariant: un S-invariant \emph{positive} certifica la boundedness, con $M(p)\le I\cdot M_0/I(p)$.
+\end{puntochiave}
+
+\section{Tutto su liveness}
+
+\begin{domanda}{$\times 1$}
+Racconta \textbf{tutto sulla liveness}: definizione, notazione, place-live, non-live, e i legami con S-net, T-net e free-choice net.
+\end{domanda}
+
+La liveness riguarda il comportamento a lungo termine: una data attività potrà \textbf{sempre, prima o poi, essere eseguita}? Oppure può capitare di finire in uno stato da cui quell'attività non sarà \textbf{mai più} possibile? È la proprietà che garantisce che un processo non ``muoia pezzo per pezzo''.
+
+La cosa cruciale è che la liveness è \emph{molto} più forte del semplice ``la transizione scatta almeno una volta''. Una transizione può scattare all'inizio e poi morire per sempre: sarebbe \emph{non-dead} ma \textbf{non} live.
+
+\begin{definizione}{Transizione live}
+Una transizione $t$ è \textbf{live} se da \emph{ogni} marcatura raggiungibile si può \emph{sempre} tornare a poterla abilitare:
+$$\forall M \in [M_0\rangle.\;\; \exists M' \in [M\rangle.\;\; M' \xrightarrow{t}$$
+Una rete è \textbf{live} se tutte le sue transizioni sono live.
+\end{definizione}
+
+Il cuore è la struttura ``$\forall M\ \exists M'$'': non importa dove sei finito, una via per riabilitare $t$ c'è sempre. Le definizioni collegate si ottengono giocando con i quantificatori: $t$ è \textbf{dead} se non è abilitata in nessuna marcatura raggiungibile ($\forall M.\ M\centernot{\xrightarrow{t}}$); è \textbf{non-live} (la negazione di live) se \emph{esiste} una marcatura da cui, comunque si prosegua, $t$ non torna mai abilitabile ($\exists M.\ \forall M'\in[M\rangle.\ M'\centernot{\xrightarrow{t}}$); è \textbf{non-dead} se scatta almeno una volta. Il legame chiave: un sistema non è live sse ha una transizione che a un certo punto può \emph{diventare} dead.
+
+La stessa idea si trasporta ai \textbf{place}: un place $p$ è \textbf{live} se da ogni marcatura raggiungibile si può sempre tornare ad averlo marcato ($\forall M.\ \exists M'\in[M\rangle.\ M'(p)>0$). Una rete è \textbf{place-live} se tutti i suoi place lo sono. Il legame tra le due nozioni: \textbf{live $\Rightarrow$ place-live} (in ogni rete), ma \emph{non} viceversa in generale. La dimostrazione di ``live $\Rightarrow$ place-live'': dato $p$ e $M$, poiché non ci sono nodi isolati esiste una transizione $t$ che tocca $p$; per liveness da $M$ si raggiunge uno scatto di $t$, e prima o dopo quello scatto $p$ è marcato.
+
+C'è poi una proprietà più debole, la \textbf{deadlock-freedom}: la rete non si blocca mai del tutto, cioè ogni marcatura raggiungibile abilita \emph{qualche} transizione ($\forall M.\ \exists t.\ M\xrightarrow{t}$). Vale \textbf{live $\Rightarrow$ deadlock-free} (dimostrabile per assurdo: se ci fosse un deadlock $M$, l'unica marcatura raggiungibile da $M$ è $M$ stessa, contraddicendo la liveness di una qualsiasi $t$) e \textbf{place-live $\Rightarrow$ deadlock-free}, ma nessuna di queste implicazioni si inverte. In sintesi la gerarchia è: live $\Rightarrow$ place-live $\Rightarrow$ deadlock-free.
+
+Sui \textbf{legami con le classi di reti}, che è la parte più ricca:
+\begin{itemize}
+  \item \textbf{S-system}: è live $\iff$ è strongly connected e $M_0(P)\ge 1$ (c'è almeno un token in giro). Con un token e la strong connectedness, si sposta il token fino a qualunque transizione la si voglia abilitare.
+  \item \textbf{T-system}: è live $\iff$ ogni circuito è marcato in $M_0$ ($M_0(\gamma)>0$ per ogni circuito $\gamma$). Se un circuito ha zero token, resta vuoto per sempre e blocca le transizioni che vi si affacciano.
+  \item \textbf{Free-choice net}: qui \textbf{place-live $\iff$ live} (l'implicazione debole si inverte, grazie alla proprietà free-choice); inoltre, per il teorema di Commoner, è live $\iff$ ogni proper siphon include un trap inizialmente marcato. Decidere la sola liveness è NP-completo, ma liveness + boundedness è polinomiale (Rank Theorem).
+\end{itemize}
+
+\begin{puntochiave}{liveness}
+Live: $\forall M\,\exists M'\in[M\rangle.\ M'\xrightarrow{t}$ (da ovunque si può \emph{sempre} riabilitare $t$). Gerarchia: live $\Rightarrow$ place-live $\Rightarrow$ deadlock-free (nessuna si inverte in generale). Classi: S-system live $\iff$ strongly connected $+$ token; T-system live $\iff$ ogni circuito marcato; free-choice: place-live $\iff$ live, e Commoner via siphon/trap.
+\end{puntochiave}
+
+\section{Disegna una rete deadlock-free ma non live}
+
+\begin{domanda}{$\times 1$}
+Disegna una rete \textbf{deadlock-free ma non live}.
+\end{domanda}
+
+Questa domanda serve a far vedere che deadlock-freedom $\not\Rightarrow$ live, cioè che l'implicazione va in un solo verso. Devo costruire una rete che gira per sempre (c'è sempre almeno una mossa disponibile) ma che ha una transizione che, a un certo punto, non scatterà mai più.
+
+L'esempio canonico: due parti che ``si contendono'' l'evoluzione, con una transizione che rimane tagliata fuori. In pratica:
+
+\begin{itemize}
+  \item un place $p$ con un token che alimenta uno \textbf{XOR-split}: due transizioni $t_1$ e $t_2$ competono per quel token;
+  \item se scatta $t_2$, il token va in un place $q$ da cui una transizione $t_3$ lo riporta in $p$ (un ciclo $p \to t_2 \to q \to t_3 \to p$ che può girare all'infinito);
+  \item $t_1$, invece, porta il token in un ramo che a un certo punto non consente più di tornare in $p$ — oppure, più semplicemente, la scelta ripetuta di $t_2$ fa sì che $t_1$ resti abilitata ma possa non scattare mai.
+\end{itemize}
+
+La chiave da spiegare: finché il sistema continua a scegliere il ciclo $t_2$–$t_3$, è \textbf{deadlock-free} (da ogni marcatura c'è sempre una transizione abilitata, quelle del ciclo). Ma se pensiamo a una transizione ``laterale'' che, dopo una certa scelta, non riceve più il suo token — per esempio una $t_4$ che dipende da un place che si svuota definitivamente in uno dei rami — allora quella transizione diventa \textbf{dead} da quella marcatura in poi, e la rete \textbf{non è live}.
+
+Il controesempio più compatto che disegnerei alla lavagna è la classica rete con un place di scelta e un ramo ``a senso unico'': il ciclo tiene viva la rete (no deadlock), ma la transizione del ramo abbandonato muore. All'orale basta enunciare chiaramente: ``la rete gira per sempre grazie al ciclo, quindi è deadlock-free; ma esiste una marcatura da cui la transizione $t$ non è più riabilitabile, quindi non è live''.
+
+\begin{attenzione}{il refuso frequente}
+Nelle testimonianze compare spesso ``draw a net deadlock-free \emph{but} live'': è quasi certamente un refuso per ``deadlock-free ma \emph{non} live''. Una rete live è per definizione deadlock-free, quindi la domanda ``deadlock-free e live'' sarebbe banale. Vale la pena farlo notare al professore.
+\end{attenzione}
+
+\section{Disegna una rete non bounded}
+
+\begin{domanda}{$\times 1$}
+Disegna una rete \textbf{non bounded}.
+\end{domanda}
+
+Una rete è unbounded se esiste un place in cui può comparire un numero arbitrariamente grande di token. Il modo più diretto per costruirne una è un \textbf{ciclo che produce token in un place ``pozzo'' senza mai consumarli}.
+
+L'esempio minimale:
+\begin{itemize}
+  \item un place $i$ con un token, una transizione $t_1$ che lo porta in un place $p$;
+  \item da $p$ una transizione $t_2$ che, oltre a far proseguire il flusso (rimettendo un token in $p$, o tornando indietro in un ciclo), \textbf{deposita anche un token in un place $o$};
+  \item il place $o$ \textbf{non ha transizioni uscenti} che ne consumino i token.
+\end{itemize}
+
+Ad ogni giro del ciclo, $t_2$ aggiunge un token in $o$ senza che nessuno lo tolga: $o$ accumula $1, 2, 3, \dots$ token senza limite. Quindi $o$ è unbounded e la rete è unbounded.
+
+La lettura all'orale, che lega la costruzione alla teoria: il reachability graph di questa rete è \textbf{infinito} (una marcatura diversa per ogni valore di $o$), coerente con ``unbounded $\iff$ reachability graph infinito''. Per rappresentarlo in modo finito si usa il \textbf{coverability graph}, che rileva il pattern $M \subsetneq M'$ lungo il cammino (la marcatura si ripete ma con un token in più in $o$) e marca $o$ con il simbolo $\omega$ (``infiniti token''), collassando gli infiniti nodi in uno solo.
+
+\begin{puntochiave}{rete unbounded}
+Ciclo che produce token in un place $o$ senza consumarli: $o$ accumula token all'infinito. Reachability graph infinito; il coverability graph lo domina segnando $o$ con $\omega$ (rileva $M\subsetneq M'$ lungo il cammino).
+\end{puntochiave}

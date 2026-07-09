@@ -1,0 +1,61 @@
+\chapter{Analisi quantitativa}
+
+Cambio di registro: dalle domande qualitative (soundness, deadlock) a quelle quantitative (quanto è veloce, quanto costa). Little's law e la Cycle Time Efficiency sono le due domande più frequenti.
+
+\section{Little's Law}
+
+\begin{domanda}{$\times 2$}
+Enuncia e spiega la \textbf{Little's Law}.
+\end{domanda}
+
+Introdurrei le tre grandezze in gioco, perché la legge le collega. In un processo si osservano: l'\textbf{arrival rate} $\lambda$ (numero medio di nuovi casi creati per unità di tempo), il \textbf{Work-In-Process} $WIP$ (numero medio di casi \emph{attivi}, cioè non ancora completati, presenti in un dato istante), e il \textbf{cycle time} $CT$ (tempo medio per gestire un caso dall'inizio alla fine).
+
+\begin{teorema}{Little's Law}
+In un sistema \textbf{stabile} (il numero di casi attivi non cresce all'infinito):
+$$WIP = \lambda \cdot CT$$
+equivalentemente
+$$CT = \frac{WIP}{\lambda}$$
+\end{teorema}
+
+Il punto che rende la legge notevole, e che va sottolineato, è la sua \textbf{universalità}: non serve sapere \emph{nulla} della struttura interna del processo — niente sequenze, gateway, tempi delle singole attività. Bastano due grandezze \textbf{osservabili dall'esterno}: contare quanti casi arrivano (per $\lambda$) e contare quanti casi sono attivi in media (per $WIP$). Fu formulata da John Little nel 1954 e dimostrata nel 1961, e vale per qualsiasi sistema a coda stabile.
+
+Un esempio numerico rende la cosa concreta: se in un anno di 250 giorni lavorativi arrivano 2500 domande, allora $\lambda = 10$ domande/giorno. Se campionando nel tempo si osservano in media $WIP = 200$ domande attive contemporaneamente, allora
+$$CT = \frac{WIP}{\lambda} = \frac{200}{10} = 20 \text{ giorni}$$
+e abbiamo ottenuto il cycle time medio \textbf{senza mai} aver cronometrato una singola domanda.
+
+Chiuderei con la \textbf{lettura operativa}, che è ciò che interessa a un'azienda. Dalla relazione $WIP = \lambda \cdot CT$: se l'arrival rate $\lambda$ aumenta (più richieste in arrivo) e non si vuole far crescere il $WIP$ (cioè non si vuole impegnare più personale o spazio per gestire più casi contemporaneamente), l'\textbf{unica leva} rimasta è ridurre il cycle time $CT$ — cioè lavorare più in fretta, snellendo il processo. La legge quindi non è solo descrittiva: indica \emph{dove} intervenire.
+
+\begin{puntochiave}{Little's Law}
+$WIP = \lambda \cdot CT$ (in un sistema stabile). $\lambda$ = tasso di arrivo, $WIP$ = casi attivi in media, $CT$ = cycle time. Universale: non serve la struttura interna, solo due grandezze osservabili dall'esterno. Lettura: se $\lambda$ sale e il $WIP$ deve restare fisso, bisogna ridurre il $CT$.
+\end{puntochiave}
+
+\section{Cycle Time Efficiency}
+
+\begin{domanda}{$\times 2$}
+Cos'è la \textbf{Cycle Time Efficiency}: definizione e in quale intervallo varia ($[0,1]$).
+\end{domanda}
+
+Motiverei la nozione partendo dal fatto che il cycle time, da solo, non dice \emph{dove} si nasconde il tempo perso. Conviene scomporlo in due parti: il \textbf{waiting time} (la parte in cui \emph{nessuno} lavora sul caso — documenti in transito, attesa di un attore libero, code) e il \textbf{processing time} (il tempo in cui qualcuno \emph{lavora davvero} sul caso). In molti processi reali il waiting time è la componente \textbf{dominante}: lavorazioni a lotti, attori non disponibili, approvazioni che aspettano una firma.
+
+Per quantificare quanto ``tempo utile'' c'è nel cycle time si introduce il theoretical cycle time e poi il rapporto:
+
+\begin{definizione}{Theoretical cycle time e Cycle Time Efficiency}
+Il \textbf{theoretical cycle time} $TCT$ si calcola con le \emph{stesse formule} del cycle time (somma per la sequenza, media pesata per lo XOR, massimo per l'AND, \dots), ma usando i \textbf{processing time} al posto dei cycle time: è il tempo che il processo impiegherebbe se non ci fosse \emph{mai} attesa.
+
+La \textbf{Cycle Time Efficiency} è
+$$CTE = \frac{TCT}{CT}$$
+\end{definizione}
+
+Sull'\textbf{intervallo}, che è la parte esplicitamente richiesta: poiché il processing time è sempre una \emph{parte} del cycle time (il tempo di lavoro effettivo non può superare il tempo totale, che include anche l'attesa), vale sempre $TCT \le CT$, e quindi
+$$CTE \in [0, 1].$$
+L'interpretazione dei due estremi:
+\begin{itemize}
+  \item $CTE$ \textbf{vicino a $1$}: quasi tutto il cycle time è lavoro effettivo, c'è pochissima attesa. Resta poco margine di miglioramento senza cambiamenti radicali del processo.
+  \item $CTE$ \textbf{vicino a $0$}: il cycle time è quasi tutto attesa, il lavoro effettivo è una frazione minima. C'è \textbf{molto} margine di miglioramento riducendo il waiting time (per esempio eliminando code e passaggi di consegne inutili).
+\end{itemize}
+
+In pratica il $CTE$ è un ``termometro'' dell'efficienza temporale: dice quanto del tempo che un caso passa nel sistema è effettivamente produttivo. Un valore basso è un campanello d'allarme che indica dove intervenire (sull'attesa, non sulla velocità di lavoro).
+
+\begin{puntochiave}{Cycle Time Efficiency}
+$CTE = TCT/CT$, dove $TCT$ usa i \emph{processing time} (nessuna attesa) nelle stesse formule del cycle time. Poiché processing $\le$ cycle time, $CTE \in [0,1]$. Vicino a 1: poco da migliorare; vicino a 0: molta attesa, ampio margine riducendo il waiting time.
+\end{puntochiave}

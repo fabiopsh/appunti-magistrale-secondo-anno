@@ -1,0 +1,115 @@
+\chapter{Workflow net e soundness}
+
+Questo è l'argomento più chiesto in assoluto: la soundness è il risultato centrale del corso, perché è la nozione di ``correttezza'' di un processo di business e viene ricondotta a proprietà (liveness e boundedness) che sappiamo verificare con gli strumenti standard sui Petri net.
+
+\section{Le tre condizioni di soundness}
+
+\begin{domanda}{$\times 3$}
+Enuncia le \textbf{tre condizioni di soundness} di un workflow net, con la loro notazione formale (option to complete, proper completion, no dead transition).
+\end{domanda}
+
+Partirei mettendo a fuoco \emph{cosa} stiamo verificando. Un \textbf{workflow net} è un Petri net con una struttura particolare: un unico place iniziale $i$ senza archi entranti, un unico place finale $o$ senza archi uscenti, e ogni altro nodo che sta su almeno un cammino da $i$ a $o$. La marcatura iniziale è sempre \textbf{un solo token in $i$} (avviare un caso), e ``concludere il caso'' significa avere un token in $o$.
+
+Il punto chiave da sottolineare è che questa definizione è \textbf{puramente strutturale}: dipende solo dalla forma del grafo. Ci esclude già gli errori grossolani (nessun ingresso o uscita, ingressi multipli, nodi scollegati), ma \textbf{non} intercetta i difetti che emergono solo \emph{eseguendo} il processo: transizioni che non si possono mai eseguire, token che restano ``pendenti'' nella rete dopo che il caso è teoricamente finito, oppure casi che entrano in un ciclo e non terminano più (livelock). La soundness serve esattamente a vietare questi difetti comportamentali.
+
+Intuitivamente un processo è sound se: (1) non contiene task inutili, (2) ogni caso avviato può sempre essere portato a termine, (3) alla conclusione non restano item pendenti. Tradotto formalmente sui workflow net, le tre condizioni sono:
+
+\begin{definizione}{Soundness di un workflow net}
+Un workflow net è \textbf{sound} se valgono tutte e tre:
+\begin{enumerate}
+  \item \textbf{No dead task}: nessuna transizione è morta, cioè ogni transizione è eseguibile in qualche marcatura raggiungibile.
+  $$\forall t \in T.\;\; \exists M \in [i\rangle.\;\; M \xrightarrow{t}$$
+  \item \textbf{Option to complete}: da ogni marcatura raggiungibile si può sempre arrivare a marcare $o$.
+  $$\forall M \in [i\rangle.\;\; \exists M' \in [M\rangle.\;\; M'(o) \ge 1$$
+  \item \textbf{Proper completion}: quando $o$ è marcato, non resta nessun altro token nella rete.
+  $$\forall M \in [i\rangle.\;\; M(o) \ge 1 \;\Rightarrow\; M = o$$
+\end{enumerate}
+\end{definizione}
+
+All'orale è efficace abbinare ogni condizione al difetto che vieta: la \textbf{condizione 1} vieta i task \emph{dead} (attività inutili, mai eseguibili); la \textbf{condizione 2} vieta i \emph{livelock} e i casi che non terminano più; la \textbf{condizione 3} vieta i \emph{token o le attività pendenti} dopo la fine del caso.
+
+Vale la pena far notare la struttura dei quantificatori, perché è la stessa della liveness: la condizione 1 è un ``$\forall t\ \exists M$'' (per ogni task \emph{esiste} un modo di eseguirlo); la condizione 2 è un ``$\forall M\ \exists M'$'' (da \emph{ogni} marcatura \emph{esiste} una via verso $o$); la condizione 3 è un'implicazione ``$\forall M$, se $o$ è marcato allora è l'unica cosa marcata''.
+
+\begin{attenzione}{cosa NON dice l'option to complete}
+La condizione 2 \textbf{non} proibisce i cicli né mette un limite alle iterazioni: dice solo che da \emph{qualunque} marcatura raggiungibile deve \emph{esistere} una via verso $o$. Si assume implicitamente la \textbf{fairness} (una transizione non può essere rimandata all'infinito), quindi un ciclo va benissimo purché ci sia sempre un'uscita verso $o$.
+\end{attenzione}
+
+Chiuderei dicendo che verificare la soundness ``a forza bruta'' significa costruire il reachability graph e controllare che ogni transizione etichetti almeno un arco e che ci sia un unico stato finale (un solo token in $o$) raggiungibile da ogni altro stato. Ma è costoso (state explosion) e può non terminare: per questo esiste il teorema principale, che riconduce tutto a liveness e boundedness.
+
+\begin{puntochiave}{soundness}
+Tre condizioni: \textbf{no dead task} ($\forall t\,\exists M.\,M\xrightarrow{t}$), \textbf{option to complete} ($\forall M\,\exists M'.\,M'(o)\ge 1$), \textbf{proper completion} ($M(o)\ge 1 \Rightarrow M=o$). Vietano rispettivamente task inutili, non-terminazione, token pendenti.
+\end{puntochiave}
+
+\section{Il main theorem, con dimostrazione}
+
+\begin{domanda}{$\times 2$}
+Enuncia e dimostra il \textbf{main theorem}: $N$ sound $\iff N^\star$ live e bounded (in particolare la direzione sound $\Rightarrow$ liveness).
+\end{domanda}
+
+Introdurrei il teorema spiegando l'\emph{idea geniale} dietro. Verificare direttamente le tre condizioni di soundness è scomodo. La trasformazione consiste nel \textbf{far ripartire il processo da capo}: aggiungiamo alla rete una transizione \textbf{reset} che riporta il token da $o$ a $i$. Così, invece di fermarsi alla fine, il processo può essere ``giocato un numero qualsiasi di volte'', e possiamo applicare le proprietà di liveness e boundedness, che già sappiamo verificare con reachability graph, invarianti e tool come WoPeD.
+
+\begin{definizione}{La rete $N^\star$}
+Dato un workflow net $N : i \to o$, la rete $N^\star$ si ottiene aggiungendo la transizione \textbf{reset} con $\bullet\text{reset} = \{o\}$ e $\text{reset}\bullet = \{i\}$. Ogni volta che il processo raggiunge $o$, reset rimette il token in $i$ e il processo può ripartire.
+\end{definizione}
+
+\begin{teorema}{Main Theorem}
+$N$ è \textbf{sound} $\iff$ $N^\star$ è \textbf{live} e \textbf{bounded}.
+\end{teorema}
+
+Per la dimostrazione conviene legare ciascuna delle tre condizioni di soundness alle due proprietà di $N^\star$, ragionando sul \emph{perché} funziona:
+
+\begin{itemize}
+  \item \textbf{$N^\star$ live $\Rightarrow$ no dead task (cond. 1).} Se $N^\star$ è live, ogni sua transizione può sempre essere riabilitata in futuro; in particolare nessuna transizione è dead. Quindi vale la condizione 1 su $N$.
+  \item \textbf{$N^\star$ bounded $\Rightarrow$ proper completion (cond. 3).} Ragioniamo per assurdo. Se non valesse la proper completion, esisterebbe una marcatura raggiungibile con un token in $o$ \emph{più} qualche token residuo. A quel punto reset riporterebbe il token da $o$ a $i$, ma i residui resterebbero: ripetendo il giro si accumulerebbero token senza limite, cioè $N^\star$ sarebbe unbounded. La boundedness lo vieta, quindi la proper completion deve valere.
+  \item \textbf{live + bounded insieme $\Rightarrow$ option to complete (cond. 2).} La liveness garantisce che reset sia sempre riabilitabile; ma reset scatta solo se $o$ è marcato, quindi da ogni marcatura raggiungibile si può sempre arrivare a marcare $o$. Questa è esattamente la condizione 2.
+\end{itemize}
+
+Per la direzione che il professore chiede spesso in modo esplicito — \textbf{sound $\Rightarrow$ $N^\star$ bounded} — conviene mostrare la prova formale per assurdo, che usa il \emph{monotonicity lemma} delle matrici. Se $N^\star$ fosse unbounded, per il criterio del coverability graph esisterebbe una coppia di marcature raggiungibili
+$$i \xrightarrow{\ast} M \xrightarrow{\ast} M' \qquad \text{con } M \subsetneq M'$$
+cioè $M'$ contiene strettamente $M$. Sia $L = M' - M \succ 0$ il ``surplus'' di token prodotto dal giro. Per monotonicità, dalla marcatura in cui $N$ completa (un token in $o$) potremmo raggiungere
+$$o + L$$
+cioè un token in $o$ \emph{più} i token extra $L$: questo viola la proper completion, e quindi $N$ non sarebbe sound. Per contrapposizione, $N$ sound $\Rightarrow N^\star$ bounded. $\blacksquare$
+
+Chiuderei sottolineando la potenza del risultato: la soundness, che è una proprietà specifica dei workflow, viene ricondotta a due proprietà generali dei Petri net per cui esistono algoritmi e tool. E, come vedremo con le free-choice net, ``liveness + boundedness'' è addirittura decidibile in tempo polinomiale sulla classe di reti che i processi reali quasi sempre appartengono.
+
+\begin{puntochiave}{main theorem}
+$N$ sound $\iff N^\star$ live e bounded. Legami: live $\Rightarrow$ no dead task; bounded $\Rightarrow$ proper completion (altrimenti reset accumula i residui $\to$ unbounded); live + bounded $\Rightarrow$ option to complete. Prova ``sound $\Rightarrow$ bounded'' per assurdo col monotonicity lemma: dal surplus $L=M'-M$ si raggiungerebbe $o+L$, violando la proper completion.
+\end{puntochiave}
+
+\section{La short-circuit net \texorpdfstring{$N^\star$}{N*}}
+
+\begin{domanda}{$\times 1$}
+Cos'è la \textbf{short-circuit net} $N^\star$ e a cosa serve?
+\end{domanda}
+
+Questa domanda è in pratica un pezzo della precedente, isolato. Risponderei: $N^\star$ (detta anche \emph{short-circuit net}, perché ``cortocircuita'' l'uscita con l'ingresso) è la rete che si ottiene da un workflow net $N$ aggiungendo un'unica transizione \textbf{reset} con pre-set $\{o\}$ e post-set $\{i\}$. Serve a \textbf{trasformare un processo ``one-shot'' in un sistema ciclico}: chiudendo l'anello da $o$ a $i$, il processo diventa ripetibile all'infinito, e questo permette di applicare le nozioni di liveness e boundedness (che parlano del comportamento a lungo termine) a un oggetto che altrimenti termina dopo un solo caso.
+
+C'è anche una ragione strutturale elegante da menzionare: aggiungere reset rende $N^\star$ \textbf{strongly connected}. Infatti, presi due nodi qualsiasi, esiste sempre un cammino orientato tra loro passando per il ``giro'' $\cdots \to o \to \text{reset} \to i \to \cdots$, dato che in $N$ ogni nodo sta su un cammino $i \to o$. Questo è importante perché vale il teorema: un sistema weakly connected che è live e bounded è anche strongly connected; e reset garantisce proprio questa proprietà, rendendo ``innocua'' la trasformazione e abilitando il main theorem.
+
+\begin{puntochiave}{short-circuit net}
+$N^\star$ = $N$ + transizione reset ($o \to i$). Rende il processo ripetibile all'infinito, così liveness e boundedness diventano applicabili; inoltre rende la rete strongly connected. È il ponte per il main theorem: $N$ sound $\iff N^\star$ live e bounded.
+\end{puntochiave}
+
+\section{Disegnare una rete che viola la proper completion}
+
+\begin{domanda}{$\times 2$}
+Disegna una rete che \textbf{viola la proper completion}.
+\end{domanda}
+
+Qui il professore vuole vedere se hai capito \emph{davvero} la condizione 3. La proper completion dice: nell'istante in cui $o$ riceve il token, la rete deve essere vuota ovunque. Per violarla basta costruire un workflow net in cui, quando il token arriva in $o$, resta ancora un token ``dimenticato'' da qualche altra parte.
+
+Il modo più semplice e classico da disegnare alla lavagna è usare un \textbf{AND-split iniziale i cui rami non vengono risincronizzati prima della fine}. In parole:
+
+\begin{itemize}
+  \item dal place iniziale $i$ parte una transizione $t_{\text{start}}$ che è un \textbf{AND-split}: produce un token sia in un place $p_1$ sia in un place $p_2$ (due rami paralleli);
+  \item il ramo di $p_1$ prosegue con una transizione $t_a$ che porta il token fino a $o$;
+  \item il ramo di $p_2$, invece, termina in una transizione $t_b$ (o resta fermo) \textbf{senza mai ricongiungersi} al place finale $o$.
+\end{itemize}
+
+Quando $t_a$ scatta e mette il token in $o$, il ramo di $p_2$ ha ancora il suo token pendente: la marcatura raggiunta è ``$o + p_2$'' (o simile), che ha $M(o) \ge 1$ ma $M \ne o$. Questo viola esattamente la condizione $M(o)\ge 1 \Rightarrow M=o$.
+
+La lettura da dare all'orale: il difetto è un \textbf{AND-split senza AND-join corrispondente} — si aprono due fili di esecuzione paralleli ma se ne chiude solo uno, e l'altro lascia ``spazzatura'' nella rete a caso concluso. È il difetto tipico dei processi mal progettati con parallelismo sbilanciato.
+
+\begin{attenzione}{coerenza col main theorem}
+Su questa rete, $N^\star$ risulterebbe \textbf{unbounded}: ad ogni giro reset riporta il token da $o$ a $i$, ma il token residuo in $p_2$ si accumula, facendo crescere i token senza limite. È la controprova comportamentale della violazione di proper completion, coerente con ``bounded $\Rightarrow$ proper completion''.
+\end{attenzione}

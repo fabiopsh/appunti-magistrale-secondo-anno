@@ -1,0 +1,70 @@
+\chapter{Process mining e conformance}
+
+Il process mining ricava un modello dai dati (log); la conformance misura quanto un modello e un log reale concordano. Le domande tipiche sono i passi dell'$\alpha$-algorithm e la footprint matrix, che è il concetto-ponte tra i due.
+
+\section{Footprint matrix}
+
+\begin{domanda}{$\times 2$}
+Cos'è la \textbf{footprint matrix} / la notazione footprint?
+\end{domanda}
+
+Introdurrei l'oggetto partendo dalle \textbf{relazioni d'ordine basate sul log}, perché la footprint matrix non è altro che il modo compatto di raccoglierle tutte. Dato un event log (un multiset di trace, cioè sequenze di attività), la relazione di base è il \textbf{directly-follows}:
+$$a >_L b \quad\text{sse esiste una trace in cui } a \text{ è immediatamente seguito da } b.$$
+Da questa si derivano tre relazioni che descrivono la ``struttura'' tra due attività:
+
+\begin{definizione}{Le relazioni d'ordine}
+\begin{itemize}
+  \item \textbf{Causality} $a \to_L b$: vale $a >_L b$ ma non $b >_L a$ (l'ordine è sempre lo stesso $\Rightarrow$ dipendenza causale, prima $a$ poi $b$).
+  \item \textbf{Mutual exclusion} $a \#_L b$: né $a >_L b$ né $b >_L a$ (le due attività non sono mai adiacenti).
+  \item \textbf{Concurrency} $a \parallel_L b$: valgono \emph{entrambi} $a >_L b$ e $b >_L a$ (si osservano entrambi gli ordini $\Rightarrow$ le attività sono in parallelo, indipendenti).
+\end{itemize}
+\end{definizione}
+
+\begin{definizione}{Footprint matrix}
+La \textbf{footprint matrix} è una tabella con una riga e una colonna per ogni attività del log, dove ogni cella $(a,b)$ riporta la relazione che intercorre tra $a$ e $b$: una fra $\to$, $\leftarrow$, $\#$ o $\parallel$. È il ``riassunto strutturale'' completo del comportamento osservato.
+\end{definizione}
+
+Da dire sulla struttura della matrice: è \textbf{antisimmetrica} per le relazioni causali (se in $(a,b)$ c'è $\to$, allora in $(b,a)$ c'è $\leftarrow$), mentre $\#$ e $\parallel$ sono \textbf{simmetriche} (compaiono uguali nelle due celle speculari). Un log si dice \textbf{completo} rispetto al footprint se ogni coppia di attività che \emph{può} susseguirsi lo fa almeno una volta nel log.
+
+Il motivo per cui la footprint è importante è che serve in \textbf{due punti} del corso. Nella \textbf{discovery} ($\alpha$-algorithm) è il punto di partenza per costruire la rete. Nella \textbf{conformance} è un metodo di confronto leggero: si calcola la footprint sia dal \textbf{log} sia dal \textbf{modello} (estraendo trace dal net con la tecnica del \emph{play-out}), poi si confrontano le due matrici. La metrica è semplicissima:
+$$\text{conformance} = 1 - \frac{d}{n}$$
+dove $n$ è il numero totale di celle e $d$ il numero di celle nella stessa posizione ma con contenuto diverso fra le due matrici. Per esempio, se 12 celle su 64 differiscono, la conformance è $1 - 12/64 = 0.8125$. È un calcolo puramente combinatorio, molto più leggero del token replay — ma anche più grossolano, perché non tiene conto delle frequenze reali delle trace. Il confronto tra footprint permette tre usi: log vs modello (conformance vera e propria), modello vs modello (quanto due modelli si somigliano), log vs log (rileva il \emph{concept drift}, come cambia il modo di lavorare nel tempo).
+
+\begin{puntochiave}{footprint matrix}
+Tabella attività$\times$attività con la relazione per cella: $\to$/$\leftarrow$ (causalità), $\#$ (mai adiacenti), $\parallel$ (parallelismo), dedotte dal directly-follows $>_L$. Antisimmetrica per $\to$, simmetrica per $\#$ e $\parallel$. Usata sia nell'$\alpha$-algorithm sia nella conformance: $\text{conf}=1-d/n$ (celle discordanti su totali).
+\end{puntochiave}
+
+\section{Alpha algorithm}
+
+\begin{domanda}{$\times 2$}
+Descrivi i \textbf{passi dell'$\alpha$-algorithm}.
+\end{domanda}
+
+Contestualizzerei: l'$\alpha$-algorithm è uno dei primi algoritmi di \textbf{process discovery} capaci di gestire correttamente la concorrenza. Prende un event log e ne ricava un Petri net (idealmente una sound workflow net), con strategia \emph{play-in}: scandisce il log per estrarre le log-based ordering relations (la footprint), e con quelle costruisce la rete. L'idea di fondo è che ogni \textbf{place} della rete corrisponde a un ``punto di decisione'' tra un gruppo di attività che lo alimentano e un gruppo che ne consuma.
+
+\begin{definizione}{I passi dell'$\alpha$-algorithm}
+Dato un log $L$, si costruisce $\alpha(L) = (P_L, T_L, F_L, i_L)$:
+\begin{enumerate}
+  \item \textbf{$T_L$} — una transizione per ogni attività che compare nel log.
+  \item \textbf{$T_I$} — le attività che compaiono come \textbf{prima} (first) di almeno una trace: gli eventi iniziali.
+  \item \textbf{$T_O$} — le attività che compaiono come \textbf{ultima} (last) di almeno una trace: gli eventi finali.
+  \item \textbf{$X_L$} — le coppie di insiemi $(A,B)$ tali che ogni $a\in A$ è in causalità con ogni $b\in B$ ($a\to_L b$), tutte le attività di $A$ sono mutuamente esclusive fra loro ($\#_L$), e così tutte quelle di $B$. Sono i candidati ``punti di decisione''.
+  \item \textbf{$Y_L$} — si tengono solo le coppie \textbf{massimali} di $X_L$ (quelle non contenute in un'altra): $A$ e $B$ i più grandi possibile.
+  \item \textbf{$P_L$} — un place $p_{(A,B)}$ per ogni coppia in $Y_L$, più il place iniziale $i_L$ e quello finale $o_L$.
+  \item \textbf{$F_L$} — gli archi: da ogni $a\in A$ al place $p_{(A,B)}$ e dal place a ogni $b\in B$; inoltre da $i_L$ verso ogni transizione iniziale ($T_I$) e da ogni transizione finale ($T_O$) verso $o_L$.
+  \item \textbf{$\alpha(L)$} — la rete risultante, con marcatura iniziale un token in $i_L$.
+\end{enumerate}
+\end{definizione}
+
+Spiegherei che i \textbf{passi 4 e 5 sono il cuore} dell'algoritmo. Il passo 4 cerca ogni possibile ``gruppo di cause $A$ $\to$ gruppo di effetti $B$'' compatibile con la footprint: le attività dentro $A$ devono essere mutuamente esclusive (perché convergono tutte sullo stesso place, quindi sono alternative), e così quelle in $B$; e ogni $a$ deve causare ogni $b$. Il passo 5 tiene solo i gruppi \textbf{massimali}, perché un place che collega insiemi più ampi cattura meglio la struttura: un place per $(\{a\},\{b,e\})$ è più informativo di due place separati per $(\{a\},\{b\})$ e $(\{a\},\{e\})$.
+
+Concluderei con i \textbf{limiti}, che il professore apprezza perché mostrano cosa un semplice conteggio di adiacenze non cattura:
+\begin{itemize}
+  \item \textbf{Dipendenze implicite}: place ``ridondanti'' che vincolano scelte lontane non vengono ricostruiti (la footprint guarda solo le adiacenze dirette).
+  \item \textbf{Short loop}: i cicli corti (come $b,b$, o cicli di lunghezza due) confondono l'algoritmo, perché $a \parallel_L a$ non è distinguibile da un vero parallelismo.
+  \item \textbf{Noise}: l'algoritmo \textbf{non tiene conto delle frequenze}, quindi un comportamento raro pesa quanto uno comune e non c'è modo di ignorare le trace infrequenti (il rumore).
+\end{itemize}
+
+\begin{puntochiave}{$\alpha$-algorithm}
+8 passi: $T_L$ (transizioni), $T_I$/$T_O$ (attività iniziali/finali), $X_L$ (coppie $(A,B)$ con $A\to B$, $A$ e $B$ internamente $\#$), $Y_L$ (coppie massimali), $P_L$ (un place per coppia + $i_L,o_L$), $F_L$ (archi), rete finale. Cuore: passi 4--5. Limiti: dipendenze implicite, short loop, noise (ignora le frequenze).
+\end{puntochiave}

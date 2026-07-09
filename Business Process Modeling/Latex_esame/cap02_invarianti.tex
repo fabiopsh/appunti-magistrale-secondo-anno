@@ -1,0 +1,84 @@
+\chapter{Invarianti}
+
+Gli invarianti sono l'apice degli strumenti algebrici del corso: trasformano domande sul \emph{comportamento} (esplorare infiniti stati) in \emph{calcoli di algebra lineare} sulla struttura della rete. Molto chiesti, soprattutto gli S-invariant.
+
+\section{S-invariant: definizione, matematica, due teoremi}
+
+\begin{domanda}{$\times 3$}
+Cos'è un \textbf{S-invariant}: definizione, scrittura matematica ($I \cdot \mathbf{N} = 0$, con attenzione alla convenzione delle slide), cosa rappresenta, e i due teoremi (in particolare: S-invariant positive $\Rightarrow$ boundedness).
+\end{domanda}
+
+Partirei dall'intuizione, che è quella delle \textbf{monete}. Un S-invariant assegna a ogni place un \textbf{peso} (un ``valore''), in modo tale che la \textbf{somma pesata dei token} nella rete non cambi mai, qualunque scatto avvenga. L'immagine è: i token sono monete di taglio diverso a seconda del place in cui si trovano; una transizione conserva il valore totale solo se ``quello che entra vale quanto quello che esce''. Se questo vale per ogni transizione, la somma pesata è costante durante tutta l'esecuzione.
+
+\begin{definizione}{S-invariant}
+Un \textbf{S-invariant} (o place-invariant) di una rete $N=(P,T,F)$ è un vettore $I$ di lunghezza $|P|$, a valori razionali, che soddisfa
+$$I \cdot \mathbf{N} = \mathbf{0}$$
+dove $\mathbf{N}$ è la matrice di incidenza. È un sistema lineare \textbf{omogeneo}: la soluzione banale $I=\mathbf{0}$ c'è sempre, e ogni combinazione lineare di S-invariant è ancora un S-invariant (le soluzioni formano uno spazio vettoriale).
+\end{definizione}
+
+Sulla \textbf{convenzione delle slide} — che è il dettaglio su cui il professore insiste — va detto esplicitamente: qui $I$ è un vettore \emph{riga} e la matrice di incidenza $\mathbf{N}$ ha i \emph{place sulle righe} e le \emph{transizioni sulle colonne}. Quindi $I \cdot \mathbf{N} = \mathbf{0}$ è un vettore di lunghezza $|T|$ tutto nullo: una equazione per transizione. Se si usasse la convenzione trasposta bisognerebbe scrivere $\mathbf{N}^{\!\top} I = \mathbf{0}$; è per questo che conviene enunciare anche la caratterizzazione ``a occhio'', che è indipendente dalla convenzione:
+
+\begin{definizione}{S-invariant — caratterizzazione sul disegno}
+$I : P \to \mathbb{Q}$ è un S-invariant se e solo se, per \textbf{ogni transizione} $t$, il peso totale in ingresso eguaglia quello in uscita:
+$$\sum_{p \in \bullet t} I(p) = \sum_{p \in t\bullet} I(p)$$
+È esattamente la condizione ``monete in $=$ monete out'', transizione per transizione.
+\end{definizione}
+
+A questo punto enuncerei la \textbf{proprietà fondamentale}, che è il motivo per cui gli S-invariant sono utili, con la sua dimostrazione (breve e richiesta spesso):
+
+\begin{teorema}{Proprietà fondamentale degli S-invariant}
+Se $I$ è un S-invariant, allora per ogni marcatura raggiungibile $M \in [M_0\rangle$:
+$$I \cdot M = I \cdot M_0$$
+cioè la somma pesata dei token è costante durante tutta l'esecuzione.
+\end{teorema}
+
+La dimostrazione usa il marking equation lemma. Se $M$ è raggiungibile, esiste $\sigma$ con $M_0 \xrightarrow{\sigma} M$, e per la marking equation $M = M_0 + \mathbf{N}\cdot\vec{\sigma}$. Moltiplicando a sinistra per $I$:
+$$I \cdot M = I \cdot M_0 + I \cdot \mathbf{N} \cdot \vec{\sigma} = I \cdot M_0 + \mathbf{0}\cdot\vec{\sigma} = I \cdot M_0$$
+perché $I \cdot \mathbf{N} = \mathbf{0}$. $\blacksquare$
+
+Prima dei due teoremi applicativi serve una classificazione per segno: un S-invariant è \textbf{semi-positive} se $I \ge \mathbf{0}$ e $I \ne \mathbf{0}$ (nessun peso negativo, almeno uno positivo), ed è \textbf{positive} se $I(p) > 0$ per \emph{ogni} place (caso più forte). Il \emph{support} $\langle I\rangle = \{p \mid I(p)>0\}$ è l'insieme dei place con peso positivo; per un invariante positive è tutto $P$.
+
+\begin{teorema}{1) S-invariant positive $\Rightarrow$ boundedness}
+Se la rete ha un S-invariant \textbf{positive}, allora è \textbf{bounded}. Anzi, ogni place è limitato esplicitamente: da
+$$I(p)\,M(p) \;\le\; I \cdot M \;=\; I \cdot M_0$$
+segue
+$$M(p) \;\le\; \frac{I \cdot M_0}{I(p)}$$
+un limite \textbf{indipendente} dalla marcatura raggiungibile. Basta esibire un S-invariant positive per certificare la boundedness, senza esplorare gli stati.
+\end{teorema}
+
+\begin{teorema}{2) S-invariant semi-positive per disprovare la liveness}
+Se la rete è \textbf{live}, allora per ogni S-invariant semi-positive $I$ vale $I \cdot M_0 > 0$. Per contrapposizione: se troviamo un S-invariant semi-positive con $I \cdot M_0 = 0$, la rete \textbf{non è live}. (Se il valore iniziale è zero e i pesi sono $\ge 0$, i place del support restano vuoti per sempre, quindi le transizioni collegate sono dead.)
+\end{teorema}
+
+C'è anche un terzo uso, che vale la pena citare: poiché $I\cdot M = I\cdot M_0$ per ogni $M$ raggiungibile, se una marcatura $M$ ha $I\cdot M \ne I\cdot M_0$ per qualche S-invariant, allora $M$ \textbf{non è raggiungibile}. È un test veloce di non-raggiungibilità che evita il problema completo (EXPSPACE-hard).
+
+\begin{attenzione}{le implicazioni non si invertono}
+Sono condizioni sufficienti o necessarie, non equivalenze. \emph{Nessun} S-invariant positive non implica unbounded (potrebbe esserlo o no); $I\cdot M_0 > 0$ non implica live; $I\cdot M = I\cdot M_0$ non implica $M$ raggiungibile. Gli invarianti danno certezze solo ``in un verso''.
+\end{attenzione}
+
+\begin{puntochiave}{S-invariant}
+Peso sui place con somma pesata conservata: $I\cdot\mathbf{N}=\mathbf{0}$, equivalentemente $\sum_{\bullet t}I(p)=\sum_{t\bullet}I(p)$. Proprietà fondamentale: $I\cdot M = I\cdot M_0$ (prova con marking equation). Usi: positive $\Rightarrow$ bounded ($M(p)\le I\cdot M_0/I(p)$); semi-positive con $I\cdot M_0=0$ $\Rightarrow$ non-live; $I\cdot M\ne I\cdot M_0$ $\Rightarrow$ $M$ irraggiungibile.
+\end{puntochiave}
+
+\section{La proprietà fondamentale, con dimostrazione}
+
+\begin{domanda}{$\times 2$}
+Enuncia e dimostra la \textbf{proprietà fondamentale} degli S-invariant ($I \cdot M = I \cdot M_0$ per ogni $M$ raggiungibile).
+\end{domanda}
+
+Questa è la stessa dimostrazione riportata sopra, ma se viene chiesta isolata conviene esporla in modo autonomo, mettendo in evidenza che si appoggia \emph{tutta} sul marking equation lemma.
+
+Enuncio: se $I$ è un S-invariant (cioè $I\cdot\mathbf{N}=\mathbf{0}$), allora per ogni marcatura raggiungibile $M \in [M_0\rangle$ vale $I\cdot M = I\cdot M_0$. In parole, la quantità $I\cdot M$ (la somma pesata dei token) è un \emph{invariante del sistema}: non cambia mai, per quanti scatti si eseguano.
+
+Dimostrazione. Sia $M$ raggiungibile: esiste una firing sequence $\sigma$ tale che $M_0 \xrightarrow{\sigma} M$. Il \textbf{marking equation lemma} ci dice che
+$$M = M_0 + \mathbf{N}\cdot\vec{\sigma}$$
+dove $\vec{\sigma}$ è il Parikh vector di $\sigma$ (il conteggio di quante volte scatta ciascuna transizione). Moltiplico entrambi i membri a sinistra per il vettore $I$:
+$$I\cdot M = I\cdot M_0 + I\cdot\mathbf{N}\cdot\vec{\sigma}.$$
+Ma per ipotesi $I$ è un S-invariant, quindi $I\cdot\mathbf{N} = \mathbf{0}$, e il termine $I\cdot\mathbf{N}\cdot\vec{\sigma} = \mathbf{0}\cdot\vec{\sigma} = 0$ si annulla. Resta
+$$I\cdot M = I\cdot M_0. \qquad \blacksquare$$
+
+Un commento che fa buona impressione: la prova mostra \emph{perché} la definizione $I\cdot\mathbf{N}=\mathbf{0}$ è quella giusta. Non è una condizione arbitraria: è precisamente ciò che serve per far sparire il contributo degli scatti nell'equazione della marcatura, indipendentemente da \emph{quali} e \emph{quanti} scatti siano avvenuti. È il Parikh vector che ``dimentica l'ordine'', ma qui non serve nemmeno l'ordine: conta solo che $I$ annulli la matrice.
+
+\begin{puntochiave}{proprietà fondamentale}
+$I\cdot M = I\cdot M_0$ per ogni $M$ raggiungibile. Prova in due righe: marking equation $M=M_0+\mathbf{N}\vec\sigma$, moltiplico per $I$, uso $I\cdot\mathbf{N}=\mathbf{0}$, il termine di scatto sparisce. È la base di tutti gli usi degli S-invariant.
+\end{puntochiave}
