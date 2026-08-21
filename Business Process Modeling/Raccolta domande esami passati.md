@@ -4,33 +4,33 @@ tags:
   - esame
 corso: "MPB (6 cfu, 295AA)"
 professore: "Roberto Bruni"
-nota: "Domande raccolte da testimonianze di studenti di appelli passati, deduplicate e organizzate per argomento. ×N = chiesta N volte in testimonianze diverse (indicatore di frequenza)."
+nota: "Domande raccolte da quattro testimonianze di studenti di appelli passati, deduplicate e organizzate per argomento. ×N = chiesta N volte in testimonianze diverse (indicatore di frequenza)."
 ---
 
 # Raccolta domande esami passati
 
 > [!tip] Come leggere questo file
 >
-> Le domande provengono da tre testimonianze distinte e sono state deduplicate: **×N** indica in quante testimonianze compare la domanda (più è alto, più è probabile che esca). Ogni blocco rimanda alla lezione dove si trova la risposta.
+> Le domande provengono da quattro testimonianze distinte e sono state deduplicate: **×N** indica in quante testimonianze compare la domanda (più è alto, più è probabile che esca). Ogni blocco rimanda alla lezione dove si trova la risposta. Per le risposte pronte: [[Raccolta risposte esami passati]].
 
 ---
 
 ## Workflow net e soundness — [[12 - Soundness]]
 
 - **×3 — Le tre condizioni di soundness**, con la loro notazione formale (option to complete, proper completion, no dead transition).
-- **×2 — Il main theorem con dimostrazione**: $N$ sound $\iff$ $N^\star$ live e bounded (in particolare la direzione sound $\Rightarrow$ liveness).
-- **×2 — Disegna una rete che viola proper completion.**
+- **×3 — Il main theorem con dimostrazione**: $N$ sound $\iff$ $N^\star$ live e bounded (in particolare la direzione sound $\Rightarrow$ liveness).
+- **×3 — Disegna una rete che viola proper completion** (variante più precisa: una rete *senza* dead task, *con* option to complete, ma *senza* proper completion).
 - **×1 — La short-circuit net $N^\star$**: cos'è e a cosa serve.
 
 ## Invarianti — [[14 - Invariants]]
 
-- **×3 — S-invariant**: definizione, scrittura matematica ($I \cdot \mathbf{N} = 0$... attenzione alla convenzione delle slide), cosa rappresenta, e i **due teoremi** (in particolare: S-invariant positive $\Rightarrow$ boundedness).
-- **×2 — Proprietà fondamentale degli S-invariant, con dimostrazione** ($I \cdot M = I \cdot M_0$ per ogni $M$ raggiungibile).
+- **×4 — S-invariant**: definizione, scrittura matematica ($I \cdot \mathbf{N} = 0$), la **definizione alternativa** (somma pesata in ingresso = in uscita per ogni transizione), cosa rappresenta, e i **due teoremi** (in particolare: S-invariant positive $\Rightarrow$ boundedness).
+- **×3 — Proprietà fondamentale degli S-invariant, con dimostrazione** ($I \cdot M = I \cdot M_0$ per ogni $M$ raggiungibile).
 
 ## Liveness e boundedness — [[10 - Liveness]]
 
 - **×2 — Boundedness**: definizione, notazione matematica, legame con gli S-invariant.
-- **×1 — Tutto su liveness**: definizione, notazione, place-live, non-live, e i legami con S-net, T-net e free-choice net.
+- **×2 — Liveness e place-liveness**: definizioni, notazione, non-live, la relazione fra le due (live $\Rightarrow$ place-live), **quando vale l'equivalenza** (free-choice), e i legami con S-net e T-net.
 - **×1 — Disegna una rete deadlock-free ma non live.**
 - **×1 — Disegna una rete non bounded.**
 
@@ -59,14 +59,15 @@ nota: "Domande raccolte da testimonianze di studenti di appelli passati, dedupli
 
 - **×1 — Differenza tra reachability graph e coverability graph.**
 
-## EPC vs BPMN — [[07a - EPC e BPMN]], [[16b - BPMN Analysis]]
+## EPC vs BPMN — [[07a - EPC e BPMN]], [[16a - EPC Analysis]], [[16b - BPMN Analysis]]
 
 - **×2 — Differenza tra BPMN ed EPC, disegnandone la notazione.**
+- **×1 — EPC**: simboli, regole di buona formazione (obbligatorie e linee guida opzionali), e i **tre approcci di traduzione** EPC → Petri net.
 
 ## Process mining e conformance — [[05 - Process Mining]], [[19 - Conformance]]
 
-- **×2 — Footprint matrix / notazione footprint.**
-- **×2 — Alpha algorithm**: descriverne i passi.
+- **×3 — Footprint matrix / notazione footprint.**
+- **×3 — Alpha algorithm**: descriverne i passi.
 
 ## Analisi quantitativa — [[20 - Quantitative Analysis]]
 
