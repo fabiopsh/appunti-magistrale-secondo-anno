@@ -1,0 +1,327 @@
+\documentclass[8pt,a4paper]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[margin=0.6cm,top=0.5cm,bottom=0.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{needspace}
+
+\definecolor{tit}{RGB}{140,20,40}
+\definecolor{pf}{RGB}{20,80,150}
+
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{12pt}
+\setlength{\columnseprule}{0.3pt}
+\setlist[itemize]{leftmargin=10pt,itemsep=0pt,topsep=1pt,parsep=0pt}
+\setlist[enumerate]{leftmargin=13pt,itemsep=0pt,topsep=1pt,parsep=0pt}
+\abovedisplayskip=2.5pt \belowdisplayskip=2.5pt
+\abovedisplayshortskip=1.5pt \belowdisplayshortskip=1.5pt
+
+% marcatori richiesti
+\newcommand{\NOT}{\colorbox{black!12}{\scriptsize\textsf{NOTAZIONE}}}
+\newcommand{\PRF}{\colorbox{pf!20}{\scriptsize\textsf{PROOF}}}
+\newcommand{\topic}[2]{%
+  \Needspace*{5\baselineskip}%
+  \vspace{4pt}\noindent{\color{tit}\bfseries #1}\hfill #2\par
+  \vspace{0pt}{\color{tit}\rule{\linewidth}{0.7pt}}\par\vspace{1.5pt}}
+\newcommand{\D}[1]{\textbf{\textit{#1}}}
+\newcommand{\pre}[1]{{}^{\bullet}#1}
+\newcommand{\post}[1]{#1^{\bullet}}
+\newcommand{\pf}{{\color{pf}\itshape Dim.}~}
+\newcommand{\sq}{\hfill\ensuremath{\square}}
+
+\linespread{0.96}
+\pagestyle{empty}
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Business Process Modeling --- Notazioni per l'esame}\\[1pt]
+{\footnotesize \NOT{} = va saputa la notazione \qquad \PRF{} = va saputa anche la dimostrazione}
+\end{center}
+\vspace{-3pt}
+
+\small
+\begin{multicols*}{2}
+
+%---------------------------------------------------------------
+\topic{0. Base: reti di Petri (prerequisito)}{\NOT}
+Rete $N=(P,T,F)$, sistema $(P,T,F,M_0)$, marcatura $M:P\to\mathbb{N}$.
+$\pre{t}=\{p\mid (p,t)\in F\}$ (pre-set), $\post{t}=\{p\mid(t,p)\in F\}$ (post-set); analoghi $\pre{p},\post{p}$ (insiemi di transizioni).
+\begin{itemize}
+\item $t$ \D{abilitata} in $M$: $\pre{t}\subseteq M$, si scrive $M\xrightarrow{t}$ o $M[t\rangle$; \ non abilitata: $M\not\xrightarrow{t}$.
+\item Scatto: $M\xrightarrow{t}M'$ con $M'=M-\pre{t}+\post{t}$.
+\item $\sigma=t_1\dots t_{n-1}\in T^*$: \ $M\xrightarrow{\sigma}M'$ sse $\exists M_1,\dots,M_n$ con
+\[M=M_1,\quad M'=M_n,\quad M_i\xrightarrow{t_i}M_{i+1}\ \ \forall\, 1\le i<n\]
+e $M\xrightarrow{\epsilon}M$ (analogo per $\sigma\in T^\omega$ infinita).
+\item Raggiungibilità: $M\xrightarrow{*}M'$; \ $[M\rangle=\{M'\mid M\xrightarrow{*}M'\}$.
+\item Grafo delle occorrenze: $OG(N)=([M_0\rangle,A)$, $A\subseteq[M_0\rangle\times T\times[M_0\rangle$,
+\[(M,t,M')\in A \iff M\xrightarrow{t}M'\]
+\item Matrice di incidenza $C=N\in\mathbb{R}^{|P|\times|T|}$:
+\[ C(p,t)=\begin{cases}-1 & (p,t)\in F\ \wedge\ (t,p)\notin F\\ +1 & (p,t)\notin F\ \wedge\ (t,p)\in F\\ \ \ 0 & \text{altrimenti}\end{cases}\]
+Scatto in forma vettoriale: $M+t_j=M+C(\cdot,t_j)=M'$.
+\item \D{Workflow net}: unico posto iniziale $i$ con $\pre{i}=\emptyset$, unico posto finale $o\neq i$ con $\post{o}=\emptyset$, ogni altro nodo su un cammino da $i$ a $o$. Linguaggio: $L(N)=\{\sigma\mid i\xrightarrow{\sigma}o\}$.
+\item \D{Cammino} $x_1\dots x_k$: $(x_i,x_{i+1})\in F$; \D{circuito} se i nodi sono distinti e $(x_k,x_1)\in F$; \D{indiretto} se $(x_i,x_{i+1})\in F\cup F^{-1}$. Rete \D{debolmente} / \D{fortemente connessa} = cammino indiretto / diretto tra ogni coppia di nodi.
+\end{itemize}
+
+%---------------------------------------------------------------
+\topic{1. Parikh vector}{\NOT}
+Sia $\sigma\in T^*$. Il \D{vettore di Parikh} $\vec{\sigma}:T\to\mathbb{N}$ mappa ogni $t\in T$ nel numero delle sue occorrenze in $\sigma$:
+\[\vec{\epsilon}=0,\qquad
+\vec{t}=[\,0\ \dots\ \underbrace{1}_{t}\ \dots\ 0\,],\qquad
+\vec{\sigma t}=\vec{\sigma}+\vec{t}\]
+La marcatura finale dipende solo da $\vec{\sigma}$, non dall'ordine di scatto.
+
+%---------------------------------------------------------------
+\topic{2. Marking equation lemma}{\PRF}
+\textbf{Lemma.} Se $M\xrightarrow{\sigma}M'$, allora $M'=M+N\cdot\vec{\sigma}$.
+
+\pf per induzione sulla lunghezza di $\sigma$.\\
+\emph{Caso base} ($\sigma=\epsilon$): $\vec{\epsilon}=0$, quindi $M'=M$: banale.\\
+\emph{Passo induttivo} ($\sigma=\sigma' t$): sia $M\xrightarrow{\sigma'}M''\xrightarrow{t}M'$. Allora
+\begin{align*}
+M' &= M''+t = M''+N\cdot\vec{t}\\
+   &= M+N\cdot\vec{\sigma'}+N\cdot\vec{t} &&\text{(ip.\ ind.)}\\
+   &= M+N\cdot(\vec{\sigma'}+\vec{t}) = M+N\cdot\vec{\sigma t} = M+N\cdot\vec{\sigma}
+\end{align*}
+\vspace{-11pt}\sq\par
+\textbf{Monotonicità 1.} $M\xrightarrow{\sigma}M'\Rightarrow M+L\xrightarrow{\sigma}M'+L$ per ogni $L$.\\
+\textbf{Monotonicità 2.} $M\xrightarrow{\sigma}\ \Rightarrow M+L\xrightarrow{\sigma}$ per ogni $L$ ($\sigma$ anche infinita).\\
+\textbf{Cor.} Se $M\xrightarrow{\sigma}M'$ con $M\subseteq M'$, allora $M\xrightarrow{\sigma\sigma\dots}$.\\
+\textbf{Boundedness lemma.} Sistema bounded, $M\in[M_0\rangle$, $M\supseteq M_0$ $\Rightarrow M=M_0$.
+\pf $M_0\xrightarrow{\sigma}M=M_0+L$; per monotonicità $M_0\xrightarrow{\sigma}M_1\xrightarrow{\sigma}M_2\dots$ con $M_k=M_0+kL$; bounded $\Rightarrow L=\emptyset$.\sq\\
+\textbf{Repetition lemma.} $M\xrightarrow{\sigma}M'$ e $M\xrightarrow{\sigma\sigma\dots}$ $\Rightarrow M\subseteq M'$.
+
+%---------------------------------------------------------------
+\topic{3. S-Invariants}{\NOT\ \PRF}
+\D{S-invariante} (place invariant) di $N=(P,T,F)$: soluzione razionale di $x\cdot N=0$, equivalentemente $I:P\to\mathbb{Q}$ tale che
+\[\sum_{p\in\pre{t}}I(p)=\sum_{p\in\post{t}}I(p)\qquad \forall t\in T\]
+(pesi sui posti: la somma pesata dei token resta costante). \D{T-invariante}: soluzione di $N\cdot y=0$, cioè $J:T\to\mathbb{Q}$ con
+\[\sum_{t\in\pre{p}}J(t)=\sum_{t\in\post{p}}J(t)\qquad \forall p\in P\]
+\begin{itemize}
+\item \D{Supporto} $\langle I\rangle=\{p\mid I(p)>0\}$; per ogni invariante semi-positivo (S- o T-) vale $\pre{\langle I\rangle}=\post{\langle I\rangle}$.
+\item \D{semi-positivo}: $I\ge0,\ I\neq0$; \ \D{positivo}: $I\succ0$; \ \D{uniforme}: coefficienti tutti $0$ o tutti $1$.
+\item Combinazione lineare di S-invarianti è S-invariante:
+\[(k_1I_1+k_2I_2)N=k_1(I_1N)+k_2(I_2N)=k_1 0+k_2 0=0\]
+\end{itemize}
+\textbf{Prop. (fondamentale).} Se $I$ è S-invariante, $\forall M\in[M_0\rangle$: \ $I\cdot M=I\cdot M_0$.
+\pf per il marking equation lemma $I\cdot M=I\cdot(M_0+N\vec{\sigma})=I\cdot M_0+0$.\sq
+
+\textbf{Teo.} Se il sistema ha un S-invariante positivo, allora è bounded.
+\pf $\forall p$: $I(p)M(p)\le I\cdot M=I\cdot M_0$; $I(p)>0$ quindi $M(p)\le \dfrac{I\cdot M_0}{I(p)}$.\sq\\
+Basta un $I$ positivo per garantire boundedness \emph{per qualsiasi} $M_0$; con $I$ semi-positivo sono bounded i posti in $\langle I\rangle$.
+
+\textbf{Teo.} Se il sistema è live, allora $I\cdot M_0>0$ per ogni $I$ semi-positivo.
+\pf sia $p\in\langle I\rangle$, $t\in\pre{p}\cup\post{p}$. Per liveness esistono $M,M'\in[M_0\rangle$ con $M\xrightarrow{t}M'$: $M(p)>0$ se $t\in\post{p}$, $M'(p)>0$ se $t\in\pre{p}$. In ogni caso $I\cdot M\ge I(p)M(p)>0$, e $I\cdot M_0=I\cdot M=I\cdot M'>0$.\sq\\
+$\Rightarrow$ un $I$ semi-positivo con $I\cdot M_0=0$ certifica che il sistema \emph{non} è live.
+
+\textbf{Raggiungibilità.} $M,M'$ \D{d'accordo} sugli S-invarianti se $I\cdot M=I\cdot M'\ \forall I$ (equivale a: $N\cdot y=M'-M$ ha soluzione reale). Se non sono d'accordo non sono raggiungibili l'una dall'altra; la raggiungibilità è decidibile ma EXPSPACE-hard, quindi si usa il test efficiente:
+\[\exists I:\ I\cdot M\neq I\cdot M_0\ \ \text{oppure}\ \ N\cdot y=M-M_0\ \text{senza soluzioni}\ \implies M\notin[M_0\rangle\]
+
+\textbf{Prop. (fondamentale dei T-invarianti).} Sia $M\xrightarrow{\sigma}M'$: \ $\vec{\sigma}$ è T-invariante sse $M'=M$.\\
+\textbf{Teo.} Sistema bounded e live $\Rightarrow$ ha un T-invariante positivo (cassetti su $[M_0\rangle$ finito).\\
+\textbf{Teo.} Rete debolmente connessa live e bounded $\Rightarrow$ fortemente connessa; idem se ha un S-invariante positivo \emph{e} un T-invariante positivo.
+
+%---------------------------------------------------------------
+\topic{4. Liveness e Place-Liveness}{\NOT\ \PRF}
+Sia $(P,T,F,M_0)$ un sistema.
+\begin{itemize}
+\item $t\in T$ \D{live}: \ $\forall M\in[M_0\rangle.\ \exists M'\in[M\rangle.\ M'\xrightarrow{t}$; \ sistema \D{live} = tutte le transizioni live.
+\item $t$ \D{dead} per $M$: \ $\forall M'\in[M\rangle.\ M'\not\xrightarrow{t}$ \ (dead $\Rightarrow$ non-live, non viceversa: una $t$ non-live può \emph{diventare} dead).
+\item $p\in P$ \D{live}: \ $\forall M\in[M_0\rangle.\ \exists M'\in[M\rangle.\ M'(p)>0$; \ sistema \D{place-live} = tutti i posti live.
+\item $p$ \D{dead} per $M$: \ $\forall M'\in[M\rangle.\ M'(p)=0$.
+\item \D{Deadlock-free}: \ $\forall M\in[M_0\rangle.\ \exists t\in T.\ M\xrightarrow{t}$.
+\end{itemize}
+\emph{Su $OG(N)$}: $t$ live sse da ogni nodo si raggiunge un arco etichettato $t$; $t$ dead per $M_0$ sse nessun arco è etichettato $t$; $p$ live sse da ogni nodo si raggiunge un nodo con token in $p$; deadlock-free sse ogni nodo ha un arco uscente.
+
+live $\Rightarrow$ place-live, non viceversa (in un sistema place-live una $t$ può non scattare mai perché i posti del suo pre-set non sono marcati \emph{contemporaneamente}).
+
+\textbf{Lemma.} Se $(P,T,F,M_0)$ è live, allora è deadlock-free.
+\pf per assurdo: sia $M\in[M_0\rangle$ con $M\not\rightarrow$ e sia $t\in T$. Per liveness $\exists M'\in[M\rangle$ con $M'\xrightarrow{t}$. Ma $M\not\rightarrow$ implica $[M\rangle=\{M\}$, quindi $M=M'$ e $M\xrightarrow{t}$: assurdo.\sq\\
+Il contrario non vale. \emph{Invarianza}: liveness, deadlock-freedom, boundedness e ciclicità valgono anche per ogni $M\in[M_0\rangle$.
+
+%---------------------------------------------------------------
+\topic{5. Boundedness (definizione)}{\NOT\ \PRF}
+\begin{itemize}
+\item $p$ \D{$k$-bounded}: \ $\forall M\in[M_0\rangle.\ M(p)\le k$; \ sistema $k$-bounded se ogni posto lo è.
+\item $p$ \D{bounded}: \ $\exists k\in\mathbb{N}.\ \forall M\in[M_0\rangle.\ M(p)\le k$; \ sistema \D{bounded} se ogni posto è bounded.
+\item $p$ \D{safe} = $1$-bounded; sistema safe se ogni posto è safe.
+\item \D{Home marking}: raggiungibile da ogni marcatura raggiungibile. Sistema \D{ciclico}/\D{reversibile}: $M_0$ è home marking. (liveness, safeness e reversibilità sono proprietà indipendenti tra loro.)
+\end{itemize}
+\textbf{Teo.} Sistema bounded $\Rightarrow$ grafo di raggiungibilità finito.
+\pf $\exists k.\forall M\in[M_0\rangle.\forall p.\ M(p)\le k$; con $n=|P|$ ci sono al più $(k+1)^n$ marcature raggiungibili (tutte le combinazioni, incluso posto vuoto), e ognuna è un nodo del grafo.\sq
+
+\textbf{Teo.} Grafo di raggiungibilità finito $\Rightarrow$ sistema bounded.
+\pf sia $k_M$ il max numero di token in uno stesso posto nel nodo $M$, e $k=\max\{k_M\mid M\in OG(N)\}$: esiste perché il grafo è finito. Il sistema è $k$-bounded.\sq
+
+Quindi: reachability graph finito \emph{sse} la rete è bounded. Se è unbounded si usa il \emph{coverability graph}, approssimazione finita con \D{extended bag} $B:P\to\mathbb{N}\cup\{\infty\}$ ($\infty$ sui posti unbounded).
+
+%---------------------------------------------------------------
+\topic{6. Soundness: tre condizioni}{\NOT}
+Una workflow net $N:i\to o$ è \D{sound} se:
+\begin{enumerate}
+\item (\D{No dead tasks}) ogni transizione è abilitabile:
+\[\forall t\in T.\ \exists M\in[i\rangle.\ M\xrightarrow{t}\]
+\item (\D{Option to complete}) per ogni token in $i$, un token raggiungerà $o$:
+\[\forall M\in[i\rangle.\ \exists M'\in[M\rangle.\ M'(o)\ge 1\]
+\item (\D{Proper completion}) quando un token raggiunge $o$, gli altri posti sono vuoti:
+\[\forall M\in[i\rangle.\ M(o)\ge 1\implies \forall p\in P\setminus\{o\}.\ M(p)=0\]
+\end{enumerate}
+Cioè: nessun task inutile, ogni caso completato, nessun oggetto in sospeso alla fine.\\
+\D{Weak soundness}: solo (2)+(3), sono ammessi dead task; garantisce deadlock-freedom e terminazione (usata per workflow module/system).
+
+%---------------------------------------------------------------
+\topic{7. Main Theorem}{\PRF}
+$N^*$ = workflow net $N:i\to o$ più la transizione $reset:o\to i$.
+
+\textbf{Teorema (principale).} $N$ è sound $\iff$ $N^*$ è live e bounded.
+
+\pf \emph{($\Leftarrow$) $N^*$ live e bounded $\Rightarrow N$ sound}: per liveness, $\forall t\in T\ \exists M\in[i\rangle.\ M\xrightarrow{t}$ (cond.\ 1). Sia $M\in[i\rangle$ che abilita $reset$, quindi con $o\subseteq M$, e $M\xrightarrow{reset}M'$: allora $M'\in[i\rangle$ e $i\subseteq M'$. Poiché $N^*$ è bounded, necessariamente $M=o$ e $M'=i$ (altrimenti gli altri posti sarebbero unbounded): valgono anche le cond.\ 2 e 3.
+
+\emph{($\Rightarrow$) $N$ sound $\Rightarrow N^*$ bounded}: per assurdo $N^*$ unbounded, cioè $\exists M,M'$ con $i\xrightarrow{*}M\xrightarrow{*}M'$ e $M\subset M'$; sia $L=M'-M\neq\emptyset$. $N$ sound $\Rightarrow\exists\sigma\in T^*$ con $M\xrightarrow{\sigma}o$; per monotonicità $M'=M+L\xrightarrow{\sigma}o+L$, quindi $o+L\in[i\rangle$: assurdo, viola la cond.\ 3.
+
+\emph{($\Rightarrow$) $N$ sound $\Rightarrow N^*$ live}: sia $t\in T$ e $M$ raggiungibile in $N^*$; per il lemma seguente $M$ è raggiungibile in $N$. Per la cond.\ 2 $\exists\sigma: M\xrightarrow{\sigma}o$, e per la cond.\ 1 $\exists\sigma': i\xrightarrow{\sigma'}M'\xrightarrow{t}$. Posto $\sigma''=\sigma\,reset\,\sigma'$: $M\xrightarrow{\sigma''}M'\xrightarrow{t}$, quindi $N^*$ è live.\sq
+
+\textbf{Lemma.} $N$ sound: $M$ è raggiungibile in $N$ sse è raggiungibile in $N^*$.
+\pf ($\Rightarrow$) banale ($N^*$ esegue più run di $N$). ($\Leftarrow$) induzione sul numero $r$ di occorrenze di $reset$ in $\sigma$. Base $r=0$: $reset$ non scatta, $M$ è raggiunta prima di ricominciare la run. Passo $r>0$: sia $t_k$ la prima occorrenza di $reset$ e $\sigma=\sigma' t_k\sigma''$ con $\sigma'$ scattabile in $N$; $N$ sound $\Rightarrow i\xrightarrow{\sigma'}o$ (cond.\ 2) e $i\xrightarrow{\sigma''}M$, con $\sigma''$ contenente $r-1$ reset: per ip.\ induttiva $M$ è raggiungibile in $N$.\sq
+
+\textbf{Lemma.} $N^*$ è fortemente connessa (da $(x,y)\in F_{N^*}$ si compone $y\xrightarrow{*}o\to reset\to i\xrightarrow{*}x$).
+
+\textbf{Lemma.} $N$ sound: se $(i,t)\in F$ allora $\pre{t}=\{i\}$; se $(t,o)\in F$ allora $\post{t}=\{o\}$.
+
+%---------------------------------------------------------------
+\topic{8. S-net, S-System e proprietà}{\NOT\ \PRF}
+$N$ è una \D{S-net} se ogni transizione ha esattamente un posto di input e uno di output:
+\[\forall t\in T.\quad |\pre{t}|=|\post{t}|=1\]
+$(N,M_0)$ è un \D{S-system} se $N$ è una S-net. Duale: \D{T-net} se $\forall p\in P.\ |\pre{p}|=|\post{p}|=1$.
+
+\textbf{Prop.} Workflow net $N$ è S-net sse $N^*$ è S-net ($reset$ ha $\pre{reset}=\{o\}$, $\post{reset}=\{i\}$).
+
+\textbf{Prop. (fondamentale degli S-system).} Sia $(P,T,F,M_0)$ un S-system. Se $M$ è raggiungibile, allora $M(P)=M_0(P)$ (numero totale di token invariante).
+\pf si mostra che $M\xrightarrow{\sigma}M'\Rightarrow M(P)=M'(P)$ per induzione su $|\sigma|$. Base ($\sigma=\epsilon$): banale. Passo ($\sigma=\sigma't$, $M\xrightarrow{\sigma'}M''\xrightarrow{t}M'$): per ip.\ induttiva $M(P)=M''(P)$, e $|\pre{t}|=|\post{t}|=1$, quindi
+\[M(P)=M''(P)=M''(P)-\pre{t}+\post{t}=M'(P)\qquad\sq\]
+
+\textbf{Cor.} Un S-system è sempre bounded.
+\pf $M(p)\le M(P)=M_0(P)$ per ogni $p$: $k$-bounded per $k\ge M_0(P)$.\sq
+
+\textbf{Prop.} Sia $N$ una S-net connessa: $I$ è S-invariante sse $I=[k\dots k]$.
+\pf $I$ S-invariante sse $\sum_{p\in\pre{t}}I(p)=\sum_{p\in\post{t}}I(p)\ \forall t$; con $\pre{t}=\{p^t\}$, $\post{t}=\{p_t\}$ si ha $I(p^t)=I(p_t)\ \forall t$, e per connessione tutti i valori coincidono.\sq
+
+\textbf{Teo.} Un S-system $(N,M_0)$ è live sse $N$ è fortemente connessa e $M_0$ marca almeno un posto.
+\pf ($\Rightarrow$) l'S-system è bounded ed è live per ipotesi, quindi per il teorema di strong connectedness $N$ è fortemente connessa; essendo live, $M_0\xrightarrow{t}$ per qualche $t$ con $\pre{t}=\{p\}$, dunque $M_0(P)\ge1$. ($\Leftarrow$) sia $p_1$ con $M(p_1)\ge1$ (esiste perché $M(P)=M_0(P)\ge1$); per forte connessione esiste un cammino $(p_1,t_1),(t_1,p_2),\dots,(p_n,t)$ e, per definizione di S-system, $\pre{t_i}=p_i$, $\post{t_i}=p_{i+1}$; quindi $M\xrightarrow{\sigma}M'\xrightarrow{t}$ con $\sigma=t_1\dots t_{n-1}$.\sq
+
+\textbf{Lemma.} $(P,T,F)$ S-net fortemente connessa: se $M(P)=M'(P)$ allora $M'$ è raggiungibile da $M$.\\
+\textbf{Teo.} $(P,T,F,M_0)$ S-system live: $M$ è raggiungibile sse $M(P)=M_0(P)$.
+
+\textbf{Teo.} Se una workflow net $N$ è un S-system, allora è \emph{safe e sound}.
+\pf \emph{Safeness}: $N$ S-system $\Rightarrow N^*$ S-system; $M_0(P)=1$ (un solo token, in $i$), quindi entrambe sono 1-bounded = safe. \emph{Soundness}: $N$ workflow net $\Rightarrow N^*$ fortemente connessa, e $M_0(P)\ge1$, quindi $N^*$ è live; $N^*$ live e bounded sse $N$ sound (Main Theorem).\sq
+
+\textbf{T-system (duale).} Per un circuito $\gamma$ con posti $P_{|\gamma}$: $M(\gamma)=\sum_{p\in P_{|\gamma}}M(p)$, e $\gamma$ è \D{marked in $M$} se $M(\gamma)>0$. Proprietà fondamentale: $M$ raggiungibile $\Rightarrow M(\gamma)=M_0(\gamma)$. T-system fortemente connesso $\Rightarrow$ bounded (safe se $M_0(\gamma)\le1\ \forall\gamma$); è \emph{live sse ogni circuito è marcato in $M_0$}. Una workflow net non è mai T-net, ma se $N^*$ lo è, $N$ è safe e sound sse ogni circuito in $N^*$ è marcato.
+
+%---------------------------------------------------------------
+\topic{9. Free-choice nets}{\NOT}
+$(P,T,F)$ è \D{free-choice} --- definizioni equivalenti:
+\begin{align*}
+&\forall p\in P,\forall t\in T:\ (p,t)\in F \implies \pre{t}\times\post{p}\subseteq F\\
+&\forall p,q\in P,\forall t,u\in T:\ \{(p,t),(q,t),(p,u)\}\subseteq F \implies (q,u)\in F\\
+&\forall p,q\in P:\quad \post{p}=\post{q}\quad\text{oppure}\quad \post{p}\cap\post{q}=\emptyset\\
+&\forall t,u\in T:\quad \pre{t}=\pre{u}\quad\text{oppure}\quad \pre{t}\cap\pre{u}=\emptyset
+\end{align*}
+$(N,M_0)$ è un \D{free-choice system} se $N$ è free-choice.
+
+\textbf{Prop.} Free-choice system: se $M\xrightarrow{t}$ e $t\in\post{p}$, allora $M\xrightarrow{t'}$ per ogni $t'\in\post{p}$ (scelta "libera").
+\pf tutte le transizioni con $p$ nel pre-set condividono con $t$ l'intero pre-set, quindi sono abilitate.\sq
+
+\textbf{Prop.} Workflow net $N$ free-choice sse $N^*$ free-choice ($reset$ non condivide pre-/post-set).\\
+\textbf{Prop.} Free-choice place-live $\Rightarrow$ live. \ \textbf{Cor.} Free-choice: live \emph{sse} place-live.\\
+\textbf{Lemma.} Workflow net free-choice sound $\Rightarrow$ safe.\\
+\textbf{Prop.} $N,N'$ workflow net free-choice sound $\Rightarrow N[N'/t]$ è free-choice sound.
+
+\textbf{S-coverability.} \D{S-component}: sottorete $N'=(P\cap X,T\cap X,F\cap(X\times X))$, $\emptyset\subset X\subseteq P\cup T$, che è S-net fortemente connessa con $\pre{p}\cup\post{p}\subseteq X\ \forall p\in X\cap P$. \D{S-cover}: insieme di S-component che copre tutti i posti ($\Rightarrow$ ognuna induce un S-invariante uniforme, la somma è invariante dell'intera rete). \textbf{Teo.} Free-choice live e bounded $\Rightarrow$ S-coverable; \textbf{Cor.} $N$ sound e free-choice $\Rightarrow N^*$ S-coverable.
+
+%---------------------------------------------------------------
+\topic{10. Commoner's theorem e Rank theorem}{\NOT}
+\D{Cluster} di un nodo $x$: $[x]$ è il più piccolo insieme tale che
+\[x\in[x];\quad p\in[x]\cap P\Rightarrow\post{p}\subseteq[x];\quad t\in[x]\cap T\Rightarrow\pre{t}\subseteq[x]\]
+\D{Insieme stabile}: $\mathbf{M}$ è stabile se $M\in\mathbf{M}\Rightarrow[M\rangle\subseteq\mathbf{M}$.\\
+\D{Sifone}: $R\subseteq P$ con $\pre{R}\subseteq\post{R}$; \D{proprio} se $R\neq\emptyset$.\\
+\D{Trappola}: $R\subseteq P$ con $\pre{R}\supseteq\post{R}$; propria se $R\neq\emptyset$.
+\begin{itemize}
+\item Sifoni unmarked restano unmarked $\Rightarrow$ sifone marcato in $M$ raggiungibile era marcato in $M_0$.
+\item Trappole marked restano marked $\Rightarrow$ trappola non marcata in $M$ raggiungibile era non marcata in $M_0$.
+\item Unione di trappole (sifoni) è trappola (sifone):
+\[\post{(R_1\cup R_2)}=\post{R_1}\cup\post{R_2}\subseteq\pre{R_1}\cup\pre{R_2}=\pre{(R_1\cup R_2)}\]
+\item Sistema live $\Rightarrow$ ogni sifone proprio è marcato; sifone non marcato $\Rightarrow$ non live.
+\end{itemize}
+\textbf{Teo. (Commoner's theorem).} Un free-choice system è \emph{live} sse ogni sifone proprio include una trappola inizialmente marcata.
+
+Quindi è non-live sse esiste un sifone proprio che contiene solo trappole non marcate (basta la trappola massimale non marcata). Decidere la non-liveness è NP-completo (riduzione da CNF-SAT); algoritmo non-deterministico: scegli $R\subseteq P$, verifica che sia sifone, calcola la trappola massimale $Q\subseteq R$, e se $M_0(Q)=0$ il sistema non è live.
+
+\emph{Trappola massimale in $R$} (polinomiale): $Q:=R$; \ \textbf{while} $(\exists p\in Q,\ \exists t\in\post{p},\ t\notin\pre{Q})$ \ $Q:=Q\setminus\{p\}$; \ ritorna $Q$.
+
+\textbf{Teo. (Rank theorem).} Un free-choice system $(P,T,F,M_0)$ è \emph{live e bounded} sse (ogni condizione è polinomiale):
+\begin{enumerate}
+\item ha almeno un posto e una transizione;
+\item è connesso;
+\item $M_0$ marca ogni sifone proprio;
+\item ha un S-invariante positivo;
+\item ha un T-invariante positivo;
+\item $rank(N)=|C_N|-1$, dove $C_N$ è l'insieme dei cluster di $N$.
+\end{enumerate}
+\emph{Sifone massimale non marcato} (punto 3): input $R=\{p\mid M_0(p)=0\}$; $Q:=R$; \ \textbf{while} $(\exists p\in Q,\ \exists t\in\pre{p},\ t\notin\post{Q})$ \ $Q:=Q\setminus\{p\}$; \ ritorna $Q$: se $Q=\emptyset$, $M_0$ marca ogni sifone.
+
+%---------------------------------------------------------------
+\topic{11. Analisi quantitativa (flow analysis)}{\NOT}
+$CT$ = average cycle time (waiting + processing time), da quando l'attività è pronta a quando termina. Notazione: $CT_A,CT_B,\dots$ per attività, $CT_1,\dots,CT_n$ per sottoprocessi $P_1,\dots,P_n$.
+\begin{itemize}
+\item \textbf{Sequenza} di $P_1,\dots,P_n$: \ $\displaystyle CT=\sum_{i=1}^{n}CT_i$
+\item \textbf{Scelta} (XOR-split), branching probabilities $p_1,\dots,p_k$ con $\sum_i p_i=1$:
+\[CT=\sum_{i=1}^{k}p_i\cdot CT_i\]
+\item \textbf{Parallelismo} (AND-split + AND-join): si attende il branch più lento:
+\[CT=\max_i\{CT_i\}\]
+\item \textbf{Loop do-while} (1-or-more), rework probability $r$, $CT_P$ = CT dei task nel loop:
+\[CT=\sum_{i=1}^{\infty} i\cdot CT_P\cdot r^{i-1}(1-r)=CT_P(1-r)\frac{1}{(1-r)^2}=\frac{CT_P}{1-r}\]
+\item \textbf{Loop while-do} (0-or-more), l'esecuzione iniziale non è garantita:
+\[CT=\sum_{i=1}^{\infty} i\cdot CT_P\cdot r^{i}(1-r)=CT_P\,r(1-r)\frac{1}{(1-r)^2}=\frac{r\cdot CT_P}{1-r}\]
+\item \textbf{Cost analysis}: formule identiche, \emph{ma} nei blocchi AND il costo è la \emph{somma} dei branch (non il massimo).
+\item \textbf{Cycle time efficiency}, con $TCT$ = theoretical cycle time (stesse formule sui soli processing time):
+\[CTE=\frac{TCT}{CT}\in[0,1]\]
+$CTE\approx1$: attesa trascurabile; $CTE\approx0$: il $CT$ è quasi tutto waiting time.
+\item \textbf{Legge di Little}, con $\lambda$ = arrival rate, $WIP$ = work-in-process:
+\[WIP=\lambda\cdot CT\qquad\Longrightarrow\qquad CT=\frac{WIP}{\lambda}\]
+\end{itemize}
+\emph{Limiti}: valide solo per processi strutturati a blocchi; i $CT$ vanno stimati (es.\ dai log); non modellano la variazione del carico (carico $\uparrow$ e risorse costanti $\Rightarrow$ waiting time $\uparrow$).
+
+%---------------------------------------------------------------
+\topic{12. $\alpha$-algorithm}{\NOT}
+Sia $A$ un insieme di attività: un \D{simple trace} $\sigma$ è una sequenza finita di attività, un \D{simple event log} $L$ è un multiset di tracce, es.\ $L_1=[\langle a,b,c,d\rangle^3,\langle a,c,e\rangle^2,\langle a,e,d\rangle]$.
+
+\textbf{Log-based ordering relations} (riassunte nella \emph{footprint matrix}):
+\begin{itemize}
+\item $a$ \emph{talvolta immediatamente seguito da} $b$: \ $a>_L b$ sse $\exists\sigma=\langle t_1,\dots,t_n\rangle\in L$, $\exists i\in\{1,\dots,n-1\}$ con $t_i=a$ e $t_{i+1}=b$
+\item \textbf{Causalità}: $a\rightarrow_L b$ sse $a>_L b$ e $b\not>_L a$
+\item \textbf{Mutua esclusione}: $a\#_L b$ sse $a\not>_L b$ e $b\not>_L a$
+\item \textbf{Concorrenza}: $a\parallel_L b$ sse $a>_L b$ e $b>_L a$
+\end{itemize}
+\textbf{Passi:}
+\begin{enumerate}
+\item Transizioni: \ $T_L=\{t\in T\mid \exists\sigma\in L.\ t\in\sigma\}$
+\item Transizioni iniziali e finali:
+\[T_I=\{t\mid\exists\sigma\in L.\ t=first(\sigma)\},\quad T_O=\{t\mid\exists\sigma\in L.\ t=last(\sigma)\}\]
+\item Coppie di insiemi (\D{decision point}) dalla footprint matrix:
+\[X_L=\left\{(A,B)\ \middle|\ \begin{aligned}&A,B\subseteq T_L\ \wedge\ A,B\neq\emptyset\ \wedge\ \forall a\in A,\forall b\in B.\ a\rightarrow_L b\\ &\wedge\ \forall a,a'\in A.\ a\#_L a'\ \wedge\ \forall b,b'\in B.\ b\#_L b'\end{aligned}\right\}\]
+\item Solo i decision point massimali:
+\[Y_L=\{(A,B)\in X_L\mid\forall (A',B')\in X_L.\,A\!\subseteq\!A'\wedge B\!\subseteq\!B'\Rightarrow(A',B')\!=\!(A,B)\}\]
+\item Posti (uno per coppia rimasta, più iniziale e finale):
+\[P_L=\{p_{(A,B)}\mid (A,B)\in Y_L\}\cup\{i_L,o_L\}\]
+\item Archi:
+\[\begin{aligned}F_L=\ &\{(i_L,t)\mid t\in T_I\}\ \cup\ \{(t,o_L)\mid t\in T_O\}\ \cup\\ &\{(a,p_{(A,B)})\mid (A,B)\in Y_L\wedge a\in A\}\ \cup\\ &\{(p_{(A,B)},b)\mid (A,B)\in Y_L\wedge b\in B\}\end{aligned}\]
+\item Rete risultante: \ $\alpha(L)=(P_L,T_L,F_L,i_L)$
+\end{enumerate}
+\emph{Limiti}: non cattura dipendenze implicite (decision point massimali che condividono eventi $\to$ posti inutili); non identifica loop di lunghezza 1 o 2; sensibile al noise (ignora le frequenze).
+
+\end{multicols*}
+\end{document}
