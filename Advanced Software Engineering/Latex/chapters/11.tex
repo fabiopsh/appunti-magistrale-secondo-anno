@@ -1,0 +1,197 @@
+\chapter{Paradigmi emergenti}\label{ch-11}
+
+\lecturemeta{Capitolo originale: 11 --- Emerging Paradigms in Computing \quad\textbullet\quad Antonio Brogi}{Appunti di Emiliano Sescu (github.com/Faxatos), cap. 11}
+
+\section{Cloud-Edge Continuum}\label{cloud-edge-continuum}
+
+\begin{boxdefinition}{Cloud-Edge Continuum}
+
+Il \textbf{Cloud-Edge Continuum} unisce i punti di forza
+dell'\textbf{Edge Computing} (elaborare i dati vicino a dove vengono
+prodotti) e del \textbf{Cloud Computing}, estendendo i servizi cloud
+fino all'\textbf{Internet of Things} (IoT). Il risultato è
+un'infrastruttura \textbf{distribuita ed eterogenea}.
+
+\end{boxdefinition}
+
+Vantaggi principali:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Potenza di calcolo}: si possono usare sia le risorse del cloud
+  sia i dispositivi edge.
+\item
+  \textbf{Connettività}: comunicazione migliore tra dispositivi, con
+  trasferimento di dati più fluido.
+\item
+  \textbf{Bassa latenza}: elaborare i dati vicino alla loro fonte riduce
+  i ritardi e rende il sistema più reattivo.
+\end{itemize}
+
+Le applicazioni del futuro saranno soprattutto \textbf{a microservizi in
+container}, eseguite su un'infrastruttura continua Cloud-Edge. Gestirle
+però è difficile, perché sia l'infrastruttura sia le applicazioni
+cambiano di continuo:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Cambiamenti dell'infrastruttura}: il carico dei nodi può
+  spostarsi, latenza e banda possono variare, i nodi possono entrare o
+  uscire dalla rete all'improvviso, e possono esserci interruzioni
+  temporanee di connessione.
+\item
+  \textbf{Cambiamenti delle applicazioni}: il codice e i requisiti
+  cambiano e richiedono adattamenti rapidi.
+\end{itemize}
+
+Per questo il deploy delle applicazioni va \textbf{gestito di continuo},
+anche dopo il primo avvio.
+
+\subsection{Monitoraggio}\label{monitoraggio}
+
+Serve un monitoraggio efficace sia delle applicazioni sia
+dell'infrastruttura: un sistema \textbf{leggero}, \textbf{tollerante ai
+guasti} e capace di adattarsi ai cambiamenti.
+
+Un metodo efficace è il \textbf{continuous reasoning}: si analizzano
+sistemi grandi concentrandosi sui \textbf{cambiamenti recenti} e
+\textbf{riusando i risultati precedenti} dove possibile. Nel continuum
+bisogna considerare insieme i cambiamenti dell'applicazione e
+dell'infrastruttura per decidere se sostituire, spostare, riavviare o
+scalare i servizi.
+
+Un esempio recente è \textbf{FogBrainX}
+(\href{https://github.com/di-unipi-socc/fogbrainx}{GitHub}), che
+confronta le differenze nelle specifiche dell'applicazione e nei dati
+monitorati dell'infrastruttura. Aiuta a decidere dove collocare i
+servizi (\emph{placement}):
+
+\begin{itemize}
+\tightlist
+\item
+  adattandosi ai cambiamenti dell'infrastruttura (es. risorse dei nodi o
+  qualità della rete), che possono richiedere di spostare dei servizi;
+\item
+  adattandosi ai cambiamenti nei requisiti dei servizi (software,
+  hardware, IoT) o nelle esigenze di comunicazione, che possono
+  richiedere aggiornamenti;
+\item
+  gestendo l'aggiunta o la rimozione di servizi o di requisiti di
+  comunicazione nelle specifiche dell'applicazione.
+\end{itemize}
+
+Prese le decisioni, FogBrainX le passa a \textbf{FogArm}, che esegue i
+comandi di gestione sull'infrastruttura Cloud-IoT.
+
+\subsection{Gestione decentralizzata}\label{gestione-decentralizzata}
+
+Per la gestione decentralizzata ci sono due approcci interessanti:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Gestione osmotica} (\emph{osmotic management}): i servizi
+  dell'applicazione si adattano in base alle risorse disponibili e alle
+  esigenze dell'applicazione. Le politiche di gestione possono
+  disinstallare, spostare o scalare le applicazioni in tempo reale.
+\item
+  \textbf{Gestione decentralizzata} ispirata al comportamento dei
+  \textbf{batteri}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ogni istanza dell'applicazione ha un proprio \textbf{agente di
+    gestione} (una specie di mini-unità di gestione);
+  \item
+    \textbf{regole semplici} fanno scattare azioni (es. disinstallare o
+    replicare) in base ai dati monitorati;
+  \item
+    dai comportamenti locali \textbf{emerge} un comportamento globale
+    flessibile, utile per infrastrutture grandi, anche se più complesso
+    da gestire.
+  \end{itemize}
+\end{itemize}
+
+\section{Quantum Software
+Engineering}\label{quantum-software-engineering}
+
+\begin{boxdefinition}{Quantum Software Engineering (QSE)}
+
+La \textbf{Quantum Software Engineering} applica solidi principi di
+ingegneria allo sviluppo, all'esercizio e alla manutenzione del
+\textbf{software quantistico} e della sua documentazione. L'obiettivo è
+creare software quantistico affidabile, efficiente sui computer
+quantistici e con costi contenuti.
+
+\end{boxdefinition}
+
+Il \textbf{Manifesto di Talavera} per la QSE indica alcuni principi
+importanti, tra cui:
+
+\begin{itemize}
+\tightlist
+\item
+  la QSE deve essere compatibile con diversi linguaggi e tecnologie di
+  programmazione quantistica;
+\item
+  bisogna integrare calcolo \textbf{classico e quantistico}, usando i
+  computer quantistici soprattutto per i compiti specifici in cui sono
+  migliori (es. i problemi di fattorizzazione).
+\end{itemize}
+
+\subsection{Quantum Broker}\label{quantum-broker}
+
+Un esempio pratico di QSE è il \textbf{Quantum Broker}, che risponde
+alla domanda: ``\textbf{Quale computer quantistico devo usare per
+eseguire il mio algoritmo?}''. È utile soprattutto per chi non conosce
+bene i vari provider quantistici.
+
+Anche dopo aver scelto un provider e avviato gli algoritmi, possono
+esserci problemi:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Disponibilità}: cosa succede se il computer quantistico
+  diventa non disponibile durante l'esecuzione?
+\item
+  \textbf{Requisiti}: come bilanciare costo, tempo e accuratezza?
+\item
+  \textbf{Personalizzazione}: come adattare il modo in cui si sceglie il
+  computer quantistico alle proprie esigenze?
+\end{itemize}
+
+\begin{boxdefinition}{Shot e distribuzione degli shot}
+
+Un circuito quantistico ha un risultato \textbf{probabilistico}, quindi
+lo si esegue molte volte: ogni esecuzione è uno \textbf{shot}. Mettendo
+insieme i risultati di tutti gli shot si ottiene la distribuzione
+statistica dei risultati. La \textbf{distribuzione degli shot} consiste
+nel dividere gli shot di un circuito tra \textbf{più computer
+quantistici} e poi combinare i dati per avere il quadro completo.
+
+\end{boxdefinition}
+
+Dato un circuito quantistico e dei requisiti specifici, il quantum
+broker sceglie il miglior insieme di computer quantistici su cui
+distribuire gli shot. Per ogni computer scelto individua i
+\textbf{compilatori} più adatti e il \textbf{numero di shot} da
+eseguire. I vantaggi sono:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Resilienza migliore}: dividere il lavoro tra sistemi
+  quantistici diversi aumenta la tolleranza ai guasti.
+\item
+  \textbf{Alta personalizzazione}: si può controllare molto nel
+  dettaglio come vengono gestiti i calcoli.
+\item
+  \textbf{Distribuzioni parziali}: ogni computer produce una
+  distribuzione parziale, e le parziali si combinano per ottenere una
+  visione completa dell'esecuzione del circuito, con la possibilità di
+  metodi di unione più sofisticati.
+\end{itemize}

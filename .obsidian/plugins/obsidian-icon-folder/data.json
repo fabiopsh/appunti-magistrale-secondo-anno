@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiAstroid",
       "LiGitBranchPlus",
       "LiImages",
       "LiNotebook",
-      "LiDatabaseZap",
-      "LiAnvil"
+      "LiDatabaseZap"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -57,7 +57,7 @@
   "Business Process Modeling/Appunti/18 - Workflow Systems.md": "LiWorkflow",
   "Business Process Modeling/Appunti/19 - Conformance.md": "LiAlbum",
   "Business Process Modeling": "LiBriefcaseBusiness",
-  "Advanced Software Engineering": "LiHardDrive",
+  "Advanced Software Engineering": "LiAstroid",
   "Business Process Modeling/Slide_Lezioni": "LiFileSliders",
   "Business Process Modeling/Appunti": "LiFileVideoCamera",
   "Business Process Modeling/Appunti/20 - Quantitative Analysis.md": "LiShieldQuestion",
