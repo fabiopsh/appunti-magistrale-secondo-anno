@@ -159,6 +159,22 @@ reti neurali profonde una componente critica dell'informatica''.
 
 \end{boxnote}
 
+\begin{boxnote}{Premi Nobel 2024}
+
+Nel 2024 il ML è arrivato anche ai Nobel: - \textbf{Fisica}: a
+\textbf{John Hopfield} e \textbf{Geoffrey Hinton} per le scoperte e
+invenzioni fondamentali che permettono il machine learning con le reti
+neurali artificiali (la rete di Hopfield come memoria associativa, la
+macchina di Boltzmann). - \textbf{Chimica}: a \textbf{Demis Hassabis} e
+\textbf{John Jumper} (Google DeepMind) per la predizione della struttura
+delle proteine con \textbf{AlphaFold}, e a \textbf{David Baker} per la
+progettazione computazionale di proteine. Hassabis: \emph{``Ho sempre
+pensato che, se riuscissimo a costruire l'AI nel modo giusto, potrebbe
+essere lo strumento definitivo per aiutare gli scienziati a esplorare
+l'universo che ci circonda.''}
+
+\end{boxnote}
+
 \subsection{Lo scopo ultimo}\label{lo-scopo-ultimo}
 
 Tutto ciò che è potente può essere pericoloso se usato male, ma lo scopo
@@ -335,50 +351,190 @@ alla fine.
 La densità del corso non è uniforme: l'introduzione è lenta e
 ``morbida'', il nucleo (reti neurali, SVM, validazione) è denso e
 consequenziale, la parte avanzata è veloce ma meno densa. Il progetto
-può iniziare circa a metà corso.
+(opzionale) viene annunciato circa a metà corso.
 
-\subsection{Esame}\label{esame}
-
-L'esame si compone di:
+\subsection{Organizzazione pratica}\label{organizzazione-pratica}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Progetto}, svolto in gruppi di 2 o 3 studenti, consegnato una
-  sola volta e discusso insieme all'orale. Può essere di \textbf{tipo A}
-  (implementazione da zero di una rete neurale, linguaggio libero) o di
-  \textbf{tipo B} (uso di librerie di ML esistenti, con maggiore sforzo
-  nella parte sperimentale e di confronto). Il voto non dipende dal tipo
-  ma dalla qualità. Comprende codice (tipo A), risultati --- inclusa la
-  competizione con \emph{blind test} \textbf{ML-CUP} --- e un report in
-  forma di slide su un template. La consegna va fatta circa 10--14
-  giorni lavorativi prima della sessione d'esame.
+  \textbf{Docente}: Prof.~Alessio Micheli (Dipartimento di Informatica),
+  professore ordinario, responsabile del gruppo CIML
+  (\emph{Computational Intelligence \& Machine Learning}) con oltre 25
+  anni di ricerca in ML/AI, \textbf{presidente della European Neural
+  Network Society} (conferenza annuale ICANN), co-fondatore della IEEE
+  Task Force on Reservoir Computing, associate editor di IEEE TNNLS e
+  \emph{Neural Networks}. Obiettivo del corso: introdurre in 3 mesi al
+  ML attuale, ripercorrendone anche le basi e la storia.
 \item
-  \textbf{Orale}: discussione del progetto e domande su tutto il
-  programma, preceduta da domande scritte (\emph{pre-test}) il giorno
-  dell'appello. Il professore chiede di rispondere \textbf{prima in
-  linguaggio matematico} (equazioni), poi si discute.
+  \textbf{Lezioni} (a.a. 2026/27): martedì, mercoledì e giovedì 16--18,
+  Aula E. L'inizio è puntuale per poter fare una pausa.
+\item
+  \textbf{Q\&A} con il docente: il martedì dopo la lezione (tempo
+  facoltativo, non parte della lezione) più alcune lezioni speciali di
+  Q\&A. Per domande personali si scrive una mail con il tag
+  \textbf{{[}ML-26-Q{]}} nell'oggetto (obbligatorio).
+\item
+  \textbf{Comunicazioni}: tramite Teams e/o le news di Moodle. Le
+  \textbf{registrazioni} delle lezioni sono su Teams (scheda
+  \emph{Shared} → \emph{Recordings}); le lezioni ufficiali sono solo in
+  presenza, lo streaming è informale e senza interazione garantita.
+\item
+  \textbf{Recuperi}: il lunedì pomeriggio (annunciati quando servono) e
+  nel periodo di recupero dal 9 al 18 dicembre 2026 (da considerare
+  prima di programmare le vacanze di Natale). Le lezioni del 15--17
+  settembre 2026 non si sono tenute e saranno recuperate.
 \end{itemize}
 
-Durante il semestre ci sono \textbf{test intermedi} su Moodle (5--10
-minuti in aula, con il proprio dispositivo). Se si partecipa ad almeno
-l'80\% dei test con una media superiore a 6/10, si è esonerati dal
-pre-test scritto della sessione invernale. Tutti i membri del gruppo
-devono sostenere l'esame nella stessa sessione, ed è obbligatorio
-iscriversi all'appello sul portale d'ateneo.
+\begin{boxnote}{Chi arriva in ritardo al corso}
 
-\begin{boxtip}{Consiglio degli studenti degli anni passati}
+Tutte le informazioni sono sul \textbf{Moodle} del corso
+(elearning.di.unipi.it, con iscrizione autonoma tramite account Unipi):
+slide, bibliografia e sezione \textbf{FAQ}. Conviene usare anche Teams
+(news e registrazioni) e gli appunti dei colleghi. Progetto e test di
+esercizio \textbf{non sono obbligatori} per l'esame. Non chiedere al
+docente ciò che è già nelle FAQ o nella prima lezione.
 
-Prima \textbf{studiare i contenuti} del corso, poi dedicarsi al
-progetto: aumenta sia l'efficacia sia l'efficienza del lavoro.
+\end{boxnote}
+
+\subsection{Esame}\label{esame}
+
+\begin{boxwarning}{Regole aggiornate (a.a. 2026/27)}
+
+Le modalità d'esame sono cambiate rispetto agli anni precedenti: il
+\textbf{progetto non è più obbligatorio} e l'esame si basa su uno
+\textbf{scritto obbligatorio}, con orale solo se necessario.
+
+\end{boxwarning}
+
+L'esame si articola, in ordine cronologico, in quattro fasi.
+
+\textbf{1. Test di esercizio durante il corso (opzionali).} Alla fine di
+ogni ciclo di lezioni vengono proposti su Moodle brevi e semplici test
+di esercizio. Servono per l'\textbf{autovalutazione} (come esercizi per
+casa, con un punteggio che però \textbf{non vale per l'esame}), tengono
+al passo con le lezioni e sono una testimonianza della partecipazione
+attiva. Hanno una scadenza (tipicamente una settimana), ma se se ne
+perde qualcuno si può continuare la serie. Preparano allo scritto, anche
+se formato, contenuti e profondità sono diversi. Vengono annunciati solo
+in aula e con un breve messaggio su Teams.
+
+\textbf{2. Progetto (opzionale).} Alla fine del corso (dicembre) si può
+svolgere un progetto:
+
+\begin{itemize}
+\tightlist
+\item
+  lavoro di gruppo di \textbf{2 studenti}, senza eccezioni;
+\item
+  contenuto: implementazione, applicazione e/o analisi di un metodo o di
+  una tecnica di ML/reti neurali con \textbf{valutazione sperimentale}
+  (possibili progetti coordinati con il corso di CM);
+\item
+  formato: presentazione pubblica di un \textbf{poster} in aula (una
+  delle ultime lezioni), più la consegna del materiale sviluppato; è
+  previsto un premio per il miglior poster;
+\item
+  dopo la presentazione si può sostenere l'esame in qualunque sessione,
+  ma per discutere il progetto i due membri del gruppo devono fare
+  l'esame \textbf{nella stessa sessione}.
+\end{itemize}
+
+Il consiglio è di non candidarsi al progetto prima di aver studiato a
+fondo i contenuti del corso. I dettagli verranno dati in una lezione
+dedicata.
+
+\textbf{3. Scritto (obbligatorio).} Si svolge dopo il corso, nelle
+sessioni d'esame (da gennaio e febbraio):
+
+\begin{itemize}
+\tightlist
+\item
+  è obbligatorio \textbf{iscriversi} all'appello su esami.unipi.it entro
+  la scadenza (verificarla con largo anticipo) e cancellare l'iscrizione
+  se si decide di non partecipare;
+\item
+  si svolge \textbf{solo in presenza}, in aula, nella data, ora e aula
+  indicate su esami.unipi.it; non presentarsi equivale a ritirarsi da
+  quella sessione;
+\item
+  le domande vanno risposte su \textbf{fogli prestampati} con spazio per
+  la risposta libera; bisogna portare penna o matita;
+\item
+  le risposte richiedono \textbf{equazioni, disegni e/o parti
+  descrittive} (quiz e domande aperte);
+\item
+  non si può usare alcun materiale del corso o esterno, né alcun ausilio
+  elettronico (assistenti virtuali, chatbot\ldots): è vietato l'uso di
+  qualunque dispositivo (portatili, smartphone, braccialetti smart,
+  auricolari, occhiali smart\ldots), pena l'esclusione.
+\end{itemize}
+
+\textbf{4. Orale (solo se necessario) e verbalizzazione.} Per accedere
+all'orale serve un livello sufficiente nello scritto (la lista degli
+ammessi è comunicata su Moodle). L'orale si tiene nella stessa sessione
+dello scritto, in presenza, tipicamente nello studio del docente: nei
+giorni successivi alla correzione il docente assegna uno slot a ogni
+studente o gruppo. Se serve (in base all'esito dello scritto), l'orale è
+un colloquio su \textbf{tutto il programma} e può includere la
+discussione dello scritto e del progetto. Esigenze particolari
+(priorità, impossibilità di essere in presenza\ldots) si valutano caso
+per caso su richiesta.
+
+\begin{boxabstract}{Riepilogo delle regole}
+
+La valutazione tiene conto di: \textbf{risultato dello scritto} +
+partecipazione attiva (inclusi i test durante il corso) + attività extra
+facoltative (progetto, presentazioni volontarie a fine corso) +
+eventuale orale completo, se richiesto dal docente.
+
+\begin{itemize}
+\tightlist
+\item
+  Scritto \textbf{sufficiente} → in uno slot pochi giorni dopo:
+  eventuale orale e \textbf{proposta di voto} → se accettata,
+  verbalizzazione.
+\item
+  Scritto \textbf{insufficiente} o voto non accettato → si ripete in una
+  sessione successiva, a scelta tra le molte dell'anno.
+\end{itemize}
+
+Completare l'80\% dei test online e un progetto molto buono possono dare
+un \textbf{piccolo bonus} (se lo scritto è già sufficiente o buono), ma
+\textbf{non sono necessari} né per sostenere l'esame né per ottenere il
+voto massimo. L'indicatore chiave è la \textbf{conoscenza finale del ML
+e la sua profondità}.
+
+\end{boxabstract}
+
+\begin{boxtip}{I consigli del professore}
+
+\begin{itemize}
+\tightlist
+\item
+  Seguire le lezioni usando le slide come guida e studiare
+  progressivamente durante il corso; le lezioni di Q\&A sono un forum di
+  discussione: è una classe, non un insieme di registrazioni.
+\item
+  Prima \textbf{studiare i contenuti} del corso, poi dedicarsi al
+  progetto: aumenta sia l'efficacia sia l'efficienza del lavoro.
+\item
+  Se qualcosa non è chiaro: niente panico, chiedere al docente (Q\&A),
+  collaborare con i colleghi, usare libri e articoli (bibliografia e
+  ricerca personale) e i supporti del corso. Il ML è un campo in
+  continua evoluzione: va studiato!
+\end{itemize}
 
 \end{boxtip}
 
 \subsection{Materiale e bibliografia}\label{materiale-e-bibliografia}
 
-Il riferimento principale sono le slide del corso (su Moodle), che però
-vanno integrate con i propri appunti e con i libri. I testi principali
-sono:
+Il riferimento principale sono le slide del corso (su Moodle, spesso
+pubblicate in anticipo; attenzione a usare l'ultima versione dei file
+\texttt{ML-26…-v*}), che però vanno integrate con i propri appunti (le
+slide da sole possono non bastare a ricostruire il filo della lezione) e
+con i libri. Il docente è disponibile a condividere su Moodle gli
+appunti degli studenti. I testi principali sono:
 
 \begin{itemize}
 \tightlist
@@ -394,9 +550,37 @@ sono:
 
 Altri riferimenti utili: Russell--Norvig (\emph{AIMA}),
 Hastie--Tibshirani--Friedman (\emph{The Elements of Statistical
-Learning}), Cherkassky--Mulier, Bishop (\emph{Pattern Recognition and
-Machine Learning}), Duda--Hart--Stork, Shalev-Shwartz--Ben-David
-(\emph{Understanding Machine Learning}).
+Learning}, copia gratuita online), Cherkassky--Mulier, Bishop
+(\emph{Pattern Recognition and Machine Learning}, ora \textbf{gratuito}
+dal sito dell'editore; e \emph{Neural Networks for Pattern
+Recognition}), Duda--Hart--Stork, Shalev-Shwartz--Ben-David
+(\emph{Understanding Machine Learning}, gratuito online).
+
+Per le \textbf{librerie software}: F. Chollet, \emph{Deep Learning with
+Python}; A. Géron, \emph{Hands-on Machine Learning with Scikit-Learn,
+Keras \& TensorFlow}; A. Zhang, Z. Lipton, M. Li, A. Smola, \emph{Dive
+into Deep Learning} (Cambridge University Press, 2023, gratuito online,
+con esempi in PyTorch, NumPy/MXNet, JAX e TensorFlow). Le librerie
+principali verranno introdotte più avanti dall'assistente del corso.
+Attenzione: esistono moltissimi libri e blog tecnici, bisogna badare
+alla qualità scientifica.
+
+\begin{boxnote}{Supporti al corso}
+
+\begin{itemize}
+\tightlist
+\item
+  Un \textbf{assistente del corso} per aiutare nello sviluppo del
+  progetto (da confermare).
+\item
+  Un \textbf{chatbot tutor} (basato su ChatGPT), sperimentale, per il
+  corso ML 2026: serve a chiarire dubbi, approfondire concetti e avere
+  indicazioni su slide, definizioni ed esercizi, sempre sulla base dei
+  materiali ufficiali del corso. Dettagli e link saranno pubblicati
+  nelle news di Moodle.
+\end{itemize}
+
+\end{boxnote}
 
 In parallelo è molto utile il corso di \textbf{Computational Mathematics
 for Learning and Data Analysis} (CM), che fornisce le basi matematiche

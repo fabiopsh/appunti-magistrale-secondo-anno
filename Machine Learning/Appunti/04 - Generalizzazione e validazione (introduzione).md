@@ -1,6 +1,6 @@
 # Generalizzazione e validazione (introduzione)
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 La quarta lezione conclude l'introduzione al ML affrontando il tema centrale del corso: la **generalizzazione**. Attraverso un esempio concreto (il fitting di polinomi) si vedono i fenomeni di **underfitting** e **overfitting**, si dà una prima formalizzazione con la **Statistical Learning Theory** e la **VC-dimension**, e si introducono le tecniche di base di **validazione**, le misure di accuratezza per la classificazione e il ciclo di progettazione di un sistema di ML.
 

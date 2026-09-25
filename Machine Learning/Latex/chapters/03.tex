@@ -429,6 +429,27 @@ della \textbf{generalizzazione}.
   \textbf{Semi-supervised learning}: combina esempi etichettati e non
   etichettati.
 \item
+  \textbf{Self-supervised learning}: è un apprendimento supervisionato
+  in cui le etichette vengono \textbf{generate automaticamente dalla
+  struttura stessa dei dati}, senza etichettatura manuale. Il modello
+  viene \textbf{pre-addestrato} su grandi quantità di dati non
+  etichettati, imparando rappresentazioni generali, che poi si adattano
+  a task specifici con il \textbf{fine-tuning}. Esempi attuali, alla
+  base degli LLM:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    la \textbf{predizione della parola successiva} in un testo, cioè
+    l'apprendimento self-supervised \textbf{autoregressivo} della
+    famiglia GPT (\emph{Generative Pre-trained Transformer}, OpenAI);
+  \item
+    la ricostruzione di \textbf{parole mascherate} (BERT, Google);
+  \item
+    per le immagini, i \textbf{masked autoencoder} (Meta), che
+    ricostruiscono porzioni nascoste dell'immagine.
+  \end{itemize}
+\item
   \textbf{Reinforcement learning}: apprendimento con un ``critico'' che
   dice giusto/sbagliato. L'algoritmo apprende una \textbf{politica} su
   come agire date le osservazioni del mondo; ogni azione ha un impatto

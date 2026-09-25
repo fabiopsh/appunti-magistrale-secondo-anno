@@ -1,6 +1,6 @@
 # Apprendimento non supervisionato: K-means e SOM
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questa lezione è un'introduzione leggera all'**apprendimento non supervisionato** con le reti neurali. Il fuoco è sul **clustering** visto come **quantizzazione vettoriale**: si parte dal classico **K-means** e si arriva a un modello neurale storico, le **Self-Organizing Map** (SOM) di Kohonen, che aggiungono al clustering la proprietà di preservare la topologia e quindi di visualizzare i dati.
 

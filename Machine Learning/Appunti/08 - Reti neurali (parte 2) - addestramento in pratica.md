@@ -1,6 +1,6 @@
 # Reti neurali (parte 2): addestramento in pratica
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Con la backpropagation ([[07 - Note sulla backpropagation]]) sappiamo calcolare il gradiente per ogni peso della rete. Questa lezione affronta tutte le questioni pratiche che servono per addestrare davvero un MLP: inizializzazione, minimi multipli, versioni on-line/batch/mini-batch, learning rate e momentum, criteri di arresto, overfitting e regolarizzazione, numero di unità (con il Cascade Correlation), rappresentazione di input e output. Chiude una sintesi di pregi e difetti delle reti neurali e i primi consigli per il progetto (benchmark MONK).
 
@@ -403,9 +403,9 @@ Buoni risultati sul MONK **non garantiscono** la correttezza del simulatore; ris
 
 Per verificare la backpropagation si può usare un esempio passo-passo (attenzione se omette i bias) o una libreria affidabile come "oracolo" (Keras, scikit-learn, PyTorch...). Altri dataset utili si trovano nell'UCI Machine Learning Repository.
 
-> [!note] Anteprima del progetto
+> [!note] Anteprima del progetto (regole a.a. 2026/27)
 >
-> Gruppi di 2–3 persone. **Tipo A**: realizzare un simulatore di rete neurale e applicarlo (linguaggio libero). **Tipo B**: applicazioni sperimentali estese con simulatori esistenti, confrontando più modelli (NN, SVM, K-NN...). Entrambi partecipano alla competizione **ML-CUP**. Consegna circa 10–14 giorni lavorativi prima dell'orale.
+> Negli anni passati il progetto era obbligatorio (gruppi di 2–3, tipo A con simulatore implementato da zero o tipo B con librerie, competizione ML-CUP). Dall'a.a. 2026/27 il progetto è **opzionale**: gruppi di **2 studenti**, implementazione/applicazione/analisi di un metodo di ML con valutazione sperimentale, presentato come **poster** in una delle ultime lezioni (dicembre). Può dare un piccolo bonus ma non è necessario per l'esame, che si basa sullo scritto (vedi [[01 - Introduzione al Machine Learning]]). I consigli sul MONK restano validi come collaudo di qualsiasi implementazione.
 
 > [!question] Possibili domande d'esame
 >

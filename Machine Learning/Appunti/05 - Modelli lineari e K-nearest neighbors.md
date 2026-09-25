@@ -1,6 +1,6 @@
 # Modelli lineari e K-nearest neighbors
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Dopo l'introduzione si passa ai primi modelli veri e propri, che occupano due estremi opposti del panorama del ML. Da una parte i **modelli lineari**: rigidi, con pochi parametri, fondati sulla matematica classica ma già ricchi di concetti moderni (funzione di loss, discesa del gradiente, regolarizzazione). Dall'altra il **K-nearest neighbors**: estremamente flessibile, locale, senza un vero modello da addestrare. Il confronto tra i due mostra concretamente il compromesso tra flessibilità e controllo della complessità.
 

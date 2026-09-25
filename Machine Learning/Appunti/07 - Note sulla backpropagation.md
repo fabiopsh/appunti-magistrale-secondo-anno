@@ -1,6 +1,6 @@
 # Note sulla backpropagation
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Queste note contengono la **derivazione completa dell'algoritmo di backpropagation**, l'algoritmo che risolve il problema del *credit assignment* nelle reti multistrato introdotto in [[06 - Reti neurali (parte 1) - dal neurone al MLP]]. Il professore insiste su un punto: **la derivazione va rifatta da sé, non memorizzata**. Solo così si è in grado di ricalcolarla per loss, attivazioni o architetture diverse — ed è questo il vero obiettivo. Implementarla nel progetto è il modo migliore per capirla a fondo.
 

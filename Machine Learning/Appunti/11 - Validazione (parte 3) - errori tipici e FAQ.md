@@ -1,6 +1,6 @@
 # Validazione (parte 3): errori tipici e FAQ
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 L'ultima parte sulla validazione raccoglie consigli pratici sull'uso della cross-validation, gli **errori più frequenti** (soprattutto nei progetti) e alcuni esempi di model selection, in parte tratti dalle slide di Andrew W. Moore (CMU).
 

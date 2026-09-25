@@ -1,6 +1,6 @@
 # Bias-varianza ed ensemble
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 La SLT ha spiegato underfitting e overfitting tramite la complessità del modello e il numero di dati. La **decomposizione bias-varianza** offre un altro punto di vista, complementare: considera il fatto che il training set è **una sola** delle possibili realizzazioni dei dati, e scompone l'errore atteso in tre componenti — **bias**, **varianza** e **rumore**. Da qui si arriva in modo naturale agli **ensemble** (bagging, boosting), che sfruttano proprio la riduzione della varianza.
 

@@ -1,6 +1,6 @@
 # SVM e kernel: aspetti pratici e visione critica
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questo pacco di slide completa [[13 - Support Vector Machines]] con una visione critica: pregi e difetti delle SVM, esempi di risultati, il ruolo cruciale degli iperparametri, alcuni luoghi comuni da sfatare e la generalizzazione ai **metodi kernel**.
 

@@ -1,6 +1,6 @@
 # Il ML nei curricula della magistrale
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questo pacco di slide è un "intermezzo" della prima lezione, che il professore chiede di leggere autonomamente. Descrive come il corso di Machine Learning si inserisce nella **Laurea Magistrale in Informatica** dell'Università di Pisa e nei suoi curricula. Non contiene materiale d'esame, ma aiuta a capire il ruolo del corso nel percorso di studi.
 

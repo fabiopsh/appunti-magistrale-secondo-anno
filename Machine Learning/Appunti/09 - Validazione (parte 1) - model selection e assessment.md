@@ -1,6 +1,6 @@
 # Validazione (parte 1): model selection e model assessment
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 La validazione è stata introdotta in [[04 - Generalizzazione e validazione (introduzione)]]; queste lezioni la approfondiscono, perché è indispensabile per il progetto e per ogni applicazione seria del ML. Si ribadiscono i due obiettivi (model selection e model assessment), si vede un controesempio che mostra quanto è facile ottenere stime sbagliate, si introducono la **grid search** e la **K-fold cross-validation**, e si discutono campionamento, pochi dati e misure d'errore.
 

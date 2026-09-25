@@ -1,6 +1,6 @@
 # Support Vector Machines
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Le **Support Vector Machines** (SVM) sono la risposta alla domanda lasciata aperta dalla SLT ([[12 - Statistical Learning Theory e VC-dimension]]): è possibile fissare l'errore di training e minimizzare **automaticamente** la VC-confidence? L'SVM è ancora una macchina lineare (una LTU), ma sceglie tra tutti gli iperpiani separatori quello che **massimizza il margine**, e questo equivale a controllare la VC-dimension. La lezione procede in quattro passi: SVM lineare *hard margin*, SVM *soft margin* per dati non separabili, **kernel** per problemi non lineari, e infine SVM per la **regressione**.
 

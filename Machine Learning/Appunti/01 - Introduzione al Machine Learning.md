@@ -1,6 +1,6 @@
 # Introduzione al Machine Learning
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 La prima lezione ha un doppio scopo: motivare lo studio del **Machine Learning** (ML, in italiano *apprendimento automatico*) collocandolo nel panorama dell'informatica e dell'intelligenza artificiale, e fornire le informazioni pratiche sul corso (prerequisiti, struttura, esame, materiale). In chiusura vengono richiamati i concetti matematici di base che serviranno per tutto il corso.
 
@@ -60,6 +60,12 @@ Il ML fornisce la base teorica e metodologica della cosiddetta *rivoluzione dell
 > [!note] Premio Turing 2018
 >
 > Il 27 marzo 2019 l'ACM ha assegnato il Premio Turing (il "Nobel dell'informatica") a **Yoshua Bengio, Geoffrey Hinton e Yann LeCun** "per le scoperte concettuali e ingegneristiche che hanno reso le reti neurali profonde una componente critica dell'informatica".
+
+> [!note] Premi Nobel 2024
+>
+> Nel 2024 il ML è arrivato anche ai Nobel:
+> - **Fisica**: a **John Hopfield** e **Geoffrey Hinton** per le scoperte e invenzioni fondamentali che permettono il machine learning con le reti neurali artificiali (la rete di Hopfield come memoria associativa, la macchina di Boltzmann).
+> - **Chimica**: a **Demis Hassabis** e **John Jumper** (Google DeepMind) per la predizione della struttura delle proteine con **AlphaFold**, e a **David Baker** per la progettazione computazionale di proteine. Hassabis: *"Ho sempre pensato che, se riuscissimo a costruire l'AI nel modo giusto, potrebbe essere lo strumento definitivo per aiutare gli scienziati a esplorare l'universo che ci circonda."*
 
 ### Lo scopo ultimo
 
@@ -133,30 +139,80 @@ La mappa non è solo un ordine delle lezioni: descrive il percorso. Si introduco
 > 10. Deep Learning (e, in estensione, SOM, RNN).
 > 11–14. SOM, RNN, (Reti Bayesiane — rimosse dal programma), argomenti avanzati (dati strutturati).
 
-La densità del corso non è uniforme: l'introduzione è lenta e "morbida", il nucleo (reti neurali, SVM, validazione) è denso e consequenziale, la parte avanzata è veloce ma meno densa. Il progetto può iniziare circa a metà corso.
+La densità del corso non è uniforme: l'introduzione è lenta e "morbida", il nucleo (reti neurali, SVM, validazione) è denso e consequenziale, la parte avanzata è veloce ma meno densa. Il progetto (opzionale) viene annunciato circa a metà corso.
+
+### Organizzazione pratica
+
+- **Docente**: Prof. Alessio Micheli (Dipartimento di Informatica), professore ordinario, responsabile del gruppo CIML (*Computational Intelligence & Machine Learning*) con oltre 25 anni di ricerca in ML/AI, **presidente della European Neural Network Society** (conferenza annuale ICANN), co-fondatore della IEEE Task Force on Reservoir Computing, associate editor di IEEE TNNLS e *Neural Networks*. Obiettivo del corso: introdurre in 3 mesi al ML attuale, ripercorrendone anche le basi e la storia.
+- **Lezioni** (a.a. 2026/27): martedì, mercoledì e giovedì 16–18, Aula E. L'inizio è puntuale per poter fare una pausa.
+- **Q&A** con il docente: il martedì dopo la lezione (tempo facoltativo, non parte della lezione) più alcune lezioni speciali di Q&A. Per domande personali si scrive una mail con il tag **[ML-26-Q]** nell'oggetto (obbligatorio).
+- **Comunicazioni**: tramite Teams e/o le news di Moodle. Le **registrazioni** delle lezioni sono su Teams (scheda *Shared* → *Recordings*); le lezioni ufficiali sono solo in presenza, lo streaming è informale e senza interazione garantita.
+- **Recuperi**: il lunedì pomeriggio (annunciati quando servono) e nel periodo di recupero dal 9 al 18 dicembre 2026 (da considerare prima di programmare le vacanze di Natale). Le lezioni del 15–17 settembre 2026 non si sono tenute e saranno recuperate.
+
+> [!note] Chi arriva in ritardo al corso
+>
+> Tutte le informazioni sono sul **Moodle** del corso (elearning.di.unipi.it, con iscrizione autonoma tramite account Unipi): slide, bibliografia e sezione **FAQ**. Conviene usare anche Teams (news e registrazioni) e gli appunti dei colleghi. Progetto e test di esercizio **non sono obbligatori** per l'esame. Non chiedere al docente ciò che è già nelle FAQ o nella prima lezione.
 
 ### Esame
 
-L'esame si compone di:
-
-- **Progetto**, svolto in gruppi di 2 o 3 studenti, consegnato una sola volta e discusso insieme all'orale. Può essere di **tipo A** (implementazione da zero di una rete neurale, linguaggio libero) o di **tipo B** (uso di librerie di ML esistenti, con maggiore sforzo nella parte sperimentale e di confronto). Il voto non dipende dal tipo ma dalla qualità. Comprende codice (tipo A), risultati — inclusa la competizione con *blind test* **ML-CUP** — e un report in forma di slide su un template. La consegna va fatta circa 10–14 giorni lavorativi prima della sessione d'esame.
-- **Orale**: discussione del progetto e domande su tutto il programma, preceduta da domande scritte (*pre-test*) il giorno dell'appello. Il professore chiede di rispondere **prima in linguaggio matematico** (equazioni), poi si discute.
-
-Durante il semestre ci sono **test intermedi** su Moodle (5–10 minuti in aula, con il proprio dispositivo). Se si partecipa ad almeno l'80% dei test con una media superiore a 6/10, si è esonerati dal pre-test scritto della sessione invernale. Tutti i membri del gruppo devono sostenere l'esame nella stessa sessione, ed è obbligatorio iscriversi all'appello sul portale d'ateneo.
-
-> [!tip] Consiglio degli studenti degli anni passati
+> [!warning] Regole aggiornate (a.a. 2026/27)
 >
-> Prima **studiare i contenuti** del corso, poi dedicarsi al progetto: aumenta sia l'efficacia sia l'efficienza del lavoro.
+> Le modalità d'esame sono cambiate rispetto agli anni precedenti: il **progetto non è più obbligatorio** e l'esame si basa su uno **scritto obbligatorio**, con orale solo se necessario.
+
+L'esame si articola, in ordine cronologico, in quattro fasi.
+
+**1. Test di esercizio durante il corso (opzionali).** Alla fine di ogni ciclo di lezioni vengono proposti su Moodle brevi e semplici test di esercizio. Servono per l'**autovalutazione** (come esercizi per casa, con un punteggio che però **non vale per l'esame**), tengono al passo con le lezioni e sono una testimonianza della partecipazione attiva. Hanno una scadenza (tipicamente una settimana), ma se se ne perde qualcuno si può continuare la serie. Preparano allo scritto, anche se formato, contenuti e profondità sono diversi. Vengono annunciati solo in aula e con un breve messaggio su Teams.
+
+**2. Progetto (opzionale).** Alla fine del corso (dicembre) si può svolgere un progetto:
+
+- lavoro di gruppo di **2 studenti**, senza eccezioni;
+- contenuto: implementazione, applicazione e/o analisi di un metodo o di una tecnica di ML/reti neurali con **valutazione sperimentale** (possibili progetti coordinati con il corso di CM);
+- formato: presentazione pubblica di un **poster** in aula (una delle ultime lezioni), più la consegna del materiale sviluppato; è previsto un premio per il miglior poster;
+- dopo la presentazione si può sostenere l'esame in qualunque sessione, ma per discutere il progetto i due membri del gruppo devono fare l'esame **nella stessa sessione**.
+
+Il consiglio è di non candidarsi al progetto prima di aver studiato a fondo i contenuti del corso. I dettagli verranno dati in una lezione dedicata.
+
+**3. Scritto (obbligatorio).** Si svolge dopo il corso, nelle sessioni d'esame (da gennaio e febbraio):
+
+- è obbligatorio **iscriversi** all'appello su esami.unipi.it entro la scadenza (verificarla con largo anticipo) e cancellare l'iscrizione se si decide di non partecipare;
+- si svolge **solo in presenza**, in aula, nella data, ora e aula indicate su esami.unipi.it; non presentarsi equivale a ritirarsi da quella sessione;
+- le domande vanno risposte su **fogli prestampati** con spazio per la risposta libera; bisogna portare penna o matita;
+- le risposte richiedono **equazioni, disegni e/o parti descrittive** (quiz e domande aperte);
+- non si può usare alcun materiale del corso o esterno, né alcun ausilio elettronico (assistenti virtuali, chatbot...): è vietato l'uso di qualunque dispositivo (portatili, smartphone, braccialetti smart, auricolari, occhiali smart...), pena l'esclusione.
+
+**4. Orale (solo se necessario) e verbalizzazione.** Per accedere all'orale serve un livello sufficiente nello scritto (la lista degli ammessi è comunicata su Moodle). L'orale si tiene nella stessa sessione dello scritto, in presenza, tipicamente nello studio del docente: nei giorni successivi alla correzione il docente assegna uno slot a ogni studente o gruppo. Se serve (in base all'esito dello scritto), l'orale è un colloquio su **tutto il programma** e può includere la discussione dello scritto e del progetto. Esigenze particolari (priorità, impossibilità di essere in presenza...) si valutano caso per caso su richiesta.
+
+> [!abstract] Riepilogo delle regole
+>
+> La valutazione tiene conto di: **risultato dello scritto** + partecipazione attiva (inclusi i test durante il corso) + attività extra facoltative (progetto, presentazioni volontarie a fine corso) + eventuale orale completo, se richiesto dal docente.
+>
+> - Scritto **sufficiente** → in uno slot pochi giorni dopo: eventuale orale e **proposta di voto** → se accettata, verbalizzazione.
+> - Scritto **insufficiente** o voto non accettato → si ripete in una sessione successiva, a scelta tra le molte dell'anno.
+>
+> Completare l'80% dei test online e un progetto molto buono possono dare un **piccolo bonus** (se lo scritto è già sufficiente o buono), ma **non sono necessari** né per sostenere l'esame né per ottenere il voto massimo. L'indicatore chiave è la **conoscenza finale del ML e la sua profondità**.
+
+> [!tip] I consigli del professore
+>
+> - Seguire le lezioni usando le slide come guida e studiare progressivamente durante il corso; le lezioni di Q&A sono un forum di discussione: è una classe, non un insieme di registrazioni.
+> - Prima **studiare i contenuti** del corso, poi dedicarsi al progetto: aumenta sia l'efficacia sia l'efficienza del lavoro.
+> - Se qualcosa non è chiaro: niente panico, chiedere al docente (Q&A), collaborare con i colleghi, usare libri e articoli (bibliografia e ricerca personale) e i supporti del corso. Il ML è un campo in continua evoluzione: va studiato!
 
 ### Materiale e bibliografia
 
-Il riferimento principale sono le slide del corso (su Moodle), che però vanno integrate con i propri appunti e con i libri. I testi principali sono:
+Il riferimento principale sono le slide del corso (su Moodle, spesso pubblicate in anticipo; attenzione a usare l'ultima versione dei file `ML-26…-v*`), che però vanno integrate con i propri appunti (le slide da sole possono non bastare a ricostruire il filo della lezione) e con i libri. Il docente è disponibile a condividere su Moodle gli appunti degli studenti. I testi principali sono:
 
 - S. Haykin, *Neural Networks and Learning Machines*, Prentice Hall, 3ª ed., 2008;
 - T. M. Mitchell, *Machine Learning*, McGraw-Hill, 1997;
 - I. Goodfellow, Y. Bengio, A. Courville, *Deep Learning*, MIT Press, 2016 (gratuito online).
 
-Altri riferimenti utili: Russell–Norvig (*AIMA*), Hastie–Tibshirani–Friedman (*The Elements of Statistical Learning*), Cherkassky–Mulier, Bishop (*Pattern Recognition and Machine Learning*), Duda–Hart–Stork, Shalev-Shwartz–Ben-David (*Understanding Machine Learning*).
+Altri riferimenti utili: Russell–Norvig (*AIMA*), Hastie–Tibshirani–Friedman (*The Elements of Statistical Learning*, copia gratuita online), Cherkassky–Mulier, Bishop (*Pattern Recognition and Machine Learning*, ora **gratuito** dal sito dell'editore; e *Neural Networks for Pattern Recognition*), Duda–Hart–Stork, Shalev-Shwartz–Ben-David (*Understanding Machine Learning*, gratuito online).
+
+Per le **librerie software**: F. Chollet, *Deep Learning with Python*; A. Géron, *Hands-on Machine Learning with Scikit-Learn, Keras & TensorFlow*; A. Zhang, Z. Lipton, M. Li, A. Smola, *Dive into Deep Learning* (Cambridge University Press, 2023, gratuito online, con esempi in PyTorch, NumPy/MXNet, JAX e TensorFlow). Le librerie principali verranno introdotte più avanti dall'assistente del corso. Attenzione: esistono moltissimi libri e blog tecnici, bisogna badare alla qualità scientifica.
+
+> [!note] Supporti al corso
+>
+> - Un **assistente del corso** per aiutare nello sviluppo del progetto (da confermare).
+> - Un **chatbot tutor** (basato su ChatGPT), sperimentale, per il corso ML 2026: serve a chiarire dubbi, approfondire concetti e avere indicazioni su slide, definizioni ed esercizi, sempre sulla base dei materiali ufficiali del corso. Dettagli e link saranno pubblicati nelle news di Moodle.
 
 In parallelo è molto utile il corso di **Computational Mathematics for Learning and Data Analysis** (CM), che fornisce le basi matematiche profonde dei metodi di apprendimento (non è però obbligatorio per seguire ML).
 

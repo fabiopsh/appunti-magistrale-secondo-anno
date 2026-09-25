@@ -1,6 +1,6 @@
 # Reti neurali ricorrenti (RNN)
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questa è un'introduzione leggera alle **reti neurali ricorrenti** (RNN), che saranno approfondite nei corsi ISPR e CNS. Finora le reti erano **feedforward** (direzione input → output) e lavoravano su **vettori**. Le RNN aggiungono **connessioni di feedback** (cicli) nella topologia: la presenza di auto-connessioni dà alla rete **proprietà dinamiche** e una **memoria** (uno stato) delle computazioni passate. Questo estende la capacità rappresentativa del modello all'elaborazione di **sequenze** (e di dati strutturati). Le RNN sono anche biologicamente plausibili: le reti neurali biologiche sono ricorrenti.
 

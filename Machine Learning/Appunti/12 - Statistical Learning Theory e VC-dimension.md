@@ -1,6 +1,6 @@
 # Statistical Learning Theory e VC-dimension
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Dopo le tecniche empiriche di validazione, si torna alla **stima analitica** dell'errore atteso (di validazione, per la model selection, o di test, per l'assessment), introdotta in [[04 - Generalizzazione e validazione (introduzione)]]. Questa lezione definisce formalmente la **VC-dimension**, la calcola per alcune classi di ipotesi, presenta il bound della SLT e il principio della **Structural Risk Minimization** (SRM), che porterà alle SVM.
 

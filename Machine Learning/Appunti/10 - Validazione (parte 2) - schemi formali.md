@@ -1,6 +1,6 @@
 # Validazione (parte 2): schemi formali
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questa seconda parte formalizza l'uso corretto della cross-validation per la model selection e/o la stima del rischio, con una notazione precisa (adattata dalle slide di S. Bengio). Sono concetti semplici, ma una notazione rigorosa evita ambiguità. Non è un ricettario: serve a **razionalizzare** e capire in modo sistematico un approccio rigoroso, per poi essere ragionevoli. Il tempo per eseguire gli esperimenti dipende soprattutto dalle scelte di validazione: bisogna evitare sia una valutazione troppo grossolana sia un processo di valutazione infinito. In caso di dubbi, questi schemi sono comunque meglio della fantasia.
 

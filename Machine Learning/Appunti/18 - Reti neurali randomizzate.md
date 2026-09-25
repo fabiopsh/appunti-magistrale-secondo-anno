@@ -1,6 +1,6 @@
 # Reti neurali randomizzate
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Dopo il deep learning, l'altro paradigma recente presentato nel corso è quello delle **reti neurali a pesi casuali** ("deep learning ed *extreme* learning", scherza il professore). L'idea sembra paradossale: e se lo strato nascosto non venisse addestrato affatto? La lezione mostra come la casualità sia una componente utile del ML e come le reti randomizzate si ricolleghino a concetti già visti: espansione in basi, teorema di Cover, regolarizzazione.
 

@@ -1,6 +1,6 @@
 # Reti neurali (parte 1): dal neurone al MLP
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Con le reti neurali si entra nel cuore del corso. Questa prima parte parte dall'ispirazione biologica, introduce il neurone artificiale e il **Perceptron** con il suo algoritmo di apprendimento e il **teorema di convergenza**, confronta il Perceptron con l'LMS, introduce le funzioni di attivazione sigmoidali e arriva al **Multi-Layer Perceptron** (MLP), analizzato come funzione flessibile, come espansione in basi adattiva e come approssimatore universale. Si chiude con i problemi che l'apprendimento in una rete pone e che saranno risolti dalla **backpropagation**.
 

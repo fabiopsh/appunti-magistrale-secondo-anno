@@ -1,6 +1,6 @@
 # Concetti fondamentali del ML
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Le lezioni 2 e 3 forniscono la **panoramica e la terminologia** del Machine Learning prima di entrare nei modelli veri e propri. Si parte dal quadro generale — l'apprendimento come approssimazione di una funzione sconosciuta a partire da esempi — per poi descrivere gli "ingredienti" di un sistema di ML (dati, task, modello, algoritmo di apprendimento, validazione) e tre concetti cruciali: il **bias induttivo**, la **funzione di loss** e la **generalizzazione**. Molti concetti qui solo accennati verranno ripresi e approfonditi nel resto del corso.
 
@@ -183,6 +183,10 @@ La figura pone la domanda chiave: tra le infinite possibilità, quale funzione s
 #### Altri paradigmi
 
 - **Semi-supervised learning**: combina esempi etichettati e non etichettati.
+- **Self-supervised learning**: è un apprendimento supervisionato in cui le etichette vengono **generate automaticamente dalla struttura stessa dei dati**, senza etichettatura manuale. Il modello viene **pre-addestrato** su grandi quantità di dati non etichettati, imparando rappresentazioni generali, che poi si adattano a task specifici con il **fine-tuning**. Esempi attuali, alla base degli LLM:
+  - la **predizione della parola successiva** in un testo, cioè l'apprendimento self-supervised **autoregressivo** della famiglia GPT (*Generative Pre-trained Transformer*, OpenAI);
+  - la ricostruzione di **parole mascherate** (BERT, Google);
+  - per le immagini, i **masked autoencoder** (Meta), che ricostruiscono porzioni nascoste dell'immagine.
 - **Reinforcement learning**: apprendimento con un "critico" che dice giusto/sbagliato. L'algoritmo apprende una **politica** su come agire date le osservazioni del mondo; ogni azione ha un impatto sull'ambiente, che fornisce un feedback. Non ci sono esempi passo-passo; l'obiettivo è il *decision-making*, ed è molto usato nella AI moderna.
 
 ### Modello

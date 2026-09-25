@@ -1,6 +1,6 @@
 # Apprendimento su dati strutturati e grafi
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 L'ultima lezione del corso è un'introduzione avanzata all'**apprendimento in domini strutturati** (SD, *Structured Domains*) e in particolare all'**apprendimento su grafi** con le **Deep Graph Networks** (DGN). È anche una panoramica delle ricerche del gruppo CIML di Pisa, che ha contribuito in modo pionieristico a questo campo. Le domande guida: si può fare deep learning sui grafi in modo **efficiente** (senza un addestramento completamente *end-to-end*)? La **profondità** nelle DGN serve, ma causa problemi: perché? Qual è il rapporto tra profondità dei modelli e difficoltà di addestramento?
 

@@ -1,6 +1,6 @@
 # Deep learning
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Questa lezione introduce il **deep learning** (DL) dal punto di vista del corso: non i dettagli delle architetture per le applicazioni (che si vedranno nei corsi successivi del curriculum AI, come Pattern Recognition e NLP), ma una **visione d'insieme** delle reti con molti strati, i concetti che le rendono efficaci (**servono davvero molti strati?**, **representation learning**, **rappresentazioni distribuite**) e le principali **tecniche** di addestramento, molte delle quali utili anche nel caso "base".
 

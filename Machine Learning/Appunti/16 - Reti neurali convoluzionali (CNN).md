@@ -1,6 +1,6 @@
 # Reti neurali convoluzionali (CNN)
 
-*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2024/25*
+*Appunti di Fabio Piscitelli — Machine Learning (654AA), Prof. Alessio Micheli, Università di Pisa, a.a. 2026/27*
 
 Le reti neurali hanno un'enorme quantità di applicazioni di successo, grazie alle prestazioni e al fatto che si configurano facilmente come primo approccio per apprendere funzioni arbitrarie di forma ignota, senza assumere un modello statistico a priori. I task **sub-simbolici** (dati sensoriali, controllo motorio, elaborazione visiva) sono il loro cavallo di battaglia.
 
