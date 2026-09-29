@@ -9,6 +9,15 @@ discesa del gradiente, regolarizzazione). Dall'altra il
 vero modello da addestrare. Il confronto tra i due mostra concretamente
 il compromesso tra flessibilità e controllo della complessità.
 
+\begin{boxnote}{Due lezioni distinte}
+
+Nelle slide 2026/27 i due argomenti sono in due pacchi separati
+(\emph{linear} e \emph{knn}); il contenuto è lo stesso e qui restano in
+un'unica nota, nella prima parte i modelli lineari e nella seconda il
+K-NN.
+
+\end{boxnote}
+
 Con i modelli lineari si passa da uno spazio delle ipotesi discreto
 (concept learning) a uno \textbf{continuo}, ancora ristretto ma
 parametrizzato da numeri reali.
@@ -107,6 +116,15 @@ locali spuri e la soluzione esiste in forma chiusa: \[
 w_1 = \frac{\sum_p x_p y_p - \frac{1}{l}\sum_p x_p \sum_p y_p}{\sum_p x_p^2 - \frac{1}{l}\left(\sum_p x_p\right)^2} = \frac{\operatorname{Cov}[x,y]}{\operatorname{Var}[x]}, \qquad w_0 = \bar{y} - w_1 \bar{x},
 \] dove \(\bar{x} = \frac{1}{l}\sum_p x_p\) e
 \(\bar{y} = \frac{1}{l}\sum_p y_p\) sono le medie.
+
+\begin{boxtip}{Da capire, non da memorizzare}
+
+Il professore precisa che questa soluzione ``diretta'' serve solo a
+sapere che \textbf{esiste} (grazie alla convessità della loss): non va
+memorizzata. Ciò che conta è saperla \textbf{ricavare} imponendo il
+gradiente nullo, come nell'esercizio che segue.
+
+\end{boxtip}
 
 \subsubsection{Calcolo del gradiente per un
 pattern}\label{calcolo-del-gradiente-per-un-pattern}
@@ -807,6 +825,23 @@ avevamo trattati come equivalenti.
 
 \end{boxnote}
 
+\begin{boxtip}{Cambia l'obiettivo dell'apprendimento}
+
+Con la regolarizzazione si ridefinisce lo scopo: non si vuole più
+\textbf{solo} il modello che si adatta meglio ai dati, ma \textbf{il
+modello più semplice che si adatta bene ai dati}. La loss è una bilancia
+tra due piatti: - \textbf{adattamento ai dati} (errore di training,
+\(\sum_p(y_p - \mathbf{w}^T\mathbf{x}_p)^2\)): spinge il modello a
+seguire i dati e minimizzare i residui; - \textbf{semplicità del
+modello} (penalità di Tikhonov, \(\|\mathbf{w}\|^2\)): punisce i pesi
+grandi, rendendo il modello più liscio, più semplice e più capace di
+generalizzare;
+
+e il \textbf{parametro di regolarizzazione} \(\lambda\) decide quanto
+peso dare alla penalità.
+
+\end{boxtip}
+
 \subsubsection{Soluzione}\label{soluzione}
 
 \begin{itemize}
@@ -1133,6 +1168,40 @@ altro, e i lati delle celle sono i punti equidistanti da due pattern. Il
 punti di classi diverse.}
 \end{figure}
 
+\subsection{\texorpdfstring{Il comportamento al variare di
+\(k\)}{Il comportamento al variare di k}}\label{il-comportamento-al-variare-di-k}
+
+Anche nel K-NN ritroviamo il \textbf{compromesso tra underfitting e
+overfitting}, governato dal valore di \(k\). L'errore di test ha la
+classica forma a \textbf{U} spostandosi tra due estremi:
+
+\begin{itemize}
+\tightlist
+\item
+  \(k = 1\): il caso \textbf{estremamente flessibile} (errore di
+  training nullo, confine frastagliato, rischio di overfitting);
+\item
+  \(k = l\) (tutti i dati): un modello \textbf{rigidissimo}, che
+  risponde con \textbf{un'unica media per tutti i dati} (per la
+  classificazione, la classe più frequente nel training set), qualunque
+  sia l'input.
+\end{itemize}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.63\linewidth,height=0.42\textheight,keepaspectratio]{images/05-knn_u-shape.png}
+\caption{Comportamento del K-NN: da \(k = l\) (rigido) a \(k = 1\) (flessibile)
+l'errore di training scende sempre, quello di test ha forma a U.}
+\end{figure}
+
+Dove l'abbiamo già visto? È lo stesso andamento del \textbf{fitting
+polinomiale} al crescere del grado \(M\) e del grafico del
+\textbf{VC-bound} della SLT
+(\href{04\%20-\%20Generalizzazione\%20e\%20validazione\%20(introduzione)}{04
+- Generalizzazione e validazione (introduzione)}): qui è \(k\) (letto da
+destra verso sinistra, cioè \(l/k\)) a fare da controllo della
+complessità. I valori intermedi di \(k\) danno il miglior compromesso.
+
 \subsection{Varianti}\label{varianti}
 
 \textbf{Multi-classe}: si restituisce la classe più frequente tra i
@@ -1277,8 +1346,12 @@ Il K-NN costruisce l'approssimazione locale \textbf{per ogni nuovo
 esempio} da predire: il costo computazionale è \textbf{spostato nella
 fase di predizione}. Per ogni input si calcolano le distanze da tutti i
 vettori memorizzati (tempo proporzionale al numero di pattern), anche se
-esistono algoritmi di ricerca di prossimità e indicizzazione ad hoc.
-Anche il costo in \textbf{spazio} è alto (tutti i dati di training).
+esistono algoritmi di ricerca di prossimità ad hoc, come
+l'indicizzazione dei pattern o le tecniche di ricerca
+\textbf{approssimata} dei vicini (\emph{approximate nearest neighbor
+search}), che rinunciano a trovare sempre il vicino esatto in cambio di
+una ricerca molto più veloce. Anche il costo in \textbf{spazio} è alto
+(tutti i dati di training).
 
 \subsubsection{Interpretabilità}\label{interpretabilituxe0}
 
@@ -1393,6 +1466,12 @@ il modello). Nelle prossime lezioni si cercano modelli \textbf{compatti}
 come la LTU (tutta la conoscenza in pochi parametri) ma
 \textbf{flessibili} come il K-NN, con un adeguato supporto al controllo
 della complessità: le \textbf{reti neurali}.
+
+Il professore suggerisce di guardare in anticipo le slide delle lezioni
+successive, e in particolare la \textbf{dimostrazione del teorema di
+convergenza del Perceptron}
+(\href{06\%20-\%20Reti\%20neurali\%20(parte\%201)\%20-\%20dal\%20neurone\%20al\%20MLP}{06
+- Reti neurali (parte 1) - dal neurone al MLP}).
 
 \begin{boxquestion}{Possibili domande d'esame}
 

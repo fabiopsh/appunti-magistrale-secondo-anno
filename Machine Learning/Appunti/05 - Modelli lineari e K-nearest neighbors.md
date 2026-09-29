@@ -4,6 +4,10 @@
 
 Dopo l'introduzione si passa ai primi modelli veri e propri, che occupano due estremi opposti del panorama del ML. Da una parte i **modelli lineari**: rigidi, con pochi parametri, fondati sulla matematica classica ma già ricchi di concetti moderni (funzione di loss, discesa del gradiente, regolarizzazione). Dall'altra il **K-nearest neighbors**: estremamente flessibile, locale, senza un vero modello da addestrare. Il confronto tra i due mostra concretamente il compromesso tra flessibilità e controllo della complessità.
 
+> [!note] Due lezioni distinte
+>
+> Nelle slide 2026/27 i due argomenti sono in due pacchi separati (*linear* e *knn*); il contenuto è lo stesso e qui restano in un'unica nota, nella prima parte i modelli lineari e nella seconda il K-NN.
+
 Con i modelli lineari si passa da uno spazio delle ipotesi discreto (concept learning) a uno **continuo**, ancora ristretto ma parametrizzato da numeri reali.
 
 ## Notazione sui dati
@@ -57,6 +61,10 @@ $$
 w_1 = \frac{\sum_p x_p y_p - \frac{1}{l}\sum_p x_p \sum_p y_p}{\sum_p x_p^2 - \frac{1}{l}\left(\sum_p x_p\right)^2} = \frac{\operatorname{Cov}[x,y]}{\operatorname{Var}[x]}, \qquad w_0 = \bar{y} - w_1 \bar{x},
 $$
 dove $\bar{x} = \frac{1}{l}\sum_p x_p$ e $\bar{y} = \frac{1}{l}\sum_p y_p$ sono le medie.
+
+> [!tip] Da capire, non da memorizzare
+>
+> Il professore precisa che questa soluzione "diretta" serve solo a sapere che **esiste** (grazie alla convessità della loss): non va memorizzata. Ciò che conta è saperla **ricavare** imponendo il gradiente nullo, come nell'esercizio che segue.
 
 #### Calcolo del gradiente per un pattern
 
@@ -417,6 +425,14 @@ $\lambda$ è l'**iperparametro di regolarizzazione**, un piccolo valore positivo
 >
 > Da qui in poi **Loss** indica la funzione obiettivo usata per l'addestramento (errore + penalità), mentre **Errore** $E$ indica la misura dell'errore del modello (il termine sui dati). Finora li avevamo trattati come equivalenti.
 
+> [!tip] Cambia l'obiettivo dell'apprendimento
+>
+> Con la regolarizzazione si ridefinisce lo scopo: non si vuole più **solo** il modello che si adatta meglio ai dati, ma **il modello più semplice che si adatta bene ai dati**. La loss è una bilancia tra due piatti:
+> - **adattamento ai dati** (errore di training, $\sum_p(y_p - \mathbf{w}^T\mathbf{x}_p)^2$): spinge il modello a seguire i dati e minimizzare i residui;
+> - **semplicità del modello** (penalità di Tikhonov, $\|\mathbf{w}\|^2$): punisce i pesi grandi, rendendo il modello più liscio, più semplice e più capace di generalizzare;
+>
+> e il **parametro di regolarizzazione** $\lambda$ decide quanto peso dare alla penalità.
+
 #### Soluzione
 
 - **Approccio diretto**: $\mathbf{w} = (X^TX + \lambda I)^{-1}X^T\mathbf{y}$. La matrice $X^TX + \lambda I$ è **sempre invertibile** (per $\lambda > 0$): un vantaggio anche numerico.
@@ -557,6 +573,18 @@ Il K-NN usa implicitamente il **diagramma di Voronoi**: ogni cella contiene tutt
 ![Diagramma di Voronoi nel piano: celle poligonali attorno a ciascun punto, grigie per i punti rossi e bianche per quelli neri|480](assets/05-knn_voronoi.png)
 *Fig. 5.18 — Diagramma di Voronoi: il confine del 1-NN segue i lati delle celle tra punti di classi diverse.*
 
+### Il comportamento al variare di $k$
+
+Anche nel K-NN ritroviamo il **compromesso tra underfitting e overfitting**, governato dal valore di $k$. L'errore di test ha la classica forma a **U** spostandosi tra due estremi:
+
+- $k = 1$: il caso **estremamente flessibile** (errore di training nullo, confine frastagliato, rischio di overfitting);
+- $k = l$ (tutti i dati): un modello **rigidissimo**, che risponde con **un'unica media per tutti i dati** (per la classificazione, la classe più frequente nel training set), qualunque sia l'input.
+
+![Errore di training e di test in funzione di k, da k = l a sinistra a k = 1 a destra: l'errore di training scende fino a zero, quello di test scende, ha un minimo per valori intermedi (cerchiato) e poi risale|440](assets/05-knn_u-shape.png)
+*Fig. 5.19 — Comportamento del K-NN: da $k = l$ (rigido) a $k = 1$ (flessibile) l'errore di training scende sempre, quello di test ha forma a U.*
+
+Dove l'abbiamo già visto? È lo stesso andamento del **fitting polinomiale** al crescere del grado $M$ e del grafico del **VC-bound** della SLT ([[04 - Generalizzazione e validazione (introduzione)]]): qui è $k$ (letto da destra verso sinistra, cioè $l/k$) a fare da controllo della complessità. I valori intermedi di $k$ danno il miglior compromesso.
+
 ### Varianti
 
 **Multi-classe**: si restituisce la classe più frequente tra i $k$ vicini:
@@ -586,7 +614,7 @@ Il K-NN non costruisce un'ipotesi globale valida per tutte le istanze: **non c'�
 Con $k$ piccolo bastano pochi punti per cambiare il confine: la flessibilità si paga. Si potrebbe pensare che il K-NN abbia un solo parametro ($k$), ma realisticamente ha circa **$l/k$ parametri effettivi** (Hastie-Tibshirani-Friedman): è come se dividesse lo spazio in $l/k$ regioni, ognuna con la sua "media".
 
 ![Errore di classificazione di training (verde) e di test (rosso) del K-NN al variare di k (e dei gradi di libertà l/k): il test error è alto per k grande (underfitting) e per k=1 (overfitting), minimo per valori intermedi; i quadratini indicano il modello lineare, la linea viola l'errore di Bayes|380](assets/05-knn_errori-k.png)
-*Fig. 5.19 — Curve di errore del K-NN al variare di $k$ (training di 200 punti, test di 10000). I quadratini sono il modello lineare, la linea viola l'errore ottimo di Bayes.*
+*Fig. 5.20 — Curve di errore del K-NN al variare di $k$ (training di 200 punti, test di 10000). I quadratini sono il modello lineare, la linea viola l'errore ottimo di Bayes.*
 
 Spostandosi da $k$ grande a $k = 1$ (cioè aumentando $l/k$) si passa dall'**underfitting** all'**overfitting**: l'errore di training scende fino a zero, quello di test ha un minimo per valori intermedi. È di nuovo il grafico del bound SLT, con $k$ nel ruolo del controllo della complessità: più flessibilità permette di trovare il risultato migliore, **se** la complessità viene controllata.
 
@@ -603,7 +631,7 @@ Spostandosi da $k$ grande a $k = 1$ (cioè aumentando $l/k$) si passa dall'**und
 Il K-NN approssima direttamente questa soluzione: il voto a maggioranza in un intorno è esattamente una stima di $\arg\max_v P(v \mid \mathbf{x})$, con due rilassamenti: la probabilità condizionata **in un punto** diventa probabilità condizionata **in un intorno** del punto (approssimazione locale), e le probabilità sono stimate con le **proporzioni** nel campione di training.
 
 ![A sinistra il confine di decisione ottimo di Bayes per il problema di esempio, calcolato conoscendo la densità generatrice; a destra il confine del 15-NN, molto simile|560](assets/05-knn_bayes.png)
-*Fig. 5.20 — Confine di Bayes ottimo (sinistra) e confine del 15-NN (destra): il 15-NN è molto vicino all'ottimo, coerentemente con il minimo dell'errore di test nella figura precedente.*
+*Fig. 5.21 — Confine di Bayes ottimo (sinistra) e confine del 15-NN (destra): il 15-NN è molto vicino all'ottimo, coerentemente con il minimo dell'errore di test nella figura precedente.*
 
 ### Bias induttivo del K-NN
 
@@ -619,11 +647,11 @@ Il bias legato alla metrica è spesso sottovalutato nei libri, ma è cruciale.
 La scelta della scala dipende dalla conoscenza del dominio. Se le variabili devono contribuire allo stesso modo, bisogna fare attenzione alle differenze di range: **riscalare i dati** (es. media zero e varianza unitaria) equivale a **cambiare la metrica**. La scalatura può cambiare del tutto quale sia il vicino più prossimo: il K-NN è fragile anche rispetto a un pre-processing elementare.
 
 ![Due grafici: a sinistra il punto x ha come vicino più prossimo il punto nero in alto; a destra, dopo aver riscalato l'asse x1, il vicino più prossimo diventa il punto rosso|500](assets/05-knn_scala.png)
-*Fig. 5.21 — Riscalando una variabile cambia il vicino più prossimo.*
+*Fig. 5.22 — Riscalando una variabile cambia il vicino più prossimo.*
 
 #### Costo computazionale
 
-Il K-NN costruisce l'approssimazione locale **per ogni nuovo esempio** da predire: il costo computazionale è **spostato nella fase di predizione**. Per ogni input si calcolano le distanze da tutti i vettori memorizzati (tempo proporzionale al numero di pattern), anche se esistono algoritmi di ricerca di prossimità e indicizzazione ad hoc. Anche il costo in **spazio** è alto (tutti i dati di training).
+Il K-NN costruisce l'approssimazione locale **per ogni nuovo esempio** da predire: il costo computazionale è **spostato nella fase di predizione**. Per ogni input si calcolano le distanze da tutti i vettori memorizzati (tempo proporzionale al numero di pattern), anche se esistono algoritmi di ricerca di prossimità ad hoc, come l'indicizzazione dei pattern o le tecniche di ricerca **approssimata** dei vicini (*approximate nearest neighbor search*), che rinunciano a trovare sempre il vicino esatto in cambio di una ricerca molto più veloce. Anche il costo in **spazio** è alto (tutti i dati di training).
 
 #### Interpretabilità
 
@@ -638,7 +666,7 @@ Il K-NN funziona bene se si trova un insieme significativo di dati vicini a ogni
 Consideriamo dati uniformi nel cubo unitario e un sottocubo che deve contenere una frazione $r$ dei dati. Il suo lato deve essere $r^{1/n}$ (perché volume $=$ lato$^n$).
 
 ![A sinistra un cubo unitario con un piccolo sottocubo rosso di lato 0.3; a destra le curve della lunghezza del lato necessaria per catturare una frazione del volume, per n=1,2,3,10: in 10 dimensioni serve un lato di circa 0.8 per il 10% del volume|600](assets/05-knn_curse.png)
-*Fig. 5.22 — Maledizione della dimensionalità: lato del sottocubo necessario per catturare una frazione $r$ del volume, al variare della dimensione $n$.*
+*Fig. 5.23 — Maledizione della dimensionalità: lato del sottocubo necessario per catturare una frazione $r$ del volume, al variare della dimensione $n$.*
 
 - Per catturare il 10% dei dati: in 2D basta un lato di $0{,}1^{1/2} \approx 0{,}32$ (il 30% del range di ogni variabile); in 10D serve $0{,}1^{1/10} \approx 0{,}8$, cioè l'**80% del range** di ogni coordinata! Anche per l'1% del volume in 10D serve il 63% del range. L'intorno non è più "locale" e i vicini non sono più simili.
 - Viceversa, fissato il lato a 0,3: in 1D si cattura il 30% dei dati, in 2D il 9%, in 3D il 2,7%, in 10D circa lo **0,0006%**. Quel lato può non bastare a trovare $k$ dati, a meno di usare $k$ piccolo (e quindi rischiare overfitting).
@@ -666,6 +694,8 @@ Estensioni ad altri modelli locali: *kernel smoothers*, regressione lineare loca
 ### E adesso?
 
 Il K-NN non costruisce un vero "modello appreso": non estrae regolarità né sintetizza conoscenza, e non soddisfa l'obiettivo dell'apprendimento (poter "dimenticare" gli esempi dopo aver costruito il modello). Nelle prossime lezioni si cercano modelli **compatti** come la LTU (tutta la conoscenza in pochi parametri) ma **flessibili** come il K-NN, con un adeguato supporto al controllo della complessità: le **reti neurali**.
+
+Il professore suggerisce di guardare in anticipo le slide delle lezioni successive, e in particolare la **dimostrazione del teorema di convergenza del Perceptron** ([[06 - Reti neurali (parte 1) - dal neurone al MLP]]).
 
 > [!question] Possibili domande d'esame
 >
